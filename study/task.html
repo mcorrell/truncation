@@ -1,0 +1,36 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="./src/style.css" />
+<title>Perception of Data Quality Issues in Viusualizations</title>
+<script src="https://vega.github.io/datalib/datalib.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+<!-- Progress Bar -->
+<div id="progress"></div>
+
+<!-- Question Prompt -->
+<div id="prompt">
+<!-- We will ask them to identify which chart has a certain type of flaw. -->
+<p>You will be shown TODO. Click the <b>Confirm</b> button to move on.</p>
+</div>
+
+
+<!-- Ready Button: reveal vizzes and start RT from clicking this. -->
+<button type="button" id="readyBtn" onclick="ready()">Ready</button>
+  <!-- Confirm Button: disabled until after the ready button has been clicked, and the graph has been chosen. -->
+<button type="button" id="confirmBtn" onclick="answer()" disabled="disabled">Confirm</button>
+<!-- Main Vis Panel -->
+<div id="panel">
+  <svg id="vis" class="vis">
+    <defs class="grad">
+      <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%" class="grad">
+        <stop offset="0%" style="stop-color:#333;stop-opacity:1" class="grad" />
+        <stop offset="100%" style="stop-color:#333;stop-opacity:0" class="grad"/>
+      </linearGradient>
+    </defs>
+  </svg>
+</div>
+</body>
+<script src="./src/script.js"></script>
+</html>

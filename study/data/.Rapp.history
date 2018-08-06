@@ -1,0 +1,731 @@
+data <- read.csv("cleandata.csv")
+library(skimr)
+skim(data)
+tmean <- function(x) { return(mean(x,trim=0.1))}
+tmean(data$correct)
+with(data,aggregate(correct ~ vis,FUN=tmean)
+)
+with(data,aggregate(correct ~ vis,FUN=tmean))
+model <- aov(correct ~ flaw * magnitude * vis *parameter + Error(id / (flaw * magnitude * vis *parameter),data=data)
+)
+model <- aov(correct ~ flaw * magnitude * vis *parameter + Error(id / (flaw * magnitude * vis *parameter)),data=data)
+)
+aov(correct ~ flaw * magnitude * vis * parameter + Error(id / (flaw * magnitude * vis * parameter)),data=data)
+)
+model <- aov(correct ~ flaw * magnitude * vis * parameter + Error(id / (flaw * magnitude * vis * parameter)),data=data)
+summary(model)
+with(data,aggregate(correct ~ vis*flaw,FUN=tmean))
+with(data,aggregate(correct ~ vis*flaw,FUN=mean))
+with(data,aggregate(correct ~ flaw,FUN=mean))
+with(data,aggregate(correct ~ flaw,FUN=tmean))
+tmean
+with(data,aggregate(correct ~ flaw*magnitude,FUN=tmean))
+with(data,aggregate(correct ~ magnitude*flaw,FUN=tmean))
+with(data,aggregate(correct ~ magnitude*flaw,FUN=mean))
+with(data,tmean(correct))
+with(subset(data, vis=="hist"),tmean(correct))
+with(subset(data, vis=="histogram"),tmean(correct))
+with(subset(data, vis=="histogram" && flaw=="gap"),tmean(correct))
+with(subset(data, (vis=="histogram" & flaw=="gap")),tmean(correct))
+with(subset(data, (vis!="histogram" & flaw=="gap")),tmean(correct))
+boot.mean <- function(x,B,binwidth=NULL) {#
+n = length(x)#
+boot.samples = matrix( sample(x,size=n*B,replace=TRUE), B, n)#
+boot.statistics = apply(boot.samples,1,tmean)#
+se = sd(boot.statistics)#
+if ( is.null(binwidth) )#
+binwidth = diff(range(boot.statistics))/30#
+p = ggplot(data.frame(x=boot.statistics),aes(x=x)) +#
+geom_histogram(aes(y=..density..),binwidth=binwidth) + geom_density(color="red")#
+interval = tmean(x) + c(-1,1)*2*se#
+print( interval )#
+return( list(boot.statistics = boot.statistics, interval=interval, se=se, plot=p) )#
+}
+boot.mean(data$correct,1000)
+boot.mean = function(x,B,binwidth=NULL) {#
+n = length(x)#
+boot.samples = matrix( sample(x,size=n*B,replace=TRUE), B, n)#
+boot.statistics = apply(boot.samples,1,tmean)#
+se = sd(boot.statistics)#
+require(ggplot2)#
+if ( is.null(binwidth) )#
+binwidth = diff(range(boot.statistics))/30#
+interval = tmean(x) + c(-1,1)*2*se#
+print( interval )#
+return( list(boot.statistics = boot.statistics, interval=interval, se=se, plot=p) )#
+}
+boot.mean(data$correct,1000)
+boot.mean = function(x,B,binwidth=NULL) {#
+n = length(x)#
+boot.samples = matrix( sample(x,size=n*B,replace=TRUE), B, n)#
+boot.statistics = apply(boot.samples,1,tmean)#
+se = sd(boot.statistics)#
+require(ggplot2)#
+if ( is.null(binwidth) )#
+binwidth = diff(range(boot.statistics))/30#
+interval = tmean(x) + c(-1,1)*2*se#
+print( interval )#
+return( list(boot.statistics = boot.statistics, interval=interval, se=se) )#
+}
+boot.mean(subset(data, (vis!="histogram" & flaw=="gap"))$correct,1000)
+boot.mean(subset(data, (vis=="histogram" & flaw=="gap"))$correct,1000)
+with(subset(data, (vis=="histogram" & flaw=="gap")),tmean(correct))
+with(subset(data, (vis=="density" & flaw=="outlier")),tmean(correct))
+with(subset(data, (vis=="density" & flaw=="outliers")),tmean(correct))
+with(subset(data, (vis!="density" & flaw=="outliers")),tmean(correct))
+boot.mean = function(x,B,binwidth=NULL) {#
+n = length(x)#
+boot.samples = matrix( sample(x,size=n*B,replace=TRUE), B, n)#
+boot.statistics = apply(boot.samples,1,tmean)#
+se = sd(boot.statistics)#
+require(ggplot2)#
+if ( is.null(binwidth) )#
+binwidth = diff(range(boot.statistics))/30#
+interval = tmean(x) + c(-1,1)*2*se#
+print( interval )#
+}
+boot.mean(subset(data, (vis!="density" & flaw=="outliers"))$correct,1000)
+boot.mean(subset(data, (vis=="density" & flaw=="outliers"))$correct,1000)
+boot.mean(data$correct)
+boot.mean(data$correct,1000)
+tmean(data$correct)
+with(data,aggregate(correct~flaw,FUN=tmean)
+)
+boot.mean(subset(data,flaw=="spike"),1000)
+boot.mean(subset(data,flaw=="spike")$correct,1000)
+boot.mean(subset(data,flaw=="outliers")$correct,1000)
+boot.mean(subset(data,flaw=="gap")$correct,1000)
+with(data,aggregate(correct~vis,FUN=tmean))
+boot.mean(subset(data,vis=="density")$correct,1000)
+boot.mean(subset(data,vis=="scatter")$correct,1000)
+boot.mean(subset(data,vis=="histogram")$correct,1000)
+TukeyHSD(model)
+model
+TukeyHSD(model)
+TukeyHSD(aov(correct ~ vis,data=data))
+TukeyHSD(aov(correct ~ flaw * magnitude * vis * parameter + Error(id / (flaw * magnitude * vis * parameter)),data=data))
+TukeyHSD(aov(correct ~ flaw * vis * parameter + Error(id / (flaw * vis * parameter)),data=data))
+TukeyHSD(aov(correct ~ flaw * magnitude * vis * parameter ,data=data))
+TukeyHSD(aov(correct ~ flaw * vis * parameter + Error(id / (flaw * vis * parameter),data=data))
+)
+TukeyHSD(aov(correct ~ flaw * vis * parameter + Error(id / (flaw * vis * parameter)),data=data))
+plot(aov)
+plot(model)
+TukeyHSD(x=model,"vis")
+TukeyHSD(aov(correct ~ flaw * vis * parameter * magnitude))
+TukeyHSD(aov(correct ~ flaw * vis * parameter * magnitude,data=data))
+TukeyHSD(x=aov(correct ~ flaw * vis * parameter * magnitude,data=data),"vis")
+warnings()
+library(agricolae)
+library(agricolae)
+HSD.test(model,"vis")
+HSD.test(aov(correct ~ flaw * vis * parameter * magnitude,data=data),"vis")
+HSD.test(aov(correct ~ flaw * vis * parameter * magnitude,data=data))
+HSD.test(aov(correct ~ flaw * vis * parameter * magnitude,data=data),"flaw")
+HSD.test(aov(correct ~ flaw * vis * parameter * magnitude,data=data),flaw)
+HSD.test(aov(correct ~ flaw * vis * parameter * magnitude,data=data),"data$flaw")
+HSD.test(aov(correct ~ flaw * vis * parameter * magnitude,data=data))
+HSD.test(aov(correct ~ flaw * vis * parameter * magnitude,data=data),group=TRUE)
+HSD.test(aov(correct ~ flaw * vis * parameter * magnitude,data=data),group=TRUE,console=TRUE)
+HSD.test(y=aov(correct ~ flaw * vis * parameter * magnitude,data=data),,console=TRUE)
+HSD.test(y=aov(correct ~ flaw * vis * parameter * magnitude,data=data),trtvi,console=TRUE)
+HSD.test(y=aov(correct ~ flaw * vis * parameter * magnitude,data=data),trt=vis,console=TRUE)
+HSD.test(y=aov(correct ~ flaw * vis * parameter * magnitude,data=data),trt="vis",console=TRUE)
+HSD.test(y=aov(correct ~ flaw * vis * parameter * magnitude,data=data),trt="vis*flaw",console=TRUE)
+HSD.test(y=aov(correct ~ flaw * vis * parameter * magnitude,data=data),trt="flaw",console=TRUE)
+HSD.test(y=aov(correct ~ flaw * vis * parameter * magnitude,data=data),trt=with(data,interaction(vis,flaw)),console=TRUE)
+HSD.test(y=aov(correct ~ with(data,interaction(vis,flaw)),data=data),trt=with(data,interaction(vis,flaw)),console=TRUE)
+HSD.test(y=aov(correct ~ with(data,interaction(vis,flaw)),data=data),trt=with(data,interaction(vis,flaw)),group=FALSE,console=TRUE)
+HSD.test(y=aov(correct ~ with(data,interaction(vis,flaw)),data=data),trt=with(data,interaction(vis,flaw)),group=TRUE,console=TRUE)
+HSD.test(y=aov(correct ~ with(data,interaction(vis,flaw)),data=data),trt=with(data,interaction(vis,flaw)),group=TRUE)
+with(data,interaction(vis,flaw))
+HSD.test(y=aov(correct ~ with(data,interaction(vis,flaw)),data=data),trt="with(data,interaction(vis,flaw))",group=TRUE)
+library(multcomp)
+lme_model <- lme(correct ~ flaw * magnitude * vis * parameter,data=data,random = ~1|id)
+library(multcomp)
+lme()
+library(lme)
+library(nlme)
+lme_model <- lme(correct ~ flaw * magnitude * vis * parameter,data=data,random = ~1|id)
+summary(lme_model)
+lme_model
+glht(lme_model)
+summary(glht(lme_model))
+summary(glht(lme_model,linfct=mcp(correct="vis")))
+summary(glht(lme_model,linfct=mcp(correct="Tukey")))
+summary(glht(lme_model,linfct=mcp(vis="Tukey")))
+summary(glht(lme_model,linfct=mcp(magnitude="Tukey")))
+summary(glht(lme_model,linfct=mcp(flaw="Tukey")))
+with(data,aggregate(correct ~ vis,FUN=tmean))
+with(data,aggregate(correct ~ vis*flaw,FUN=tmean))
+vf <- with(data,interaction(vis,flaw))
+avf <- aov(correct ~ vf, data=data)
+HSD.tst(avf,"vf",group=TRUE)
+HSD.test(avf,"vf",group=TRUE)
+summary(HSD.test(avf,"vf",group=TRUE))
+HSD.test(avf,"vf",group=TRUE)
+tavf <- HSD.test(avf,"vf",group=TRUE,console=TRUE)
+with(data,aggregate(correct ~ vis*flaw,FUN=tmean))
+boot.mean(subset(data,vis=="histogram" & flaw="outliers")$correct,1000)
+boot.mean(subset(data,vis=="histogram" & flaw=="outliers")$correct,1000)
+boot.mean(subset(data,vis=="scatter" & flaw=="outliers")$correct,1000)
+boot.mean(subset(data,vis=="scatter" & flaw=="gap")$correct,1000)
+boot.mean(subset(data,vis=="density" & flaw=="gap")$correct,1000)
+ls()
+HSD.test(lme_model)
+HSD.test(lme_model,trt="vis")
+model_f <- aov(correct ~ vis * parameter * magnitude * flaw,data=data)
+HSD.test(model_f,"vis")
+HSD.test(model_f,"vis",console=TRUE)
+TukeyHSD(model_f,"vis")
+warnings()
+with(data,aggregate(correct ~ vis,FUN=boot.mean))
+boot.mean
+tboot <- function(x) {#
+n = length(x)#
+boot.samples = matrix( sample(x,size=n*1000,replace=TRUE), B, n)#
+boot.statistics = apply(boot.samples,1,tmean)#
+se = sd(boot.statistics)#
+interval = tmean(x) + c(quantile(boot.statistics,0.025),quantile(boot.statistics,0.975))#
+return(tmean,interval)#
+}
+tboot(data$correct)
+tboot <- function(x) {#
+n = length(x)#
+boot.samples = matrix( sample(x,size=n*1000,replace=TRUE), 1000, n)#
+boot.statistics = apply(boot.samples,1,tmean)#
+interval = tmean(x) + c(quantile(boot.statistics,0.025),quantile(boot.statistics,0.975))#
+return(tmean,interval)#
+}
+tboot(data$correct)
+tboot <- function(x) {#
+n = length(x)#
+boot.samples = matrix( sample(x,size=n*1000,replace=TRUE), 1000, n)#
+boot.statistics = apply(boot.samples,1,tmean)#
+interval = tmean(x) + c(quantile(boot.statistics,0.025),quantile(boot.statistics,0.975))#
+return(interval)#
+}
+tboot(data$correct)
+tboot <- function(x) {#
+n = length(x)#
+boot.samples = matrix( sample(x,size=n*1000,replace=TRUE), 1000, n)#
+boot.statistics = apply(boot.samples,1,tmean)#
+interval = tmean(x) + c(quantile(boot.statistics,0.025),quantile(boot.statistics,0.975))#
+return(interval)#
+}
+tboot <- function(x) {#
+n = length(x)#
+boot.samples = matrix( sample(x,size=n*1000,replace=TRUE), 1000, n)#
+boot.statistics = apply(boot.samples,1,tmean)#
+print(quantile(boot.statistics))#
+interval = tmean(x) + c(quantile(boot.statistics,0.025),quantile(boot.statistics,0.975))#
+return(interval)#
+}
+tboot(data$correct)
+tboot <- function(x) {#
+n = length(x)#
+boot.samples = matrix( sample(x,size=n*1000,replace=TRUE), 1000, n)#
+boot.statistics = apply(boot.samples,1,tmean)#
+print(quantile(boot.statistics))#
+interval = c(quantile(boot.statistics,0.025),tmean(x),quantile(boot.statistics,0.975))#
+return(interval)#
+}
+tboot(data$correct)
+tboot <- function(x) {#
+n = length(x)#
+boot.samples = matrix( sample(x,size=n*1000,replace=TRUE), 1000, n)#
+boot.statistics = apply(boot.samples,1,tmean)#
+interval = c(quantile(boot.statistics,0.025),tmean(x),quantile(boot.statistics,0.975))#
+return(interval)#
+}
+with(data,aggregate(correct ~ vis,FUN=tboot))
+tboot(data$correct)
+with(data,aggregate(correct ~ flaw,FUN=tboot))
+with(data,aggregate(correct ~ flaw,FUN=tboot))
+with(data,aggregate(correct ~ flaw,FUN=tboot))
+with(data,aggregate(correct ~ flaw,FUN=tboot))
+with(data,aggregate(correct ~ flaw,FUN=tboot))
+tmean
+tboot
+tboot <- function(x) {#
+	n = length(x)#
+	boot.samples = matrix( sample(x,size=n*1000,replace=TRUE), 1000, n)#
+	boot.statistics = apply(boot.samples,1,tmean)#
+	interval = c(ci1 = quantile(boot.statistics,0.025),midmean = tmean(x),ci2 = quantile(boot.statistics,0.975))#
+	return(interval)#
+}
+tboot(data$correct)
+tboot(data$correct)
+tboot(data$correct)
+tboot(data$correct)
+tboot(data$correct)
+tboot(data$correct)
+quantile(data$correct,0.025)
+quantile(data$correct,0.025)$2.5%
+quantile(data$correct,0.025)$"2.5%"
+quantile(data$correct,0.025)[0]
+quantile(data$correct,0.025)[1]
+quantile(data$correct,0.05)[1]
+quantile(data$correct,0.5)[1]
+quantile(data$correct,0.5)
+quantile(data$correct,1)
+quantile(data$correct,0.97)
+quantile(data$correct,0.5)
+quantile(data$correct,0.4)
+quantile(data$correct,0.6)
+quantile(data$correct,0.6)[,]
+quantile(data$correct,0.6)
+test <- quantile(data$correct,0.6)
+test
+summary(test)
+test[,]
+test[1]
+test[2]
+test[3]
+test[2]
+test[1]
+test <- quantile(data$correct,0.6,names=FALSE)
+test
+tboot <- function(x) {#
+	n = length(x)#
+	boot.samples = matrix( sample(x,size=n*1000,replace=TRUE), 1000, n)#
+	boot.statistics = apply(boot.samples,1,tmean)#
+	interval = c(ci1 = quantile(boot.statistics,0.025,names=FALSE),midmean = tmean(x),ci2 = quantile(boot.statistics,0.975,names=FALSE))#
+	return(interval)#
+}
+tboot(data$correct)
+demo <- read.csv("cleandemo.csv")
+skim(demo)
+demo
+skim(demo)
+skim(data)
+model
+model <- aov(correct ~ flaw * magnitude * vis * parameter + Error(id / (flaw * magnitude * vis * parameter)),data=data)
+with(data,aggregate(correct ~ flaw,FUN=tboot))
+with(data,aggregate(correct ~ magnitude*flaw,FUN=tboot))
+tmean(subset(data,vis=="histogram")$correct)
+with(subset(data,flaw=="gap"),aggregate(correct ~ parameter*vis,FUN=tboot))
+analysis <- function() {#
+	#TODO: Add post hoc tests!#
+	#TODO: Add factor creation code!#
+	#load in our data#
+	data <- read.csv("cleandata.csv")#
+	demo <- read.csv("cleandemo.csv")#
+	#does our data look reasonable?#
+	skim(data)#
+	#how good were people, overall?#
+	tboot(data$correct)#
+	#let's build our factorial anova#
+	model <- aov(correct ~ flaw * magnitude * vis * parameter + Error(id / (flaw * magnitude * vis * parameter)),data=data)#
+	#how different was performance across flaws?#
+	with(data,aggregate(correct ~ flaw,FUN=tboot))#
+	#how different was performance across vis types?#
+	with(data,aggregate(correct ~ vis,FUN=tboot))#
+	#okay, but across flaw types?#
+	with(data,aggregate(correct ~ vis*flaw,FUN=tboot))#
+	#data for our figures#
+	#Figure 8#
+	print("Fig 8")#
+	with(data,aggregate(correct ~ magnitude*flaw,FUN=tboot))#
+	#Figure 9a#
+	print("Fig 9a")#
+	with(subset(data,flaw=="gap"),aggregate(correct ~ parameter*vis,FUN=tboot))#
+	#Figure 9b#
+	print("Fig 9b")#
+	with(subset(data,flaw=="outliers"),aggregate(correct ~ parameter*vis,FUN=tboot))#
+	#Figure 9c#
+	print("Fig 9c")#
+	with(subset(data,flaw=="spike"),aggregate(correct ~ parameter*vis,FUN=tboot))#
+}
+analysis()
+analysis <- function() {#
+	#TODO: Add post hoc tests!#
+	#TODO: Add factor creation code!#
+	#load in our data#
+	data <- read.csv("cleandata.csv")#
+	demo <- read.csv("cleandemo.csv")#
+	#does our data look reasonable?#
+	skim(data)#
+	#how good were people, overall?#
+	tboot(data$correct)#
+	#let's build our factorial anova#
+	model <- aov(correct ~ flaw * magnitude * vis * parameter + Error(id / (flaw * magnitude * vis * parameter)),data=data)#
+	#how different was performance across flaws?#
+	with(data,aggregate(correct ~ flaw,FUN=tboot))#
+	#how different was performance across vis types?#
+	with(data,aggregate(correct ~ vis,FUN=tboot))#
+	#okay, but across flaw types?#
+	with(data,aggregate(correct ~ vis*flaw,FUN=tboot))#
+	#data for our figures#
+	#Figure 8#
+	print("Fig 8")#
+	print(with(data,aggregate(correct ~ magnitude*flaw,FUN=tboot)))#
+	#Figure 9a#
+	print("Fig 9a")#
+	print(with(subset(data,flaw=="gap"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+	#Figure 9b#
+	print("Fig 9b")#
+	print(with(subset(data,flaw=="outliers"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+	#Figure 9c#
+	print("Fig 9c")#
+	print(with(subset(data,flaw=="spike"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+}
+analysis()
+analysis <- function() {#
+	#TODO: Add post hoc tests!#
+	#TODO: Add factor creation code!#
+	#load in our data#
+	data <- read.csv("cleandata.csv")#
+	demo <- read.csv("cleandemo.csv")#
+	#does our data look reasonable?#
+	print(skim(data))#
+	#how good were people, overall?#
+	print("Overall accuracy")#
+	print(tboot(data$correct))#
+	#let's build our factorial anova#
+	model <- aov(correct ~ flaw * magnitude * vis * parameter + Error(id / (flaw * magnitude * vis * parameter)),data=data)#
+	#how different was performance across flaws?#
+	print("Accuracy across flaw types")#
+	print(with(data,aggregate(correct ~ flaw,FUN=tboot)))#
+	#how different was performance across vis types?#
+	print("Accuracy across vis types")#
+	print(with(data,aggregate(correct ~ vis,FUN=tboot)))#
+	#okay, but across flaw types?#
+	print("Interaction of vis type and flaw type")#
+	print(with(data,aggregate(correct ~ vis*flaw,FUN=tboot)))#
+	#data for our figures#
+	#Figure 8#
+	print("Fig 8")#
+	print(with(data,aggregate(correct ~ magnitude*flaw,FUN=tboot)))#
+	#Figure 9a#
+	print("Fig 9a")#
+	print(with(subset(data,flaw=="gap"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+	#Figure 9b#
+	print("Fig 9b")#
+	print(with(subset(data,flaw=="outliers"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+	#Figure 9c#
+	print("Fig 9c")#
+	print(with(subset(data,flaw=="spike"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+}
+analysis()
+print(foo)
+skim(demo)
+summary(demo)
+skim(demo[c("gender")])
+skim(demo[c("gender","age","education","experience")])
+demo$experienceFactor <- factor(demo$experience,labels=c(1,2,3,4,5))
+demo$experienceFactor <- factor(demo$experience,labels=c(1,2,3,4))
+skim(demo[c("experienceFactor")])
+demo$experienceFactor <- factor(demo$experience,labels=c(1,2,3,4))#
+	print(skim(demo[c("gender","age","education","experienceFactor")]))
+data$parameterFactor <- factor(data$parameter)
+levels(data$parameterFactor)
+levels(data$parameterFactor) <- c("1","2","3","1","2","3","3","2","1")
+levels(data$parameterFactor)
+subset(data,vis=="histogram")[c("parameter","parameterFactor"),1:20]
+subset(data,vis=="histogram")[c("parameter","parameterFactor")]
+summary(model)
+summary.aov(model)
+library(car)
+summary.aov(model)
+model
+summary.aov(model)
+library(car)
+Anova(model)
+anova(model)
+anova(correct ~ flaw * magnitude * vis * parameterFactor + Error(id / (flaw * magnitude * vis * parameterFactor)),data=data)
+anova(lm(correct ~ flaw * magnitude * vis * parameterFactor + Error(id / (flaw * magnitude * vis * parameterFactor)),data=data))
+ls()
+anova(model_f)
+model_f
+model
+summary(model_)
+summary(model)
+library(ez)
+#Analysis code for the study connected with our InfoVis 2018 Paper Looks Good To Me: Visualizations As Sanity Checks#
+#
+#I like the univariate summaries from skimr, even though the results of the paper ironically suggest that they aren't very good#
+library(skimr)#
+#I originally ran this with a regular ANOVA, but I think ez_ANOVAs are easier to read for repeated measures studies.#
+library(ez)#
+#
+#Cleveland & McGill '84 use 10% trimmed means as measures of central tendency because they are insensitive to#
+#Outliers and other weirdness we'd expect from a psychophysics-lite experiment like this one.#
+tmean <- function(x) {#
+	#10% trimmed means#
+	return(mean(x,trim=0.1))#
+}#
+#
+#C&McG also use bootstrapped confidence intervals since they are not quite so parametric as the regular kind.#
+tboot <- function(x) {#
+	#95% bootstrapped confidence intervals of the trimmed means with 1000 samples.#
+	#Note that these will not be stable confidence intervals! If they differ across runs, don't be scared.#
+	n = length(x)#
+	boot.samples = matrix( sample(x,size=n*1000,replace=TRUE), 1000, n)#
+	boot.statistics = apply(boot.samples,1,tmean)#
+	interval = c(ci1 = quantile(boot.statistics,0.025,names=FALSE),midmean = tmean(x),ci2 = quantile(boot.statistics,0.975,names=FALSE))#
+	return(interval)#
+}#
+#
+#main analysis#
+#
+analyis <- function(){#
+	#load in our data#
+	data <- read.csv("cleandata.csv")#
+	demo <- read.csv("cleandemo.csv")#
+	#who were our participants?#
+	print("Participant information")#
+	#cast "experience" from a zero-indexed 0-4 numeric to a 1-5 Likert factor.#
+	#The participants saw "1-5" radio buttons but I stored it as zero-indexed out of habit.#
+	demo$experience <- demo$experience+1#
+	demo$experienceFactor <- factor(demo$experience)#
+	print(skim(demo[c("gender","age","education","experience","experienceFactor")]))#
+	#does our data look reasonable?#
+	print(skim(data))#
+	#how good were people, overall?#
+	print("Overall accuracy")#
+	print(tboot(data$correct))#
+	#let's build our factorial anova#
+	#convert parameter from a numeric to a factor, from 1=least conversative to 3=most conversative parameter settings.#
+	data$parameterFactor <- factor(data$parameter)#
+	#this means we're in lexical/sorted order, except for histograms, where more bins is more liberal, not less.#
+	levels(data$parameterFactor) <- c("1","2","3","1","2","3","3","2","1")#
+	#Magnitude could probably stay as a numeric, but I think it makes sense to treat it as a factor as well, since#
+	#I regard it more as an ordinal factor for this study.#
+	data$magnitudeFactor <- factor(data$magnitude)#
+#
+	model <- model_ez <- ezANOVA(data=data, dv = .(correct), wid= .(id), within = .(flaw,magnitudeFactor,vis,parameterFactor))#
+	#what did our model find?#
+	print("Factorial ANOVA")#
+	print(model$ANOVA)#
+	#oh cool, flaw type is a significant factor#
+	#how different was performance across flaws?#
+	print("Accuracy across flaw types")#
+	print(with(data,aggregate(correct ~ flaw,FUN=tboot)))#
+	#when was this difference significant?#
+	#note: my heart tells me to do a Tukey HSD post hoc here, but since we've already hitched our wagon to ezANOVA...#
+	#I think pairwise t-tests with a Bonferroni correction are more conservative, but much easier to read and present.#
+	print(pairwise.t.test(data$correct,data$flaw,p.adjust.method="bonferroni"))#
+	#magnitude is also a significant factor, but we mainly care about its interaction with flaw#
+	print("Accuracy across magnitude of flaw")#
+	print(with(data,aggregate(correct ~ magnitude,FUN=tboot)))#
+	print("Interaction between flaw type and magnitude")#
+	#Figure 8 data#
+	print("Fig 8")#
+	print(with(data,aggregate(correct ~ magnitude*flaw,FUN=tboot)))#
+	pairwise.t.test(data$correct,interaction(data$magnitude,data$flaw),p.adjust.method="bonferroni")#
+	#vis type also is a significant factor#
+	#how different was performance across vis types?#
+	print("Accuracy across vis types")#
+	print(with(data,aggregate(correct ~ vis,FUN=tboot)))#
+	#when was this difference significant?#
+	print(pairwise.t.test(data$correct,data$vis,p.adjust.method="bonferroni"))#
+	#and there's an interaction here as well.	#
+	print("Interaction of vis type and flaw type")#
+	print(with(data,aggregate(correct ~ vis*flaw,FUN=tboot)))#
+	#which visualizations were different across different flaws? Did any dominate?#
+	print(pairwise.t.test(data$correct,interaction(data$vis,data$flaw),p.adjust.method="bonferroni"))#
+	print("Interaction of flaw type and parameter conservativeness")#
+	#So how did conservativenss of parameters impact flaw detection?#
+	#I did not design the study to be powerful enough to reliably distinguish between all of these cells.#
+	#This is more to look for general trends. I think the real interesting bit is the triple interactions with vis type.#
+	print(with(data,aggregate(correct ~ parameterFactor*flaw,FUN=tboot)))#
+	print(pairwise.t.test(data$correct,interaction(data$parameterFactor,data$flaw),p.adjust.method="bonferroni"))#
+	#Now to show the full three-way interaction between vis, flaw, and design parameter#
+	print("Parameter impacts across flaw types")#
+	#Figure 9a#
+	print("Fig 9a: Gap Detection")#
+	print(with(subset(data,flaw=="gap"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+	#Figure 9b#
+	print("Fig 9b: Outlier Detection")#
+	print(with(subset(data,flaw=="outliers"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+	#Figure 9c#
+	print("Fig 9c: Spike Detection")#
+	print(with(subset(data,flaw=="spike"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+}#
+#
+analysis()
+analysis()
+#Analysis code for the study connected with our InfoVis 2018 Paper Looks Good To Me: Visualizations As Sanity Checks#
+#
+#I like the univariate summaries from skimr, even though the results of the paper ironically suggest that they aren't very good#
+library(skimr)#
+#I originally ran this with a regular ANOVA, but I think ez_ANOVAs are easier to read for repeated measures studies.#
+library(ez)#
+#
+#Cleveland & McGill '84 use 10% trimmed means as measures of central tendency because they are insensitive to#
+#Outliers and other weirdness we'd expect from a psychophysics-lite experiment like this one.#
+tmean <- function(x) {#
+	#10% trimmed means#
+	return(mean(x,trim=0.1))#
+}#
+#
+#C&McG also use bootstrapped confidence intervals since they are not quite so parametric as the regular kind.#
+tboot <- function(x) {#
+	#95% bootstrapped confidence intervals of the trimmed means with 1000 samples.#
+	#Note that these will not be stable confidence intervals! If they differ across runs, don't be scared.#
+	n = length(x)#
+	boot.samples = matrix( sample(x,size=n*1000,replace=TRUE), 1000, n)#
+	boot.statistics = apply(boot.samples,1,tmean)#
+	interval = c(ci1 = quantile(boot.statistics,0.025,names=FALSE),midmean = tmean(x),ci2 = quantile(boot.statistics,0.975,names=FALSE))#
+	return(interval)#
+}#
+#
+#main analysis#
+#
+analyis <- function(){#
+	#load in our data#
+	data <- read.csv("cleanData.csv")#
+	demo <- read.csv("cleanDemo.csv")#
+	#who were our participants?#
+	print("Participant information")#
+	#cast "experience" from a zero-indexed 0-4 numeric to a 1-5 Likert factor.#
+	#The participants saw "1-5" radio buttons but I stored it as zero-indexed out of habit.#
+	demo$experience <- demo$experience+1#
+	demo$experienceFactor <- factor(demo$experience)#
+	print(skim(demo[c("gender","age","education","experience","experienceFactor")]))#
+	#does our data look reasonable?#
+	print(skim(data))#
+	#how good were people, overall?#
+	print("Overall accuracy")#
+	print(tboot(data$correct))#
+	#let's build our factorial anova#
+	#convert parameter from a numeric to a factor, from 1=least conversative to 3=most conversative parameter settings.#
+	data$parameterFactor <- factor(data$parameter)#
+	#this means we're in lexical/sorted order, except for histograms, where more bins is more liberal, not less.#
+	levels(data$parameterFactor) <- c("1","2","3","1","2","3","3","2","1")#
+	#Magnitude could probably stay as a numeric, but I think it makes sense to treat it as a factor as well, since#
+	#I regard it more as an ordinal factor for this study.#
+	data$magnitudeFactor <- factor(data$magnitude)#
+#
+	model <- model_ez <- ezANOVA(data=data, dv = .(correct), wid= .(id), within = .(flaw,magnitudeFactor,vis,parameterFactor))#
+	#what did our model find?#
+	print("Factorial ANOVA")#
+	print(model$ANOVA)#
+	#oh cool, flaw type is a significant factor#
+	#how different was performance across flaws?#
+	print("Accuracy across flaw types")#
+	print(with(data,aggregate(correct ~ flaw,FUN=tboot)))#
+	#when was this difference significant?#
+	#note: my heart tells me to do a Tukey HSD post hoc here, but since we've already hitched our wagon to ezANOVA...#
+	#I think pairwise t-tests with a Bonferroni correction are more conservative, but much easier to read and present.#
+	print(pairwise.t.test(data$correct,data$flaw,p.adjust.method="bonferroni"))#
+	#magnitude is also a significant factor, but we mainly care about its interaction with flaw#
+	print("Accuracy across magnitude of flaw")#
+	print(with(data,aggregate(correct ~ magnitude,FUN=tboot)))#
+	print("Interaction between flaw type and magnitude")#
+	#Figure 8 data#
+	print("Fig 8")#
+	print(with(data,aggregate(correct ~ magnitude*flaw,FUN=tboot)))#
+	pairwise.t.test(data$correct,interaction(data$magnitude,data$flaw),p.adjust.method="bonferroni")#
+	#vis type also is a significant factor#
+	#how different was performance across vis types?#
+	print("Accuracy across vis types")#
+	print(with(data,aggregate(correct ~ vis,FUN=tboot)))#
+	#when was this difference significant?#
+	print(pairwise.t.test(data$correct,data$vis,p.adjust.method="bonferroni"))#
+	#and there's an interaction here as well.	#
+	print("Interaction of vis type and flaw type")#
+	print(with(data,aggregate(correct ~ vis*flaw,FUN=tboot)))#
+	#which visualizations were different across different flaws? Did any dominate?#
+	print(pairwise.t.test(data$correct,interaction(data$vis,data$flaw),p.adjust.method="bonferroni"))#
+	print("Interaction of flaw type and parameter conservativeness")#
+	#So how did conservativenss of parameters impact flaw detection?#
+	#I did not design the study to be powerful enough to reliably distinguish between all of these cells.#
+	#This is more to look for general trends. I think the real interesting bit is the triple interactions with vis type.#
+	print(with(data,aggregate(correct ~ parameterFactor*flaw,FUN=tboot)))#
+	print(pairwise.t.test(data$correct,interaction(data$parameterFactor,data$flaw),p.adjust.method="bonferroni"))#
+	#Now to show the full three-way interaction between vis, flaw, and design parameter#
+	print("Parameter impacts across flaw types")#
+	#Figure 9a#
+	print("Fig 9a: Gap Detection")#
+	print(with(subset(data,flaw=="gap"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+	#Figure 9b#
+	print("Fig 9b: Outlier Detection")#
+	print(with(subset(data,flaw=="outliers"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+	#Figure 9c#
+	print("Fig 9c: Spike Detection")#
+	print(with(subset(data,flaw=="spike"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+}#
+#
+analysis()
+demo <- read.csv("cleanDemo.csv")#
+	#who were our participants?#
+	print("Participant information")#
+	#cast "experience" from a zero-indexed 0-4 numeric to a 1-5 Likert factor.#
+	#The participants saw "1-5" radio buttons but I stored it as zero-indexed out of habit.#
+	demo$experience <- demo$experience+1#
+	demo$experienceFactor <- factor(demo$experience)#
+	print(skim(demo[c("gender","age","education","experience","experienceFactor")]))
+#load in our data#
+	data <- read.csv("cleanData.csv")#
+	demo <- read.csv("cleanDemo.csv")#
+	#who were our participants?#
+	print("Participant information")#
+	#cast "experience" from a zero-indexed 0-4 numeric to a 1-5 Likert factor.#
+	#The participants saw "1-5" radio buttons but I stored it as zero-indexed out of habit.#
+	demo$experience <- demo$experience+1#
+	demo$experienceFactor <- factor(demo$experience)#
+	print(skim(demo[c("gender","age","education","experience","experienceFactor")]))#
+	#does our data look reasonable?#
+	print(skim(data))#
+	#how good were people, overall?#
+	print("Overall accuracy")#
+	print(tboot(data$correct))#
+	#let's build our factorial anova#
+	#convert parameter from a numeric to a factor, from 1=least conversative to 3=most conversative parameter settings.#
+	data$parameterFactor <- factor(data$parameter)#
+	#this means we're in lexical/sorted order, except for histograms, where more bins is more liberal, not less.#
+	levels(data$parameterFactor) <- c("1","2","3","1","2","3","3","2","1")#
+	#Magnitude could probably stay as a numeric, but I think it makes sense to treat it as a factor as well, since#
+	#I regard it more as an ordinal factor for this study.#
+	data$magnitudeFactor <- factor(data$magnitude)#
+#
+	model <- model_ez <- ezANOVA(data=data, dv = .(correct), wid= .(id), within = .(flaw,magnitudeFactor,vis,parameterFactor))#
+	#what did our model find?#
+	print("Factorial ANOVA")#
+	print(model$ANOVA)#
+	#oh cool, flaw type is a significant factor#
+	#how different was performance across flaws?#
+	print("Accuracy across flaw types")#
+	print(with(data,aggregate(correct ~ flaw,FUN=tboot)))#
+	#when was this difference significant?#
+	#note: my heart tells me to do a Tukey HSD post hoc here, but since we've already hitched our wagon to ezANOVA...#
+	#I think pairwise t-tests with a Bonferroni correction are more conservative, but much easier to read and present.#
+	print(pairwise.t.test(data$correct,data$flaw,p.adjust.method="bonferroni"))#
+	#magnitude is also a significant factor, but we mainly care about its interaction with flaw#
+	print("Accuracy across magnitude of flaw")#
+	print(with(data,aggregate(correct ~ magnitude,FUN=tboot)))#
+	print("Interaction between flaw type and magnitude")#
+	#Figure 8 data#
+	print("Fig 8")#
+	print(with(data,aggregate(correct ~ magnitude*flaw,FUN=tboot)))#
+	pairwise.t.test(data$correct,interaction(data$magnitude,data$flaw),p.adjust.method="bonferroni")#
+	#vis type also is a significant factor#
+	#how different was performance across vis types?#
+	print("Accuracy across vis types")#
+	print(with(data,aggregate(correct ~ vis,FUN=tboot)))#
+	#when was this difference significant?#
+	print(pairwise.t.test(data$correct,data$vis,p.adjust.method="bonferroni"))#
+	#and there's an interaction here as well.	#
+	print("Interaction of vis type and flaw type")#
+	print(with(data,aggregate(correct ~ vis*flaw,FUN=tboot)))#
+	#which visualizations were different across different flaws? Did any dominate?#
+	print(pairwise.t.test(data$correct,interaction(data$vis,data$flaw),p.adjust.method="bonferroni"))#
+	print("Interaction of flaw type and parameter conservativeness")#
+	#So how did conservativenss of parameters impact flaw detection?#
+	#I did not design the study to be powerful enough to reliably distinguish between all of these cells.#
+	#This is more to look for general trends. I think the real interesting bit is the triple interactions with vis type.#
+	print(with(data,aggregate(correct ~ parameterFactor*flaw,FUN=tboot)))#
+	print(pairwise.t.test(data$correct,interaction(data$parameterFactor,data$flaw),p.adjust.method="bonferroni"))#
+	#Now to show the full three-way interaction between vis, flaw, and design parameter#
+	print("Parameter impacts across flaw types")#
+	#Figure 9a#
+	print("Fig 9a: Gap Detection")#
+	print(with(subset(data,flaw=="gap"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+	#Figure 9b#
+	print("Fig 9b: Outlier Detection")#
+	print(with(subset(data,flaw=="outliers"),aggregate(correct ~ parameter*vis,FUN=tboot)))#
+	#Figure 9c#
+	print("Fig 9c: Spike Detection")#
+	print(with(subset(data,flaw=="spike"),aggregate(correct ~ parameter*vis,FUN=tboot)))

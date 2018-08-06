@@ -1,0 +1,86 @@
+#panel{
+    display: grid;
+    grid-gap: 10px;
+    margin: 20px;
+}
+
+#panel button{
+  align-self: center;
+  margin: auto;
+}
+
+.vis{
+  border-style: solid;
+  border-width: 5px;
+  border-color: #fff;
+  width: 400px;
+  height: 300px;
+}
+
+.selected{
+  border-color: crimson;
+}
+
+.vis:hover{
+  //border-style: solid;
+  //border-width: 5px;
+  //border-color: #333;
+}
+
+#prompt{
+  color: gray;
+}
+
+#prompt span{
+  color: black;
+}
+
+.glyph{
+    height: 1em;
+}
+
+.fig{
+  display:flex;
+  flex-wrap: wrap;
+  width: 60%;
+  margin: auto;
+  justify-content: center;
+}
+
+.figImg{
+    width: 33%;
+    margin-top: 5px;
+}
+
+.figCaption{
+  font-size: 85%;
+  align-self: center;
+}
+
+.sampleCaption{
+  font-family: Futura,sans-serif;
+  font-size: 200%;
+  position: absolute;
+  text-align: center;
+  left: 275px;
+}
+
+input[type="submit"], button{
+  background-color: #333;
+  border: none;
+  color: white;
+  padding: 5px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+input[type="submit"]:disabled, button:disabled{
+    background-color: #ddd;
+}
+
+input[type="submit"]:hover:enabled, button:hover:enabled{
+    background-color: #555;
+}
