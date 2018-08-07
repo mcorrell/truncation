@@ -1,15 +1,30 @@
+// TODO: Specify factor levels
+// TODO: Specify task questions (different sets for each framing)
+// TODO: Hook up factors to the data writing code
+// TODO: Add tasks for each framing.
+
 /***
 Study Parameters
 ***/
-var visTypes = ["bar","gradbar","bottomgradbar","scatter","lollipop","gradlollipop","gradbottomlollipop","pointline","line","area","gradarea","bottomgradarea"];
-var labelTypes = ["none","top","with"]
 
-//Populate the trial stimuli, optionally permuting the trials
+//What are the visualizations I've implemented so far?
+var allVisTypes = ["bar","gradbar","bottomgradbar","scatter","lollipop","gradlollipop","gradbottomlollipop","pointline","line","area","gradarea","bottomgradarea"];
+
+//What type of visualizations will they see?
+var visTypes = ["bar","bottomgradbar","scatter","lollipop","gradbottomlollipop","pointline","area","bottomgradarea"];
+
+//Will the vis be labeled?
+var labelTypes = ["none","top","with"];
+
+//Will the y-axis be futzed with? If so, where will it start?
+var truncationTypes = [0,0.2,0.4,0.8];
+
+//How will the task questions be framed? In terms of specific values, in terms of the overall trend, or a mix of both?
+var framingTypes = ["values","trend","mix"];
+
 var makeStimuli = function(permute){
+  //Populate the trial stimuli, optionally permuting the trials
   var stimuli = [];
-  //what distribution type the null is generated from
-  //var distributions = ["uniform","normal","exponential"];
-
   var replicates = 1;
   var trainingReplicates = 1;
   var stimulis;
@@ -28,29 +43,26 @@ var rt;
 var stimuli = makeStimuli(true);
 var questionIndex = 0;
 
-// 20 total vizzes means an alpha of 0.05
-
 var vizWidth = 400;
 var vizHeight = 300;
 var margin = 40;
 var markSize = 10;
 
-//Exponential distribution
-//unconstrained exponential
-
 var x = d3.scaleBand().domain([0,1]).range([margin,vizWidth]).paddingOuter(0.2).paddingInner(0.1);
 var y = d3.scaleLinear().domain([0,1]).range([vizHeight-margin,margin]);
 var yAxis = d3.axisLeft(y).tickFormat(d3.format(".0%")).tickValues([0,1]);
+
+
 /***
 UI Functions
 ***/
 
-//What happens when the participant clicks the ready button.
-// The RT timer starts.
-// The vis is drawn.
-// The "Confirm" button becomes enabled.
-
 var ready = function(){
+  //What happens when the participant clicks the ready button.
+  // The RT timer starts.
+  // The vis is drawn.
+  // The "Confirm" button becomes enabled.
+
   //You can't "ready" twice.
   d3.select("#readyBtn")
     .style("visibility","hidden")
@@ -59,11 +71,6 @@ var ready = function(){
   rt = new Date();
   makeVis(stimuli[questionIndex]);
 };
-
-
-/***
-Draw Functions
-***/
 
 var nextQuestion = function(){
   console.log(this.responseText);
@@ -363,8 +370,9 @@ var pointLine = function(svg,data){
     .call(yAxis);
 }
 
-var drawLabels = function(svg,data){
+var drawLabels = function(svg){
   //draw text showing the values directly above each mark
+  var data = svg.datum();
   svg.append("g").selectAll("text").data(data).enter().append("text")
     .attr("x",(d,i) => x(i) + (x.bandwidth()/2))
     .attr("text-anchor","middle")
@@ -372,8 +380,9 @@ var drawLabels = function(svg,data){
     .text(d => d3.format(".0%")(d));
 }
 
-var drawTopLabels = function(svg,data){
+var drawTopLabels = function(svg){
   //draw text showing the values way at the top of the chart
+  var data = svg.datum();
   svg.append("g").selectAll("text").data(data).enter().append("text")
     .attr("x",(d,i) => x(i) + (x.bandwidth()/2))
     .attr("text-anchor","middle")
@@ -444,6 +453,10 @@ function truncate(val){
     yAxis.tickValues([val,1]);
 }
 
+/***
+Test and Debug Functions
+***/
+
 function changeVisType(newViz,newParameter){
   //change the current vis that is in "#vis" to a different one, preserving whatever data was there.
   var makeViz = getVisFunction(newViz);
@@ -485,23 +498,18 @@ function testAllGrid(){
 Utility Functions
 ***/
 
-//What happens when we "confirm" our selection.
-//Get rid of the existing vizzes
-//Increment the question num
-//See if we were right
-//See how long it took
-//If it's the last question, go to the post test/wrap up screen
 var answer = function(){
-  var selected = d3.select(".selected");
-  var right = selected.datum().flawed;
+  //What happens when we "confirm" our selection.
+  //Get rid of the existing vizzes
+  //Increment the question num
+  //See if we were right
+  //See how long it took
+  //If it's the last question, go to the post test/wrap up screen
   var timestamp = new Date();
   rt = timestamp-rt;
-  console.log("Correct?: "+right);
   participantData[questionIndex] = stimuli[questionIndex];
-  participantData[questionIndex].correct = right ? "1" : "0";
   participantData[questionIndex].rt = rt;
   participantData[questionIndex].timestamp = timestamp.toString();
-  participantData[questionIndex].vizIndex = selected.attr("id");
 
   d3.select("#vis").selectAll("*:not(.grad)").remove();
 
