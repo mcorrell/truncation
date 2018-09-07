@@ -14,9 +14,11 @@ var allVisTypes = ["bar","gradbar","bottomgradbar","scatter","lollipop","gradlol
 var visTypes = ["bar","pointline","area"];
 
 //Will the vis be labeled?
+//with, above, none
 var labelTypes = ["none"];
 
 //How will the task questions be framed? In terms of specific values, in terms of the overall trend, or a mix of both?
+//values, trend
 var framingTypes = ["values","trend"];
 
 //How many items are in the series?
