@@ -1,0 +1,46 @@
+
+.foldDash {
+  stroke: #333;
+  stroke-width: 2px;
+  stroke-dasharray: 3;
+  fill: none;
+}
+
+.fold {
+  stroke: #333;
+  stroke-width: 2px;
+  fill: none;
+}
+
+.punch {
+  fill: white;
+  stroke: #333;
+  stroke-width: 1px;
+}
+
+.question {
+  width: 80%;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.icon{
+  width: 60px;
+  height: 60px;
+}
+
+.answer{
+  border-width: 2px;
+  border-color: white;
+  border-style: solid;
+}
+
+.answer:hover{
+  border-color: #333;
+}
+
+.selected{
+  border-color: crimson;
+}
