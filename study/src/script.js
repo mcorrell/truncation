@@ -13,7 +13,7 @@ var allVisTypes = ["bar","gradbar","bottomgradbar","scatter","lollipop","gradlol
 //What type of visualizations will they see?
 var visTypes = ["bar","pointline","area"];
 
-//Will the vis be labeled?
+//Will the marks be labeled?
 var labelTypes = ["none"];
 
 //How will the task questions be framed? In terms of specific values, in terms of the overall trend, or a mix of both?
@@ -26,10 +26,10 @@ var dataSizes = [2,3];
 var truncationTypes = [0,0.5];
 
 //Are the data going up or down?
-var trendDirections = [1];
+var trendDirections = [1,-1];
 
 //How much are they going down or up by?
-var trendSlopes = [0.25,0.5,1];
+var trendSlopes = [0.5];
 
 
 /***
@@ -589,14 +589,13 @@ function genData(stimulis){
   var n = stimulis.dataSize;
   var sign = stimulis.trendDirection;
   var slope = stimulis.trendSlope;
-  var max = (slope*n) + min;
-
+  var max = 1
   var delta = (max - min)/n;
   var vals = sign==1 ? dl.range(min,max,delta) : dl.range(max,min,-1*delta);
   var jitter = dl.random.uniform(-delta/4,delta/4);
 
   var constrainJitter = function(d){
-    return Math.max(Math.min(d + jitter(),1),min + delta/4);
+    return Math.max(Math.min(d + jitter(),max),min + delta/4);
   }
   return vals.map(d => constrainJitter(d));
 }
