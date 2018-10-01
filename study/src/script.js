@@ -8,7 +8,7 @@ Study Parameters
 ***/
 
 //What are the visualizations I've implemented so far?
-var allVisTypes = ["bar","gradbar","bottomgradbar","scatter","lollipop","gradlollipop","gradbottomlollipop","pointline","line","area","gradarea","bottomgradarea"];
+var allVisTypes = ["bar","brokenbar","brokengradbar","gradbar","bottomgradbar","scatter","lollipop","gradlollipop","gradbottomlollipop","brokenlollipop","brokengradlollipop","pointline","line","area","gradarea","bottomgradarea"];
 
 //What type of visualizations will they see?
 var visTypes = ["bar","pointline","area"];
@@ -164,7 +164,6 @@ var makeVis = function(stimulis){
   }
 }
 
-
 var scatter = function(svg,data){
   //scatterplot
   svg.datum(data);
@@ -197,6 +196,111 @@ var bar = function(svg,data){
   svg.append("g")
     .attr("transform","translate(" + margin + ",0)")
     .call(yAxis);
+}
+
+var brokenBar = function(svg,data){
+  //bar chart with a "broken" axis.
+  var t = y.domain()[0];
+
+  if(t<=0){
+    bar(svg,data);
+    return;
+  }
+
+  var denom = 4;
+  var breakPoint = 1/denom;
+  while(breakPoint > t){
+    denom++;
+    breakPoint = 1/denom;
+  }
+
+  var breakHeight = vizHeight/2;
+  var breakMargin = vizHeight/20;
+  var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-margin,breakHeight+(breakMargin/2)]).clamp(true);
+  var y2 = d3.scaleLinear().domain([t,1]).range([breakHeight-(breakMargin/2),margin]);
+  svg.datum(data);
+  x.domain(dl.range(0,data.length,1));
+
+  //before the break values
+  svg.append("g").selectAll("rect").data(data).enter().append("rect")
+  .attr("x",(d,i) =>  x(i) )
+  .attr("y", d => y1(d))
+  .attr("fill","#333")
+  .attr("height", d => y1(0) - y1(d))
+  .attr("width",x.bandwidth());
+
+  //after the break values
+  svg.append("g").selectAll("rect").data(data).enter().append("rect")
+  .attr("x",(d,i) =>  x(i) )
+  .attr("y", d => y2(d))
+  .attr("fill","#333")
+  .attr("height", d => y2(t) - y2(d))
+  .attr("width",x.bandwidth());
+
+  var y1Axis = d3.axisLeft(y1).tickFormat(d3.format(".0%")).tickValues([0,breakPoint]);
+  var y2Axis = d3.axisLeft(y2).tickFormat(d3.format(".0%")).tickValues([t,1]);
+
+  svg.append("g")
+    .attr("transform","translate(" + margin + ",0)")
+    .call(y1Axis);
+
+  svg.append("g")
+    .attr("transform","translate(" + margin + ",0)")
+    .call(y2Axis);
+}
+
+var brokenGradBar = function(svg,data){
+  //bar chart with a "broken" axis and a gradient fill towards and away from the break
+  var t = y.domain()[0];
+
+  //if there's no truncation, then it's just a regular bar chart
+  if(t<=0){
+    bar(svg,data);
+    return;
+  }
+
+  //otherwise, we choose a place to break the axis, ideally at some nice fraction.
+  var denom = 4;
+  var breakPoint = 1/denom;
+  while(breakPoint > t){
+    denom++;
+    breakPoint = 1/denom;
+  }
+
+  //half of the chart is the devoted to each section.
+  var breakHeight = vizHeight/2;
+  var breakMargin = vizHeight/20;
+  var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-margin,breakHeight+(breakMargin/2)]).clamp(true);
+  var y2 = d3.scaleLinear().domain([t,1]).range([breakHeight-(breakMargin/2),margin]);
+  svg.datum(data);
+  x.domain(dl.range(0,data.length,1));
+
+  //before the break values
+  svg.append("g").selectAll("rect").data(data).enter().append("rect")
+  .attr("x",(d,i) =>  x(i) )
+  .attr("y", d => y1(d))
+  .attr("fill","url(#rgrad)")
+  .attr("height", d => y1(0) - y1(d))
+  .attr("width",x.bandwidth());
+
+  //after the break values
+  svg.append("g").selectAll("rect").data(data).enter().append("rect")
+  .attr("x",(d,i) =>  x(i) )
+  .attr("y", d => y2(d))
+  .attr("fill","url(#grad)")
+  .attr("height", d => y2(t) - y2(d))
+  .attr("width",x.bandwidth());
+
+  var y1Axis = d3.axisLeft(y1).tickFormat(d3.format(".0%")).tickValues([0,breakPoint]);
+  var y2Axis = d3.axisLeft(y2).tickFormat(d3.format(".0%")).tickValues([t,1]);
+
+  svg.append("g")
+    .attr("transform","translate(" + margin + ",0)")
+    .call(y1Axis);
+
+  svg.append("g")
+    .attr("transform","translate(" + margin + ",0)")
+    .call(y2Axis);
 }
 
 var gradBar = function(svg,data){
@@ -325,6 +429,138 @@ var gradBottomLollipop = function(svg,data){
     .attr("transform","translate(" + margin + ",0)")
     .call(yAxis);
 };
+
+var brokenLollipop = function(svg,data){
+  //lollipop chart with a "broken" axis
+  var t = y.domain()[0];
+
+  //if there's no truncation, then it's just a regular bar chart
+  if(t<=0){
+    lollipop(svg,data);
+    return;
+  }
+
+  //otherwise, we choose a place to break the axis, ideally at some nice fraction.
+  var denom = 4;
+  var breakPoint = 1/denom;
+  while(breakPoint > t){
+    denom++;
+    breakPoint = 1/denom;
+  }
+
+  //half of the chart is the devoted to each section.
+  var breakHeight = vizHeight/2;
+  var breakMargin = vizHeight/20;
+  var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-margin,breakHeight+(breakMargin/2)]).clamp(true);
+  var y2 = d3.scaleLinear().domain([t,1]).range([breakHeight-(breakMargin/2),margin]);
+  svg.datum(data);
+  x.domain(dl.range(0,data.length,1));
+
+
+  svg.append("g").selectAll("circle").data(data.filter(d => d>t)).enter().append("circle")
+    .attr("fill","#333")
+    .attr("r",markSize)
+    .attr("cx", (d,i) => x(i) + (x.bandwidth()/2))
+    .attr("cy", d => y2(d));
+
+  svg.append("g").selectAll("circle").data(data.filter(d => d<breakPoint)).enter().append("circle")
+    .attr("fill","#333")
+    .attr("r",markSize)
+    .attr("cx", (d,i) => x(i) + (x.bandwidth()/2))
+    .attr("cy", d => y1(d));
+
+  svg.append("g").selectAll("line").data(data).enter().append("line")
+    .attr("stroke","#333")
+    .attr("x1", (d,i) => x(i) + (x.bandwidth()/2))
+    .attr("x2", (d,i) => x(i) + (x.bandwidth()/2))
+    .attr("y1", y1(0))
+    .attr("y2", d => y1(d))
+    .attr("stroke-width",lineWidth);
+
+    svg.append("g").selectAll("line").data(data).enter().append("line")
+      .attr("stroke","#333")
+      .attr("x1", (d,i) => x(i) + (x.bandwidth()/2))
+      .attr("x2", (d,i) => x(i) + (x.bandwidth()/2))
+      .attr("y1", y2(t))
+      .attr("y2", d => y2(d))
+      .attr("stroke-width",lineWidth);
+
+  var y1Axis = d3.axisLeft(y1).tickFormat(d3.format(".0%")).tickValues([0,breakPoint]);
+  var y2Axis = d3.axisLeft(y2).tickFormat(d3.format(".0%")).tickValues([t,1]);
+
+  svg.append("g")
+    .attr("transform","translate(" + margin + ",0)")
+    .call(y1Axis);
+
+  svg.append("g")
+    .attr("transform","translate(" + margin + ",0)")
+    .call(y2Axis);
+}
+
+var brokenGradLollipop = function(svg,data){
+  //lollipop chart with a "broken" axis
+  var t = y.domain()[0];
+
+  //if there's no truncation, then it's just a regular bar chart
+  if(t<=0){
+    lollipop(svg,data);
+    return;
+  }
+
+  //otherwise, we choose a place to break the axis, ideally at some nice fraction.
+  var denom = 4;
+  var breakPoint = 1/denom;
+  while(breakPoint > t){
+    denom++;
+    breakPoint = 1/denom;
+  }
+
+  //half of the chart is the devoted to each section.
+  var breakHeight = vizHeight/2;
+  var breakMargin = vizHeight/20;
+  var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-margin,breakHeight+(breakMargin/2)]).clamp(true);
+  var y2 = d3.scaleLinear().domain([t,1]).range([breakHeight-(breakMargin/2),margin]);
+  svg.datum(data);
+  x.domain(dl.range(0,data.length,1));
+
+
+  svg.append("g").selectAll("circle").data(data.filter(d => d>t)).enter().append("circle")
+    .attr("fill","#333")
+    .attr("r",markSize)
+    .attr("cx", (d,i) => x(i) + (x.bandwidth()/2))
+    .attr("cy", d => y2(d));
+
+  svg.append("g").selectAll("circle").data(data.filter(d => d<breakPoint)).enter().append("circle")
+    .attr("fill","#333")
+    .attr("r",markSize)
+    .attr("cx", (d,i) => x(i) + (x.bandwidth()/2))
+    .attr("cy", d => y1(d));
+
+  svg.append("g").selectAll("rect").data(data).enter().append("rect")
+    .attr("fill","url(#rgrad)")
+    .attr("x", (d,i) => x(i)-(lineWidth/2) + (x.bandwidth()/2))
+    .attr("y",d => y1(d))
+    .attr("width",lineWidth)
+    .attr("height",d => y1(0) - y1(d));
+
+  svg.append("g").selectAll("rect").data(data).enter().append("rect")
+    .attr("fill","url(#grad)")
+    .attr("x", (d,i) => x(i)-(lineWidth/2) + (x.bandwidth()/2))
+    .attr("y",d => y2(d))
+    .attr("width",lineWidth)
+    .attr("height",d => y2(t) - y2(d));
+
+  var y1Axis = d3.axisLeft(y1).tickFormat(d3.format(".0%")).tickValues([0,breakPoint]);
+  var y2Axis = d3.axisLeft(y2).tickFormat(d3.format(".0%")).tickValues([t,1]);
+
+  svg.append("g")
+    .attr("transform","translate(" + margin + ",0)")
+    .call(y1Axis);
+
+  svg.append("g")
+    .attr("transform","translate(" + margin + ",0)")
+    .call(y2Axis);
+}
 
 var area = function(svg,data){
   //area chart
@@ -490,6 +726,14 @@ function getVisFunction(vizType){
       makeViz = gradBottomLollipop;
     break;
 
+    case "brokenlollipop":
+      makeViz = brokenLollipop;
+    break;
+
+    case "brokengradlollipop":
+      makeViz = brokenGradLollipop;
+    break;
+
     case "gradbar":
       makeViz = gradBar;
     break;
@@ -506,10 +750,21 @@ function getVisFunction(vizType){
       makeViz = pointLine;
     break;
 
+    case "brokenbar":
+      makeViz = brokenBar;
+    break;
+
+    case "brokengradbar":
+      makeViz = brokenGradBar;
+    break;
+
     case "bar":
     default:
       makeViz = bar;
     break;
+
+
+
   }
   return makeViz;
 }
@@ -556,7 +811,7 @@ var testAllGrid = function(){
   //Click to have them go away
   var data = dl.random.uniform(0.4,1).samples(5);
   truncate(0.4);
-  visTypes.forEach(function(d){
+  allVisTypes.forEach(function(d){
     getVisFunction(d)(d3.select("body").append("svg").classed("vis",true).classed("test",true),data);
   });
   d3.select("body").on("click",function(){ d3.selectAll(".test").remove()});
