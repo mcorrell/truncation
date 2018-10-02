@@ -119,6 +119,7 @@ var ready = function(){
 
   rt = new Date();
   makeVis(stimuli[questionIndex]);
+  makeQuestions(stimuli[questionIndex]);
 };
 
 var nextQuestion = function(){
@@ -140,6 +141,43 @@ var nextQuestion = function(){
 
   document.body.scrollTop = document.documentElement.scrollTop = 0;
   d3.select("#progress").html("Question "+(questionIndex+1)+"/"+stimuli.length);
+}
+
+var makeQuestions = function(stimulis){
+  //Pandey et al questions:
+  //1-5 Rating scale
+  //"How much do you think [quantity A] has improved in terms of [the context] between [time period]?"
+  //"How much better do you think is [quantity A] as compared to [quantity B] in terms of [the context]?"
+  var questions = d3.select("#questions").append("form")
+    .attr("name","questions");
+    
+  makeScale(questions,"q1","This Statement is True.",["Strongly Disagree","","Neither Agree Nor Disagree","","Strongly Agree"]);
+  makeScale(questions,"q2","This Statement is False.",["Strongly Disagree","","Neither Agree Nor Disagree","","Strongly Agree"]);
+
+
+}
+
+var makeScale = function(parent,id,question,labels){
+    //Makes a 5 point rating scale
+    parent.append("div")
+      .text(question)
+      .style("font-weight","bold");
+
+    var scale = parent.append("div")
+      .classed("scale",true)
+      .attr("id",id);
+
+    var numbers = [1,2,3,4,5,0,1,2,3,4];
+
+    scale.selectAll("span").data(numbers).enter().append("span")
+      .text( (d,i) => i<5 ? d : labels[d]);
+
+    scale.selectAll("input").data(dl.range(1,6,1)).enter().append("input")
+      .attr("type","radio")
+      .attr("name",id)
+      .attr("value",d =>d);
+
+    scale.append("br");
 }
 
 /***
@@ -835,6 +873,7 @@ var answer = function(){
   participantData[questionIndex].timestamp = timestamp.toString();
 
   d3.select("#vis").selectAll("*:not(.grad)").remove();
+  d3.select("#questions").selectAll("*").remove();
 
   writeAnswer(participantData[questionIndex]);
 }
