@@ -20,10 +20,12 @@
 
 .question {
   width: 80%;
-  height: 60px;
+  height: 65px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  margin-top: 5px;
+  margin-bottom: 3em;
 }
 
 .icon{
