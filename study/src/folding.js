@@ -67,6 +67,12 @@ function makeSample(){
 }
 
 function makeQuestions(){
+  var qs = [
+    //q1
+    [],
+    []
+  ];
+
   var answers = [
     [
       //q1 answers
@@ -181,6 +187,7 @@ function makeQuestions(){
       [{"x":15,"y":30},{"x":45,"y":30},{"x":30,"y":15},{"x":30,"y":45}]
     ],
   ];
+
 
   answers.forEach(function(q,i){
     var sample = d3.select("body").append("div")
