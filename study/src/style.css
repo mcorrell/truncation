@@ -18,7 +18,6 @@
 .scale{
   display: grid;
   grid-template-columns: 20% 20% 20% 20% 20%;
-  grid-template-rows: 30% 30% 30%;
   text-align: center;
   justify-items: center;
   max-width: 50%;
@@ -92,4 +91,15 @@ input[type="submit"]:disabled, button:disabled{
 
 input[type="submit"]:hover:enabled, button:hover:enabled{
     background-color: #555;
+}
+
+.pretestQuestion{
+  max-width: 450px;
+  margin-bottom: 1em;
+}
+
+.pretestImage{
+  max-width: 450px;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }

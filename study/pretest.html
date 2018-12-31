@@ -1,0 +1,201 @@
+<html>
+<!-- Taken from Galesic and Garcia-Retamero's "Graph Literacy : A Cross-Cultural Comparison"-->
+<head>
+  <title>Perception of Effect Sizes in Visualizations</title>
+  <link rel="stylesheet" type="text/css" href="./src/style.css" />
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+  <div id="prompt" style="max-width:500px;">
+    In this section we will be assessing your ability to read and interpret charts. You will be shown 8 different charts, and be asked a total of 13 questions. <span>Please answer each question to the best of your ability</span>; time is not a factor in assessing your responses. After you have answered these questions, you will then be asked to complete the main task.
+  </div>
+  <form action="./task.html" method="get">
+    <div class="pretestImage">
+      <div>Here is some information about cancer therapies.</div>
+      <img src="./img/q1.png" width="350px"/>
+    </div>
+
+    <div class="pretestQuestion">
+      <div>Q1. What percentage of patients recovered after chemotherapy?</div>
+      <input name="q1" type="number" min="0" max="100" required/>%
+    </div>
+
+    <div class="pretestQuestion">
+      <div>Q2. What is the difference between the percentage of patients who recovered after a surgery and the percentage of patients who recovered after radiation therapy? </div>
+      <input name="q2" type="number" min="0" max="100" required/>%
+    </div>
+
+    <div class="pretestImage">
+      <div>Here is some information about different forms of cancer.</div>
+      <img src="./img/q2.png" width="350px"/>
+    </div>
+
+    <div class="pretestQuestion">
+      <div>Q3. Of all the people who die from cancer, approximately what percentage dies from lung cancer?</div>
+      <input name="q3" type="number" min="0" max="100" required/>%
+    </div>
+
+    <div class="pretestQuestion">
+      <div>Q4. Approximately what percentage of people who die from cancer die from colon cancer, breast cancer, and prostate cancer taken together?</div>
+      <input name="q4" type="number" min="0" max="100" required/>%
+    </div>
+
+    <div class="pretestImage">
+      <div>Here is some information about an imaginary disease called Adeolitis.</div>
+      <div>Percentage of people with Adeolitis</div>
+      <img src="./img/q3.png" width="350px"/>
+    </div>
+
+    <div class="pretestQuestion">
+      <div>Q5. Approximately what percentage of people had Adeolitis in the year 2000?</div>
+      <input name="q5" type="number" min="0" max="100" required/>%
+    </div>
+
+    <div class="pretestQuestion">
+      <div>Q6. When was the increase in the percentage of people with Adeolitis higher?</div>
+      <div>
+        <input type="radio" id="q6_1" name="q6" value="1" required/>
+        <label for="q6_1">From 1975 to 1980</label>
+      </div>
+      <div>
+        <input type="radio" id="q6_2" name="q6" value="2" />
+        <label for="q6_2">From 2000 to 2005</label>
+      </div>
+      <div>
+        <input type="radio" id="q6_3" name="q6" value="3" />
+        <label for="q6_3">Increase was the same in both intervals</label>
+      </div>
+      <div>
+        <input type="radio" id="q6_4" name="q6" value="4" />
+        <label for="q6_4">Don't know</label>
+      </div>
+    </div>
+
+    <div class="pretestQuestion">
+      <div>Q7. According to your best guess, what will the percentage of people with Adeolitis be in the year 2010?</div>
+      <input name="q7" type="number" min="0" max="100" required/>%
+    </div>
+
+    <div class="pretestImage">
+      <div> The following figure shows the number of men and women among patients with disease X. The total number of circles is 100.</div>
+      <img src="./img/q4.png" width="250px"/>
+    </div>
+
+    <div class="pretestQuestion">
+      <div>Q8. Of 100 patients with disease X, how many are women?</div>
+      <input name="q8" type="number" min="0" max="100" required/>
+    </div>
+
+    <div class="pretestQuestion">
+      <div>Q9. How many more men than women are there among 100 patients with disease X?</div>
+      <input name="q9" type="number" min="0" max="100" required/>
+    </div>
+
+    <div class="pretestImage">
+      <div>In a magazine you see two advertisements, one on page 5 and another on page 12.  Each is for a different drug for treating heart disease, and each includes a graph showing the effectiveness of the drug compared to a placebo (sugar pill).</div>
+      <img src="./img/q5.png" width="700px"/>
+    </div>
+
+    <div class="pretestQuestion">
+      <div>Q10. Compared to the placebo, which treatment leads to a larger decrease in the percentage of patients who die? </div>
+      <div>
+        <input type="radio" id="q10_1" name="q10" value="1" required/>
+        <label for="q10_1">Crosicol</label>
+      </div>
+      <div>
+        <input type="radio" id="q10_2" name="q10" value="2" />
+        <label for="q10_2">Hertinol</label>
+      </div>
+      <div>
+        <input type="radio" id="q10_3" name="q10" value="3" />
+        <label for="q10_3">They are equal</label>
+      </div>
+      <div>
+        <input type="radio" id="q10_4" name="q10" value="4" />
+        <label for="q10_4">Can't say</label>
+      </div>
+    </div>
+
+    <div class="pretestImage">
+      <div>In the newspaper you see two advertisements, one on page 15 and another on page 17.  Each is for a different treatment of psoriasis, and each includes a graph showing the effectiveness of the treatment over time.</div>
+      <img src="./img/q6.png" width="600px"/>
+    </div>
+
+    <div class="pretestQuestion">
+      <div>Q11. Which of the treatments contributes to a larger decrease in the percentage of sick patients?</div>
+      <div>
+        <input type="radio" id="q11_1" name="q11" value="1" required/>
+        <label for="q11_1">Apsoriatin</label>
+      </div>
+      <div>
+        <input type="radio" id="q11_2" name="q11" value="2" />
+        <label for="q11_2">Nopsorian</label>
+      </div>
+      <div>
+        <input type="radio" id="q11_3" name="q11" value="3" />
+        <label for="q11_3">They are equal</label>
+      </div>
+      <div>
+        <input type="radio" id="q11_4" name="q11" value="4" />
+        <label for="q11_4">Can't say</label>
+      </div>
+    </div>
+
+    <div class="pretestImage">
+      <div>Here is some information about the imaginary diseases Coliosis and Tiosis.</div>
+      <img src="./img/q7.png" width="600px"/>
+    </div>
+
+    <div class="pretestQuestion">
+      <div>Q12. Between 1980 and 1990, which disease had a higher increase in the percentage of people affected? </div>
+      <div>
+        <input type="radio" id="q12_1" name="q12" value="1" required/>
+        <label for="q12_1">Coliosis</label>
+      </div>
+      <div>
+        <input type="radio" id="q12_2" name="q12" value="2" />
+        <label for="q12_2">Tiosis</label>
+      </div>
+      <div>
+        <input type="radio" id="q12_3" name="q12" value="3" />
+        <label for="q12_3">They are equal</label>
+      </div>
+      <div>
+        <input type="radio" id="q12_4" name="q12" value="4" />
+        <label for="q12_4">Can't say</label>
+      </div>
+    </div>
+
+    <div class="pretestImage">
+      <div>Here is some information about cancer therapies</div>
+      <img src="./img/q8.png" width="350px"/>
+    </div>
+
+    <div class="pretestQuestion">
+      <div>Q13. What is the percentage of cancer patients who die after chemotherapy?</div>
+      <input name="q13" type="number" min="0" max="100" required/>
+    </div>
+
+    <div>
+    <input type="hidden" id="id" name="id" value="id" />
+    <input type="submit" value="Submit" />
+    </div>
+  </form>
+
+  <script>
+  function gup(name) {
+    var regexS = "[\\?&]" + name + "=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var tmpURL = window.location.href;
+    var results = regex.exec( tmpURL );
+    if ( results == null )
+    return "";
+    else
+    return results[1];
+  }
+  var id = gup("id");
+  d3.select("#id").attr("value",id);
+  </script>
+
+</body>
+</html>

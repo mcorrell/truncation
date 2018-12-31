@@ -3,6 +3,7 @@
 // TODO: Hook up factors to the data writing code
 // TODO: Add tasks for each framing.
 
+
 /***
 Study Parameters
 ***/
@@ -11,7 +12,7 @@ Study Parameters
 var allVisTypes = ["bar","brokenbar","brokengradbar","gradbar","bottomgradbar","scatter","lollipop","gradlollipop","gradbottomlollipop","brokenlollipop","brokengradlollipop","pointline","line","area","gradarea","bottomgradarea"];
 
 //What type of visualizations will they see?
-var visTypes = ["bar","pointline","area"];
+var visTypes = ["bar","pointline","area","line"];
 
 //Will the vis be labeled?
 //with, above, none
@@ -30,10 +31,6 @@ var truncationTypes = [0,0.5];
 //Are the data going up or down?
 var trendDirections = [1,-1];
 
-//How much are they going down or up by?
-var trendSlopes = [0.5];
-
-
 /***
 Global Variables and Settings
 ***/
@@ -49,10 +46,10 @@ var vizHeight = 300;
 var margin = 40;
 var markSize = 10;
 var lineWidth = 4;
-var x = d3.scaleBand().domain([0,1]).range([margin,vizWidth]).paddingOuter(0.2).paddingInner(0.1);
+var x = d3.scaleBand().domain([0,1]).range([margin,vizWidth-margin]).paddingOuter(0.2).paddingInner(0.1);
 var y = d3.scaleLinear().domain([0,1]).range([vizHeight-margin,margin]);
 var yAxis = d3.axisLeft(y).tickFormat(d3.format(".0%")).tickValues([0,1]);
-
+var xAxis = d3.axisBottom(x);
 
 function makeStimuli(permute){
   //Populate the trial stimuli, optionally permuting the trials
@@ -62,6 +59,9 @@ function makeStimuli(permute){
   var id=gup("id");
   id = id ? id : "EMPTY";
   var index = 1;
+
+  var graphicity = handlePretest();
+
   //currently all blocked effects. We'd potentially want some of these to be random.
   for(vis of visTypes){
     for(label of labelTypes){
@@ -69,7 +69,6 @@ function makeStimuli(permute){
         for(size of dataSizes){
           for(truncation of truncationTypes){
             for(direction of trendDirections){
-              for(slope of trendSlopes){
                 stimulis = {};
                 stimulis.visType = vis;
                 stimulis.labelType = label;
@@ -77,11 +76,11 @@ function makeStimuli(permute){
                 stimulis.dataSize = size;
                 stimulis.truncationLevel = truncation;
                 stimulis.trendDirection = direction;
-                stimulis.trendSlope = slope;
                 stimulis.data = genData(stimulis);
+                stimulis.id = id;
+                stimulis.graphicity = graphicity;
                 stimuli.push(stimulis);
                 index++;
-              }
             }
           }
         }
@@ -137,8 +136,6 @@ var nextQuestion = function(){
   d3.select("#confirmBtn")
     .attr("disabled","disabled");
 
-  d3.select("#flawType").html("a flaw");
-
   document.body.scrollTop = document.documentElement.scrollTop = 0;
   d3.select("#progress").html("Question "+(questionIndex+1)+"/"+stimuli.length);
 }
@@ -150,11 +147,18 @@ var makeQuestions = function(stimulis){
   //"How much better do you think is [quantity A] as compared to [quantity B] in terms of [the context]?"
   var questions = d3.select("#questions").append("form")
     .attr("name","questions");
-    
+
   makeScale(questions,"q1","This Statement is True.",["Strongly Disagree","","Neither Agree Nor Disagree","","Strongly Agree"]);
   makeScale(questions,"q2","This Statement is False.",["Strongly Disagree","","Neither Agree Nor Disagree","","Strongly Agree"]);
 
+  questions.selectAll("input").on("change",checkInput);
+}
 
+var checkInput = function(){
+  console.log("change");
+  if(+document.forms["questions"]["q1"].value && +document.forms["questions"]["q2"].value){
+    d3.select("#confirmBtn").attr("disabled",null);
+  }
 }
 
 var makeScale = function(parent,id,question,labels){
@@ -213,11 +217,19 @@ var scatter = function(svg,data){
     .attr("cx", (d,i) => x(i) + (x.bandwidth()/2))
     .attr("cy", d => y(d));
 
+  drawAxes(svg);
+
+};
+
+var drawAxes = function(svg){
   svg.append("g")
     .attr("transform","translate(" + margin + ",0)")
     .call(yAxis);
 
-};
+  svg.append("g")
+    .attr("transform","translate(0," + (vizHeight-margin) + ")")
+    .call(xAxis);
+}
 
 var bar = function(svg,data){
   //bar chart
@@ -231,9 +243,7 @@ var bar = function(svg,data){
   .attr("height", d => y(y.domain()[0]) - y(d))
   .attr("width",x.bandwidth());
 
-  svg.append("g")
-    .attr("transform","translate(" + margin + ",0)")
-    .call(yAxis);
+  drawAxes(svg);
 }
 
 var brokenBar = function(svg,data){
@@ -285,6 +295,10 @@ var brokenBar = function(svg,data){
   svg.append("g")
     .attr("transform","translate(" + margin + ",0)")
     .call(y2Axis);
+
+  svg.append("g")
+    .attr("transform","translate(0," + (vizHeight-margin) + ")")
+    .call(xAxis);
 }
 
 var brokenGradBar = function(svg,data){
@@ -339,6 +353,10 @@ var brokenGradBar = function(svg,data){
   svg.append("g")
     .attr("transform","translate(" + margin + ",0)")
     .call(y2Axis);
+
+  svg.append("g")
+    .attr("transform","translate(0," + (vizHeight-margin) + ")")
+    .call(xAxis);
 }
 
 var gradBar = function(svg,data){
@@ -353,9 +371,7 @@ var gradBar = function(svg,data){
   .attr("height", d => y(y.domain()[0]) - y(d))
   .attr("width",x.bandwidth());
 
-  svg.append("g")
-    .attr("transform","translate(" + margin + ",0)")
-    .call(yAxis);
+  drawAxes(svg);
 }
 
 var bottomGradBar = function(svg,data){
@@ -379,9 +395,7 @@ var bottomGradBar = function(svg,data){
     .attr("height", margin)
     .attr("width",x.bandwidth());
 
-  svg.append("g")
-    .attr("transform","translate(" + margin + ",0)")
-    .call(yAxis);
+  drawAxes(svg);
 }
 
 var lollipop = function(svg,data){
@@ -405,9 +419,7 @@ var lollipop = function(svg,data){
     .attr("y2", d => y(d))
     .attr("stroke-width",lineWidth);
 
-  svg.append("g")
-    .attr("transform","translate(" + margin + ",0)")
-    .call(yAxis);
+  drawAxes(svg);
 };
 
 var gradLollipop = function(svg,data){
@@ -430,9 +442,7 @@ var gradLollipop = function(svg,data){
     .attr("width",lineWidth)
     .attr("height",d => y(y.domain()[0]) - y(d));
 
-  svg.append("g")
-    .attr("transform","translate(" + margin + ",0)")
-    .call(yAxis);
+  drawAxes(svg);
 };
 
 var gradBottomLollipop = function(svg,data){
@@ -463,9 +473,7 @@ var gradBottomLollipop = function(svg,data){
     .attr("width",lineWidth)
     .attr("height",margin);
 
-  svg.append("g")
-    .attr("transform","translate(" + margin + ",0)")
-    .call(yAxis);
+  drawAxes(svg);
 };
 
 var brokenLollipop = function(svg,data){
@@ -533,6 +541,10 @@ var brokenLollipop = function(svg,data){
   svg.append("g")
     .attr("transform","translate(" + margin + ",0)")
     .call(y2Axis);
+
+  svg.append("g")
+    .attr("transform","translate(0," + (vizHeight-margin) + ")")
+    .call(xAxis);
 }
 
 var brokenGradLollipop = function(svg,data){
@@ -598,6 +610,10 @@ var brokenGradLollipop = function(svg,data){
   svg.append("g")
     .attr("transform","translate(" + margin + ",0)")
     .call(y2Axis);
+
+  svg.append("g")
+    .attr("transform","translate(0," + (vizHeight-margin) + ")")
+    .call(xAxis);
 }
 
 var area = function(svg,data){
@@ -614,9 +630,7 @@ var area = function(svg,data){
     .attr("fill","#333")
     .attr("d",path);
 
-  svg.append("g")
-    .attr("transform","translate(" + margin + ",0)")
-    .call(yAxis);
+  drawAxes(svg);
 }
 
 var gradArea = function(svg,data){
@@ -633,9 +647,7 @@ var gradArea = function(svg,data){
     .attr("fill","url(#grad)")
     .attr("d",path);
 
-  svg.append("g")
-    .attr("transform","translate(" + margin + ",0)")
-    .call(yAxis);
+  drawAxes(svg);
 }
 
 var bottomGradArea = function(svg,data){
@@ -659,9 +671,7 @@ var bottomGradArea = function(svg,data){
     .attr("width",x(data.length-1)-x(0))
     .attr("height", margin);
 
-  svg.append("g")
-    .attr("transform","translate(" + margin + ",0)")
-    .call(yAxis);
+  drawAxes(svg);
 }
 
 var line = function(svg,data){
@@ -679,9 +689,7 @@ var line = function(svg,data){
     .attr("fill","none")
     .attr("d",path);
 
-  svg.append("g")
-    .attr("transform","translate(" + margin + ",0)")
-    .call(yAxis);
+  drawAxes(svg);
 }
 
 var pointLine = function(svg,data){
@@ -707,9 +715,7 @@ var pointLine = function(svg,data){
     .attr("cx", (d,i) => x(i) + (x.bandwidth()/2))
     .attr("cy", d => y(d));
 
-  svg.append("g")
-    .attr("transform","translate(" + margin + ",0)")
-    .call(yAxis);
+  drawAxes(svg);
 }
 
 var drawLabels = function(svg){
@@ -850,10 +856,22 @@ var testAllGrid = function(){
   var data = dl.random.uniform(0.4,1).samples(5);
   truncate(0.4);
   allVisTypes.forEach(function(d){
-    getVisFunction(d)(d3.select("body").append("svg").classed("vis",true).classed("test",true),data);
+    getVisFunction(d)(d3.select("body").append("svg").classed("vis",true).classed("test",true).attr("id",d),data);
   });
   d3.select("body").on("click",function(){ d3.selectAll(".test").remove()});
 }
+
+var writeAnswer = function(response){
+  //Called when we answer a question in the first task
+  //XML to call out to a php script to store our data in a csv over in ./data/
+  var writeRequest = new XMLHttpRequest();
+  var writeString = "answer=" + JSON.stringify(response);
+  writeRequest.open("GET", "data/writeJSON.php?" + writeString, true);
+  writeRequest.setRequestHeader("Content-Type", "application/json");
+  writeRequest.addEventListener("load", nextQuestion);
+  writeRequest.send();
+};
+
 
 /***
 Utility Functions
@@ -880,12 +898,11 @@ var answer = function(){
 
 
 function genData(stimulis){
-  // TODO: Fix this to make it correctly spit out values when we've got truncation.
+  //Slopes
   var min = stimulis.truncationLevel;
   var n = stimulis.dataSize;
   var sign = stimulis.trendDirection;
-  var slope = stimulis.trendSlope;
-  var max = 1
+  var max = 1;
   var delta = (max - min)/n;
   var vals = sign==1 ? dl.range(min,max,delta) : dl.range(max,min,-1*delta);
   var jitter = dl.random.uniform(-delta/4,delta/4);
@@ -894,17 +911,6 @@ function genData(stimulis){
     return Math.max(Math.min(d + jitter(),max),min + delta/4);
   }
   return vals.map(d => constrainJitter(d));
-}
-
-var writeAnswer = function(response){
-  //Called when we answer a question in the first task
-  //XML to call out to a php script to store our data in a csv over in ./data/
-  var writeRequest = new XMLHttpRequest();
-  var writeString = "answer=" + JSON.stringify(response);
-  writeRequest.open("GET", "data/writeJSON.php?" + writeString, true);
-  writeRequest.setRequestHeader("Content-Type", "application/json");
-  writeRequest.addEventListener("load", nextQuestion);
-  writeRequest.send();
 }
 
 function gup(name){
@@ -917,4 +923,41 @@ function gup(name){
   return "";
   else
   return results[1];
+};
+
+function handlePretest(){
+  //the correct answers
+  var rightAnswers =
+  [
+    35,
+    15,
+    25,
+    25,
+    20,
+    3,
+    25,
+    40,
+    20,
+    3,
+    4,
+    2,
+    5
+  ];
+
+  //how much leeway we give the answers
+  var fuzz = dl.repeat(false,13);
+  fuzz[2] = 1;
+  fuzz[3] = 1;
+  fuzz[6] = 1;
+
+  var correct = 0;
+  var answer,isRight;
+  for(var i = 0;i<rightAnswers.length;i++){
+    answer = +gup("q"+(i+1));
+    isRight = Math.abs(answer-rightAnswers[i])<=fuzz[i];
+    //if(!isRight)
+    //  console.log("got q"+(i+1)+" wrong");
+    correct = isRight ? correct+1 : correct;
+  }
+  return correct;
 }

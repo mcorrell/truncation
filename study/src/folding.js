@@ -69,8 +69,9 @@ function makeSample(){
 function makeQuestions(){
   var qs = [
     //q1
-    [],
-    []
+    [
+      []
+    ]
   ];
 
   var answers = [
