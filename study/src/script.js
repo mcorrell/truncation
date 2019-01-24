@@ -886,8 +886,21 @@ var testAllGrid = function(useAll=true){
 var writeAnswer = function(response){
   //Called when we answer a question in the first task
   //XML to call out to a php script to store our data in a csv over in ./data/
+
+  //deal with our array of values in 'data'
+  //we want a "firstX" and "lastX" values and then we just stash all the middle values in a "x1","x2", etc
+  var toWrite = JSON.parse(JSON.stringify(response));
+  var data = toWrite.data;
+  toWrite.firstX = data[0];
+  toWrite.lastX = data[data.length-1];
+
+  for(var i = 1;i<toWrite.data.length-1;i++){
+    toWrite['x'+i] = data[i];
+  }
+  delete toWrite.data;
+
   var writeRequest = new XMLHttpRequest();
-  var writeString = "answer=" + JSON.stringify(response);
+  var writeString = "answer=" + JSON.stringify(toWrite);
   writeRequest.open("GET", "data/writeJSON.php?" + writeString, true);
   writeRequest.setRequestHeader("Content-Type", "application/json");
   writeRequest.addEventListener("load", nextQuestion);
