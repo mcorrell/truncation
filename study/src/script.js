@@ -95,7 +95,7 @@ function makeStimuli(permute){
   }
 
   stimuli.forEach(function(d,i){
-    d.i = i;
+    d.index = i;
   });
 
   d3.select("#progress").html("Question 1/"+stimuli.length);
