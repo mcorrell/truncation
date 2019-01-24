@@ -59,8 +59,15 @@
 }
 
 .figImg{
-    width: 33%;
+    width: 30%;
+    align-self: center;
+    text-align: center;
+    font-size: 85%;
     margin-top: 5px;
+}
+
+.figImg img{
+    max-width: 100%;
 }
 
 .figCaption{

@@ -14,7 +14,7 @@ var allVisTypes = ["bar","brokenbar","brokengradbar","gradbar","bottomgradbar","
 //What type of visualizations will they see?
 var visTypes = ["bar","area","line"];
 
-//Will the vis be labeled?
+//Will the individual values be labeled?
 //with, above, none
 var labelTypes = ["none"];
 
@@ -63,28 +63,26 @@ function makeStimuli(permute){
 
   var graphicity = handlePretest();
 
-  //currently all blocked effects. We'd potentially want some of these to be random.
+  //currently all blocked effects, except for trend direction, which is random.
   for(vis of visTypes){
     for(label of labelTypes){
       for(frame of framingTypes){
         for(size of dataSizes){
           for(truncation of truncationTypes){
-            for(direction of trendDirections){
-              for(slope of slopes){
+            for(slope of slopes){
                 stimulis = {};
                 stimulis.visType = vis;
                 stimulis.labelType = label;
                 stimulis.framing = frame;
                 stimulis.dataSize = size;
                 stimulis.truncationLevel = truncation;
-                stimulis.trendDirection = direction;
+                stimulis.trendDirection = trendDirections[~~(Math.random() * trendDirections.length)];
                 stimulis.slope = slope;
                 stimulis.id = id;
                 stimulis.graphicity = graphicity;
                 stimulis.data = genData(stimulis);
                 stimuli.push(stimulis);
                 index++;
-              }
             }
           }
         }
@@ -873,12 +871,13 @@ var testAll = function(){
   },1000);
 }
 
-var testAllGrid = function(){
+var testAllGrid = function(useAll=true){
   //make a big line of all of our vis types, sharing an initial random set of data.
   //Click to have them go away
+  var typesToTest = useAll ? allVisTypes : visTypes;
   var data = dl.random.uniform(0.4,1).samples(5);
   truncate(0.4);
-  allVisTypes.forEach(function(d){
+  typesToTest.forEach(function(d){
     getVisFunction(d)(d3.select("body").append("svg").classed("vis",true).classed("test",true).attr("id",d),data);
   });
   d3.select("body").on("click",function(){ d3.selectAll(".test").remove()});
