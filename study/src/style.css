@@ -15,9 +15,12 @@
   margin-right: 5px;
 }
 
+.instructions{
+  max-width: 75%;
+}
+
 .scale{
   display: grid;
-  grid-template-columns: 20% 20% 20% 20% 20%;
   text-align: center;
   justify-items: center;
   max-width: 50%;

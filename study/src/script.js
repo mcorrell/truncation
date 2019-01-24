@@ -12,7 +12,7 @@ Study Parameters
 var allVisTypes = ["bar","brokenbar","brokengradbar","gradbar","bottomgradbar","scatter","lollipop","gradlollipop","gradbottomlollipop","brokenlollipop","brokengradlollipop","pointline","line","area","gradarea","bottomgradarea"];
 
 //What type of visualizations will they see?
-var visTypes = ["bar","pointline","area","line"];
+var visTypes = ["bar","area","line"];
 
 //Will the vis be labeled?
 //with, above, none
@@ -26,11 +26,12 @@ var framingTypes = ["values","trend"];
 var dataSizes = [2,3];
 
 //Will the y-axis be futzed with? If so, where will it start?
-var truncationTypes = [0,0.5];
+var truncationTypes = [0,0.25,0.5];
 
 //Are the data going up or down?
 var trendDirections = [1,-1];
 
+var slopes = [0.125,0.25];
 /***
 Global Variables and Settings
 ***/
@@ -69,6 +70,7 @@ function makeStimuli(permute){
         for(size of dataSizes){
           for(truncation of truncationTypes){
             for(direction of trendDirections){
+              for(slope of slopes){
                 stimulis = {};
                 stimulis.visType = vis;
                 stimulis.labelType = label;
@@ -76,11 +78,13 @@ function makeStimuli(permute){
                 stimulis.dataSize = size;
                 stimulis.truncationLevel = truncation;
                 stimulis.trendDirection = direction;
-                stimulis.data = genData(stimulis);
+                stimulis.slope = slope;
                 stimulis.id = id;
                 stimulis.graphicity = graphicity;
+                stimulis.data = genData(stimulis);
                 stimuli.push(stimulis);
                 index++;
+              }
             }
           }
         }
@@ -148,21 +152,37 @@ var makeQuestions = function(stimulis){
   var questions = d3.select("#questions").append("form")
     .attr("name","questions");
 
-  makeScale(questions,"q1","This Statement is True.",["Strongly Disagree","","Neither Agree Nor Disagree","","Strongly Agree"]);
-  makeScale(questions,"q2","This Statement is False.",["Strongly Disagree","","Neither Agree Nor Disagree","","Strongly Agree"]);
+  var binaryQ = stimulis.framing=="values" ?
+  "Which value is larger, the first value or the last value?" :
+  "Are the values increasing or descreasing?";
+
+  var binaryItems = stimulis.framing=="values" ? ["First","Last"] : ["Descreasing","Increasing"];
+
+  var scaleQ = stimulis.framing=="values" ?
+  "Subjectively, how different is the first value compared to the last value?" :
+  "Subjectively, how quickly are the values changing?";
+
+  var scaleItems = stimulis.framing=="values" ?
+  ["Almost the Same","","Somewhat Different","","Extremely Different"] :
+  ["Barely","","Somewhat","","Extremely Quickly"];
+
+  makeScale(questions,"q1",binaryQ,binaryItems,false);
+  makeScale(questions,"q2",scaleQ,scaleItems,true);
 
   questions.selectAll("input").on("change",checkInput);
 }
 
 var checkInput = function(){
-  console.log("change");
   if(+document.forms["questions"]["q1"].value && +document.forms["questions"]["q2"].value){
     d3.select("#confirmBtn").attr("disabled",null);
   }
 }
 
-var makeScale = function(parent,id,question,labels){
-    //Makes a 5 point rating scale
+var makeScale = function(parent,id,question,labels,showNumbers){
+    //Makes a rating scale
+
+    var items = labels.length;
+
     parent.append("div")
       .text(question)
       .style("font-weight","bold");
@@ -171,12 +191,15 @@ var makeScale = function(parent,id,question,labels){
       .classed("scale",true)
       .attr("id",id);
 
-    var numbers = [1,2,3,4,5,0,1,2,3,4];
+    scale.style("grid-template-columns","repeat("+items+","+(100/items)+"%)");
+
+    var numbers = showNumbers ? dl.range(1,items+1).concat(dl.range(0,items)) : dl.range(0,items);
+    //[1,2,3,4,5,0,1,2,3,4];
 
     scale.selectAll("span").data(numbers).enter().append("span")
-      .text( (d,i) => i<5 ? d : labels[d]);
+      .text( (d,i) => i<items&&showNumbers ? d : labels[d]);
 
-    scale.selectAll("input").data(dl.range(1,6,1)).enter().append("input")
+    scale.selectAll("input").data(dl.range(1,items+1)).enter().append("input")
       .attr("type","radio")
       .attr("name",id)
       .attr("value",d =>d);
@@ -898,19 +921,25 @@ var answer = function(){
 
 
 function genData(stimulis){
-  //Slopes
-  var min = stimulis.truncationLevel;
+  //Data should always be in the range [max trunacation val,1]
+  //The first and last points should be the beginning and end of our slope value
+  //With some jitter in between
+
   var n = stimulis.dataSize;
   var sign = stimulis.trendDirection;
+  var slope = stimulis.slope;
+  var min = dl.max(truncationTypes)+0.05;
   var max = 1;
-  var delta = (max - min)/n;
-  var vals = sign==1 ? dl.range(min,max,delta) : dl.range(max,min,-1*delta);
+  var delta = slope/n;
+  var dmin = sign==1 ? min : max - slope;
+  var dmax = sign==1 ? min + slope : max;
+  var vals = sign==1 ? dl.range(dmin,dmax,delta) : dl.range(dmax,dmin,-1*delta);
   var jitter = dl.random.uniform(-delta/4,delta/4);
 
-  var constrainJitter = function(d){
-    return Math.max(Math.min(d + jitter(),max),min + delta/4);
+  var constrainJitter = function(d,i){
+    return (i!=0 && i!=n-1) ? Math.max(Math.min(d + jitter(),dmax),dmin + delta/4) : d;
   }
-  return vals.map(d => constrainJitter(d));
+  return vals.map((d,i) => constrainJitter(d,i));
 }
 
 function gup(name){

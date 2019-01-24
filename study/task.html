@@ -28,11 +28,11 @@
 </div>
 <!-- Question Prompt -->
 <div id="prompt">
-<!-- We will ask them to identify which chart has a certain type of flaw. -->
-<p>You will be shown TODO. Click the <b>Confirm</b> button to move on.</p>
+<!-- We will ask them about a chart. -->
+<p class="instructions">You will be shown a chart, and asked to answer two questions about it. The questions may change for each chart. Click the <b>Confirm</b> button to move on.</p>
 <!-- Ready Button: reveal vizzes and start RT from clicking this. -->
 <button type="button" id="readyBtn" onclick="ready()">Ready</button>
-  <!-- Confirm Button: disabled until after the ready button has been clicked, and the graph has been chosen. -->
+  <!-- Confirm Button: disabled until after the ready button has been clicked, and all questions have been answered. -->
 <button type="button" id="confirmBtn" onclick="answer()" disabled="disabled">Confirm</button>
 </div>
 <br />
