@@ -12,7 +12,7 @@ Study Parameters
 var allVisTypes = ["bar","brokenbar","brokengradbar","gradbar","bottomgradbar","scatter","lollipop","gradlollipop","gradbottomlollipop","brokenlollipop","brokengradlollipop","pointline","line","area","gradarea","bottomgradarea"];
 
 //What type of visualizations will they see?
-var visTypes = ["bar","area","line"];
+var visTypes = ["bar","line"];
 
 //Will the individual values be labeled?
 //with, above, none
@@ -54,6 +54,7 @@ var xAxis = d3.axisBottom(x);
 
 function makeStimuli(permute){
   //Populate the trial stimuli, optionally permuting the trials
+  var training = [];
   var stimuli = [];
   var replicates = 1;
   var stimulis;
@@ -61,7 +62,32 @@ function makeStimuli(permute){
   id = id ? id : "EMPTY";
   var index = 1;
 
-  var graphicity = handlePretest();
+  var trainingReplications = 2;
+  //want stimuli showing the full range of slopes/truncations in order to give people anchor points. These stimuli are discarded from analysis.
+  for(var i = 0;i<trainingReplications;i++){
+    for(truncation of [truncationTypes[0],truncationTypes[truncationTypes.length-1]]){
+      for(slope of [slopes[0],slopes[slopes.length-1]]){
+        stimulis = {};
+        stimulis.visType = visTypes[~~(Math.random() * visTypes.length)];
+        stimulis.labelType = "none";
+        stimulis.framing = framingTypes[~~(Math.random() * framingTypes.length)];
+        stimulis.dataSize = dataSizes[~~(Math.random() * dataSizes.length)];
+        stimulis.truncationLevel = truncation;
+        stimulis.trendDirection = trendDirections[~~(Math.random() * trendDirections.length)];
+        stimulis.slope = slope;
+        stimulis.id = id;
+        stimulis.index = index;
+        stimulis.data = genData(stimulis);
+        stimulis.training=true;
+        training.push(stimulis);
+        index++;
+      }
+    }
+  }
+
+  if(permute){
+    dl.permute(training);
+  }
 
   //currently all blocked effects, except for trend direction, which is random.
   for(vis of visTypes){
@@ -79,8 +105,9 @@ function makeStimuli(permute){
                 stimulis.trendDirection = trendDirections[~~(Math.random() * trendDirections.length)];
                 stimulis.slope = slope;
                 stimulis.id = id;
-                stimulis.graphicity = graphicity;
+                stimulis.index = index;
                 stimulis.data = genData(stimulis);
+                stimulis.training=false;
                 stimuli.push(stimulis);
                 index++;
             }
@@ -94,10 +121,7 @@ function makeStimuli(permute){
     dl.permute(stimuli);
   }
 
-  stimuli.forEach(function(d,i){
-    d.index = i;
-  });
-
+  stimuli = training.concat(stimuli);
   d3.select("#progress").html("Question 1/"+stimuli.length);
   return stimuli;
 }
@@ -128,7 +152,7 @@ var nextQuestion = function(){
   questionIndex++;
   //Check to see if the next question is the last one
   if(questionIndex==stimuli.length){
-    window.location.href="demographics.html?id="+stimuli[0].id;
+    window.location.href="graphicity.html?id="+stimuli[0].id;
   }
 
   d3.select("#readyBtn")
@@ -194,12 +218,14 @@ var makeScale = function(parent,id,question,labels,showNumbers){
     var numbers = showNumbers ? dl.range(1,items+1).concat(dl.range(0,items)) : dl.range(0,items);
     //[1,2,3,4,5,0,1,2,3,4];
 
-    scale.selectAll("span").data(numbers).enter().append("span")
-      .text( (d,i) => i<items&&showNumbers ? d : labels[d]);
+    scale.selectAll("label").data(numbers).enter().append("label")
+      .text( (d,i) => i<items&&showNumbers ? d : labels[d])
+      .attr("for", (d,i) => i<items ? id+(i+1) : id+((i%labels.length)+1));
 
     scale.selectAll("input").data(dl.range(1,items+1)).enter().append("input")
       .attr("type","radio")
       .attr("name",id)
+      .attr("id",d => id+d)
       .attr("value",d =>d);
 
     scale.append("br");
@@ -888,15 +914,17 @@ var writeAnswer = function(response){
   //XML to call out to a php script to store our data in a csv over in ./data/
 
   //deal with our array of values in 'data'
-  //we want a "firstX" and "lastX" values and then we just stash all the middle values in a "x1","x2", etc
+  //we want a "firstX" and "lastX" values and then we just stash all other values as x0...xn.
+  //since length can be << datasize, fill the empty values with ''
   var toWrite = JSON.parse(JSON.stringify(response));
   var data = toWrite.data;
   toWrite.firstX = data[0];
   toWrite.lastX = data[data.length-1];
 
-  for(var i = 1;i<toWrite.data.length-1;i++){
-    toWrite['x'+i] = data[i];
+  for(var i = 0;i<dl.max(dataSizes);i++){
+    toWrite['x'+i] = data[i] ? data[i] : '';
   }
+
   delete toWrite.data;
 
   var writeRequest = new XMLHttpRequest();
@@ -965,40 +993,3 @@ function gup(name){
   else
   return results[1];
 };
-
-function handlePretest(){
-  //the correct answers
-  var rightAnswers =
-  [
-    35,
-    15,
-    25,
-    25,
-    20,
-    3,
-    25,
-    40,
-    20,
-    3,
-    4,
-    2,
-    5
-  ];
-
-  //how much leeway we give the answers
-  var fuzz = dl.repeat(false,13);
-  fuzz[2] = 1;
-  fuzz[3] = 1;
-  fuzz[6] = 1;
-
-  var correct = 0;
-  var answer,isRight;
-  for(var i = 0;i<rightAnswers.length;i++){
-    answer = +gup("q"+(i+1));
-    isRight = Math.abs(answer-rightAnswers[i])<=fuzz[i];
-    //if(!isRight)
-    //  console.log("got q"+(i+1)+" wrong");
-    correct = isRight ? correct+1 : correct;
-  }
-  return correct;
-}

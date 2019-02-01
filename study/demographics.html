@@ -7,8 +7,10 @@
 <body>
   <p>This completes the main task. We will now ask you a brief series of demographics questions. You will also have the chance to give feedback.</p>
   <form id="demoform" method="post" action="post.php">
-    <input type="hidden" name="experiment" value="test">
+    <input type="hidden" name="experiment" value="pilot">
     <input type="hidden" id="id" name="id" value="id">
+    <input type="hidden" id="q10" name="q10" value="q10">
+    <input type="hidden" id="q11" name="q11" value="q11">
     <ol>
 
       <li>What is your gender <br>
@@ -26,21 +28,61 @@
         <label><input type="radio" name="education" required="required" value="Graduate degree"><span>Graduate degree<br></span></label>
       </li>
 
-      <li>How do you rate your experience interpreting graphs and charts (1-5)? <br>
-        <label><input type="radio" name="experience" required="required" value="0"><span>1. No experience<br></span></label>
-        <label><input type="radio" name="experience" required="required" value="1"><span>2.<br></span></label>
-        <label><input type="radio" name="experience" required="required" value="2"><span>3. Some experience<br></span></label>
-        <label><input type="radio" name="experience" required="required" value="3"><span>4.<br></span></label>
-        <label><input type="radio" name="experience" required="required" value="4"><span>5. A great deal of experience<br></span></label>
-      </li>
-
       <li>What is your age? <br><input type="number" name="age" required="required" min="18" max="100"></li>
+
+      <li>What strategy or procedure did you use to complete the tasks? <br><textarea name="strategy" rows="4" cols="50" required="required"></textarea></li>
+
+      <li>Did you notice anything odd or unusual about the charts you saw during the task? <br><textarea name="notice" rows="4" cols="50" required="required"></textarea></li>
 
       <li>Any additional comments of feedback? <br><textarea name="comments" rows="4" cols="50"></textarea></li>
       <input type="submit" value="Submit" />
     </ol>
   </form>
   <script>
+  function handlePretest(){
+    //the correct answers
+    var rightAnswers =
+    [
+      35,
+      15,
+      25,
+      25,
+      20,
+      3,
+      25,
+      40,
+      20,
+      3,
+      4,
+      2,
+      5
+    ];
+
+    //how much leeway we give the answers
+    var fuzz = dl.repeat(false,13);
+    fuzz[2] = 1;
+    fuzz[3] = 1;
+    fuzz[6] = 1;
+
+    var correct = 0;
+    var answer,isRight;
+    for(var i = 0;i<rightAnswers.length;i++){
+      answer = +gup("q"+(i+1));
+      isRight = Math.abs(answer-rightAnswers[i])<=fuzz[i];
+      //two of the questions specifically deal with y-axis issues, so let's call them out
+      if(i==9 || i==10){
+        d3.select("#q"+(i+1)).attr("value",isRight);
+      }
+      //if(!isRight)
+      //  console.log("got q"+(i+1)+" wrong");
+      correct = isRight ? correct+1 : correct;
+    }
+    return correct;
+  }
+
+  d3.select("#graphicity").attr("value",handlePretest());
+
+
   function gup(name) {
     var regexS = "[\\?&]" + name + "=([^&#]*)";
     var regex = new RegExp( regexS );

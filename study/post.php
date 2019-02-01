@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Perception of Data Quality Issues in Viusualizations</title>
+<title>Perception of Effect Sizes in Visualizations</title>
 <link rel="stylesheet" type="text/css" href="./src/style.css" />
 <script src="./src/config.js"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -31,8 +31,14 @@ if(true || is_writable($path)){
   $gender = $_POST['gender'];
   $age = $_POST['age'];
   $education = $_POST['education'];
-  $experience = $_POST['experience'];
+  $graphicity = $_POST['graphicity'];
+  $qa = $_POST['q10'];
+  $qb = $_POST['q11'];
   $comments = $_POST['comments'];
+  $strategy = $_POST['strategy'];
+  $notice = $_POST['notice'];
+  $strategy = str_replace(",","_",$strategy);
+  $notice = str_replace(",","_",$notice);
   $comments = str_replace(",","_",$comments);
   $time = date('c');
   $ip = $_SERVER['REMOTE_ADDR'];
@@ -40,7 +46,7 @@ if(true || is_writable($path)){
     $id = $ip;
   }
 
-  $writestr = "$time,$experiment,$id,$ip,$gender,$age,$education,$experience,$comments";
+  $writestr = "$time,$experiment,$id,$ip,$gender,$age,$education,$graphicity,$qa,$qb,$strategy,$notice,$comments";
   //echo $writestr;
   if (fwrite($file,$writestr.PHP_EOL) === FALSE) {
     echo "Cannot write to $path";
