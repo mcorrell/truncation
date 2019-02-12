@@ -3,14 +3,15 @@
 <title>Perception of Effect Sizes in Visualizations</title>
 <link rel="stylesheet" type="text/css" href="./src/style.css" />
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://vega.github.io/datalib/datalib.min.js"></script>
 </head>
 <body>
   <p>This completes the main task. We will now ask you a brief series of demographics questions. You will also have the chance to give feedback.</p>
   <form id="demoform" method="post" action="post.php">
     <input type="hidden" name="experiment" value="pilot">
     <input type="hidden" id="id" name="id" value="id">
-    <input type="hidden" id="q10" name="q10" value="q10">
-    <input type="hidden" id="q11" name="q11" value="q11">
+    <input type="hidden" id="q10" name="q10" value="">
+    <input type="hidden" id="q11" name="q11" value="">
     <ol>
 
       <li>What is your gender <br>
@@ -82,7 +83,6 @@
 
   d3.select("#graphicity").attr("value",handlePretest());
 
-
   function gup(name) {
     var regexS = "[\\?&]" + name + "=([^&#]*)";
     var regex = new RegExp( regexS );
@@ -95,6 +95,8 @@
   }
   var id = gup("id");
   d3.select("#id").attr("value",id);
+  d3.select("#q10").attr("value",gup("q10"));
+  d3.select("#q11").attr("value",gup("q11"));
   </script>
 </body>
 
