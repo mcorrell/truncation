@@ -1,6 +1,7 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="./src/style.css" />
+<script src="https://d3js.org/d3.v4.min.js"></script>
 <title>Perception of Effect Sizes in Visualizations</title>
 </head>
 <body>
@@ -8,7 +9,7 @@
     <p>You are invited by Michael Correll of the Tableau Research team to participate in a research study about how users make judgements about information in different kinds of charts. You have been asked to participate because we need to know how trends or effects are perceived in different kinds of charts.</p>
     <p>This study will include participants over 18 years of age who feel comfortable using an online interface to read graphs and answer questions about data.</p>
     <h4><b>What Will My Participation Involve?</b></h4>
-    <p>If you decide to participate in this research, you will be asked to answer questions about fictional data, using a number of charts or graphs to assist you in making decisions. After a basic pretest, you will be presented with a set of charts, and asked to answer brief questions. After the main task, we will collect basic demographic information. We expect this study to take 30 minutes.</p>
+    <p>If you decide to participate in this research, you will be asked to answer questions about fictional data, using a number of charts or graphs to assist you in making decisions. You will be presented with a set of 56 charts, and asked to answer brief questions. After the main task, we will ask you some questions about how you read charts and collect basic demographic information. We expect this study to take 30 minutes.</p>
     <h4><b>Are There Any Risks To Me?</b></h4>
     <p>We don't anticipate any risks from participation in this study greater than normal activity.</p>
     <h4><b>Are There Any Benefits To Me?</b></h4>
@@ -22,17 +23,36 @@
       <p>While there will probably be publications as a result of this study, your name or participant ID will not be used. Only group characteristics will be published.</p>
 
     <p>
-      By entering your Prolific ID (visible on your profile page) and clicking "I Agree", you acknowledge that you have read and understood this consent form.
+      Your current Prolific ID is being recorded as <span id="prolificid" style="fontweight: bold;">UNDEFINED</span>.
+    </p>
+    <p>
+      Please double-check that this is correct. Your Prolific ID should be visible on your profile page.
+    </p>
+    <p>
+      By clicking "I Agree", you acknowledge that you have read and understood this consent form.
     </p>
     <p>
       <form method="GET" action="tutorial.html">
-        <p>
-          Prolific ID: <input type="text" name="id" required="required" />
-        </p>
+        <input id="id" type="hidden" name="id" value="UNDEFINED"/>
         <p>
           <input type="submit" value="I Agree" />
         </p>
       </form>
     </p>
+<script>
+  function gup(name) {
+    var regexS = "[\\?&]" + name + "=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var tmpURL = window.location.href;
+    var results = regex.exec( tmpURL );
+    if ( results == null )
+    return "";
+    else
+    return results[1];
+  }
+  var id = gup("id");
+  d3.select("#id").attr("value",id);
+  d3.select("#prolificid").text(id);
+</script>
 </body>
 </html>
