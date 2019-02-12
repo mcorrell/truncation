@@ -23,7 +23,7 @@
       <p>While there will probably be publications as a result of this study, your name or participant ID will not be used. Only group characteristics will be published.</p>
 
     <p>
-      Your current Prolific ID is being recorded as <span id="prolificid" style="fontweight: bold;">UNDEFINED</span>.
+      Your current Prolific ID is being recorded as <span id="prolificid" style="font-weight: bold;">UNDEFINED</span>.
     </p>
     <p>
       Please double-check that this is correct. Your Prolific ID should be visible on your profile page.
@@ -51,6 +51,7 @@
     return results[1];
   }
   var id = gup("PROLIFIC_PID");
+  id = (!id || id.length==0) ? "UNDEFINED" : id;
   d3.select("#id").attr("value",id);
   d3.select("#prolificid").text(id);
 </script>
