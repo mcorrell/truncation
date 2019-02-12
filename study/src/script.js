@@ -122,6 +122,11 @@ function makeStimuli(permute){
   }
 
   stimuli = training.concat(stimuli);
+  
+  stimuli.forEach(function(d,i){
+    d.index = i+1;
+  });
+
   d3.select("#progress").html("Question 1/"+stimuli.length);
   return stimuli;
 }
