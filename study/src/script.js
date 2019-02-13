@@ -952,6 +952,10 @@ var answer = function(){
   participantData[questionIndex] = stimuli[questionIndex];
   participantData[questionIndex].rt = rt;
   participantData[questionIndex].timestamp = timestamp.toString();
+  participantData[questionIndex].qTrend = +document.forms["questions"]["q1"].value;
+  participantData[questionIndex].qTrend = participantData[questionIndex].qTrend==1 ? -1 : 1;
+  participantData[questionIndex].qSeverity = +document.forms["questions"]["q2"].value;
+  participantData[questionIndex].correct = (participantData[questionIndex].qTrend == participantData[questionIndex].trendDirection) ? 1 : 0;
 
   d3.select("#vis").selectAll("*:not(.grad)").remove();
   d3.select("#questions").selectAll("*").remove();
