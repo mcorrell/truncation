@@ -18,7 +18,7 @@ if(true || is_writable($path)){
 
   if(filesize($path)==0){
     //Make the header if we're the first entry
-    $header = "timestamp,experiment,id,ip,gender,age,education,experience,comments".PHP_EOL;
+    $header = "timestamp,experiment,id,ip,gender,age,education,graphicity,q10,q11,strategy,notice,comments".PHP_EOL;
     if(fwrite($file,$header) === FALSE){
       echo "Cannot write to $path";
       exit;
