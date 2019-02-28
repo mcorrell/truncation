@@ -122,7 +122,7 @@ function makeStimuli(permute){
   }
 
   stimuli = training.concat(stimuli);
-  
+
   stimuli.forEach(function(d,i){
     d.index = i+1;
   });
@@ -946,12 +946,18 @@ Utility Functions
 ***/
 
 var answer = function(){
+
   //What happens when we "confirm" our selection.
   //Get rid of the existing vizzes
   //Increment the question num
   //See if we were right
   //See how long it took
   //If it's the last question, go to the post test/wrap up screen
+
+  d3.select("#confirmBtn")
+    .attr("disabled","disabled");
+
+
   var timestamp = new Date();
   rt = timestamp-rt;
   participantData[questionIndex] = stimuli[questionIndex];
