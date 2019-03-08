@@ -314,7 +314,7 @@ var brokenBar = function(svg,data){
     breakPoint = 1/denom;
   }
 
-  var breakHeight = vizHeight/2;
+  var breakHeight = 2*vizHeight/3;
   var breakMargin = vizHeight/20;
   var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-margin,breakHeight+(breakMargin/2)]).clamp(true);
   var y2 = d3.scaleLinear().domain([t,1]).range([breakHeight-(breakMargin/2),margin]);
@@ -337,7 +337,7 @@ var brokenBar = function(svg,data){
   .attr("height", d => y2(t) - y2(d))
   .attr("width",x.bandwidth());
 
-  var y1Axis = d3.axisLeft(y1).tickFormat(d3.format(".0%")).tickValues([0,breakPoint]);
+  var y1Axis = d3.axisLeft(y1).tickFormat(d3.format(".0%")).tickValues([0]);
   var y2Axis = d3.axisLeft(y2).tickFormat(d3.format(".0%")).tickValues([t,1]);
 
   svg.append("g")
@@ -371,8 +371,8 @@ var brokenGradBar = function(svg,data){
     breakPoint = 1/denom;
   }
 
-  //half of the chart is the devoted to each section.
-  var breakHeight = vizHeight/2;
+  //most of the chart is the devoted to the top section.
+  var breakHeight = 2*vizHeight/3;
   var breakMargin = vizHeight/20;
   var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-margin,breakHeight+(breakMargin/2)]).clamp(true);
   var y2 = d3.scaleLinear().domain([t,1]).range([breakHeight-(breakMargin/2),margin]);
@@ -395,7 +395,7 @@ var brokenGradBar = function(svg,data){
   .attr("height", d => y2(t) - y2(d))
   .attr("width",x.bandwidth());
 
-  var y1Axis = d3.axisLeft(y1).tickFormat(d3.format(".0%")).tickValues([0,breakPoint]);
+  var y1Axis = d3.axisLeft(y1).tickFormat(d3.format(".0%")).tickValues([0]);
   var y2Axis = d3.axisLeft(y2).tickFormat(d3.format(".0%")).tickValues([t,1]);
 
   svg.append("g")
@@ -547,7 +547,7 @@ var brokenLollipop = function(svg,data){
   }
 
   //half of the chart is the devoted to each section.
-  var breakHeight = vizHeight/2;
+  var breakHeight = 2*vizHeight/3;
   var breakMargin = vizHeight/20;
   var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-margin,breakHeight+(breakMargin/2)]).clamp(true);
   var y2 = d3.scaleLinear().domain([t,1]).range([breakHeight-(breakMargin/2),margin]);
@@ -583,7 +583,7 @@ var brokenLollipop = function(svg,data){
       .attr("y2", d => y2(d))
       .attr("stroke-width",lineWidth);
 
-  var y1Axis = d3.axisLeft(y1).tickFormat(d3.format(".0%")).tickValues([0,breakPoint]);
+  var y1Axis = d3.axisLeft(y1).tickFormat(d3.format(".0%")).tickValues([0]);
   var y2Axis = d3.axisLeft(y2).tickFormat(d3.format(".0%")).tickValues([t,1]);
 
   svg.append("g")
@@ -618,7 +618,7 @@ var brokenGradLollipop = function(svg,data){
   }
 
   //half of the chart is the devoted to each section.
-  var breakHeight = vizHeight/2;
+  var breakHeight = 2*vizHeight/3;
   var breakMargin = vizHeight/20;
   var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-margin,breakHeight+(breakMargin/2)]).clamp(true);
   var y2 = d3.scaleLinear().domain([t,1]).range([breakHeight-(breakMargin/2),margin]);
@@ -652,7 +652,7 @@ var brokenGradLollipop = function(svg,data){
     .attr("width",lineWidth)
     .attr("height",d => y2(t) - y2(d));
 
-  var y1Axis = d3.axisLeft(y1).tickFormat(d3.format(".0%")).tickValues([0,breakPoint]);
+  var y1Axis = d3.axisLeft(y1).tickFormat(d3.format(".0%")).tickValues([0]);
   var y2Axis = d3.axisLeft(y2).tickFormat(d3.format(".0%")).tickValues([t,1]);
 
   svg.append("g")

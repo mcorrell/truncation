@@ -17,7 +17,7 @@
   $answer = json_decode($rawAnswer,true);
   $answer['ip'] = $_SERVER['REMOTE_ADDR'];
 
-  if($answer['id']=="UNKNOWN" || $answer['id']==""){
+  if($answer['id']==""){
     $path = 'test.csv';
   }
   else{
