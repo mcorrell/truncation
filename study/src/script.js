@@ -95,11 +95,12 @@ function makeStimuli(permute){
       for(frame of framingTypes){
         for(truncation of truncationTypes){
           for(slope of slopes){
+            for(size of dataSizes){
               stimulis = {};
               stimulis.visType = vis;
               stimulis.labelType = label;
               stimulis.framing = frame;
-              stimulis.dataSize = dataSizes[~~(Math.random() * dataSizes.length)];
+              stimulis.dataSize = size;
               stimulis.truncationLevel = truncation;
               stimulis.trendDirection = trendDirections[~~(Math.random() * trendDirections.length)];
               stimulis.slope = slope;
@@ -109,6 +110,7 @@ function makeStimuli(permute){
               stimulis.training=false;
               stimuli.push(stimulis);
               index++;
+            }
           }
         }
       }
@@ -179,7 +181,7 @@ var makeQuestions = function(stimulis){
 
   var binaryQ = stimulis.framing=="values" ?
   "Which value is larger, the first value or the last value?" :
-  "Are the values increasing or descreasing?";
+  "Are the values increasing or decreasing?";
 
   var binaryItems = stimulis.framing=="values" ? ["First","Last"] : ["Descreasing","Increasing"];
 
