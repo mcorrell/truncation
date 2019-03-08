@@ -12,7 +12,7 @@ Study Parameters
 var allVisTypes = ["bar","brokenbar","brokengradbar","gradbar","bottomgradbar","scatter","lollipop","gradlollipop","gradbottomlollipop","brokenlollipop","brokengradlollipop","pointline","line","area","gradarea","bottomgradarea"];
 
 //What type of visualizations will they see?
-var visTypes = ["bar","line"];
+var visTypes = ["bar","brokenbar","bottomgradbar"];
 
 //Will the individual values be labeled?
 //with, above, none
@@ -20,7 +20,7 @@ var labelTypes = ["none"];
 
 //How will the task questions be framed? In terms of specific values, in terms of the overall trend, or a mix of both?
 //values, trend
-var framingTypes = ["values","trend"];
+var framingTypes = ["trend"];
 
 //How many items are in the series?
 var dataSizes = [2,3];
@@ -93,24 +93,22 @@ function makeStimuli(permute){
   for(vis of visTypes){
     for(label of labelTypes){
       for(frame of framingTypes){
-        for(size of dataSizes){
-          for(truncation of truncationTypes){
-            for(slope of slopes){
-                stimulis = {};
-                stimulis.visType = vis;
-                stimulis.labelType = label;
-                stimulis.framing = frame;
-                stimulis.dataSize = size;
-                stimulis.truncationLevel = truncation;
-                stimulis.trendDirection = trendDirections[~~(Math.random() * trendDirections.length)];
-                stimulis.slope = slope;
-                stimulis.id = id;
-                stimulis.index = index;
-                stimulis.data = genData(stimulis);
-                stimulis.training=false;
-                stimuli.push(stimulis);
-                index++;
-            }
+        for(truncation of truncationTypes){
+          for(slope of slopes){
+              stimulis = {};
+              stimulis.visType = vis;
+              stimulis.labelType = label;
+              stimulis.framing = frame;
+              stimulis.dataSize = dataSizes[~~(Math.random() * dataSizes.length)];
+              stimulis.truncationLevel = truncation;
+              stimulis.trendDirection = trendDirections[~~(Math.random() * trendDirections.length)];
+              stimulis.slope = slope;
+              stimulis.id = id;
+              stimulis.index = index;
+              stimulis.data = genData(stimulis);
+              stimulis.training=false;
+              stimuli.push(stimulis);
+              index++;
           }
         }
       }
