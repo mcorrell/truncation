@@ -411,6 +411,12 @@ var brokenGradBar = function(svg,data){
 
 var gradBar = function(svg,data){
   //bar chart with a gradient fill, indicating truncation
+
+  if(t<=0){
+    bar(svg,data);
+    return;
+  }
+
   svg.datum(data);
   x.domain(dl.range(0,data.length,1));
 
@@ -426,6 +432,12 @@ var gradBar = function(svg,data){
 
 var bottomGradBar = function(svg,data){
   //bar chart with a gradient below the y-axis, indicating truncation
+
+  if(t<=0){
+    bar(svg,data);
+    return;
+  }
+
   svg.datum(data);
   x.domain(dl.range(0,data.length,1));
 
@@ -474,6 +486,12 @@ var lollipop = function(svg,data){
 
 var gradLollipop = function(svg,data){
   //lollipop chart with a gradient "stick", indicating truncation
+
+  if(t<=0){
+    lollipop(svg,data);
+    return;
+  }
+
   svg.datum(data);
   x.domain(dl.range(0,data.length,1));
 
@@ -497,6 +515,12 @@ var gradLollipop = function(svg,data){
 
 var gradBottomLollipop = function(svg,data){
   //lollipop chart with a gradient below the y-axis indicating truncation
+
+  if(t<=0){
+    lollipop(svg,data);
+    return;
+  }
+
   svg.datum(data);
   x.domain(dl.range(0,data.length,1));
 
@@ -685,6 +709,12 @@ var area = function(svg,data){
 
 var gradArea = function(svg,data){
   //area chart with a gradient fill indicating truncation
+
+  if(t<=0){
+    area(svg,data);
+    return;
+  }
+
   svg.datum(data);
   x.domain(dl.range(0,data.length,1));
 
@@ -702,6 +732,12 @@ var gradArea = function(svg,data){
 
 var bottomGradArea = function(svg,data){
   //area chart with a gradient rectange at the bottom indicating truncation
+
+  if(t<=0){
+    area(svg,data);
+    return;
+  }
+
   svg.datum(data);
   x.domain(dl.range(0,data.length,1));
 
