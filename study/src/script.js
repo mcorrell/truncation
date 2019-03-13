@@ -314,10 +314,9 @@ var brokenBar = function(svg,data){
     breakPoint = 1/denom;
   }
 
-  var breakHeight = 2*vizHeight/3;
-  var breakMargin = vizHeight/20;
-  var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-margin,breakHeight+(breakMargin/2)]).clamp(true);
-  var y2 = d3.scaleLinear().domain([t,1]).range([breakHeight-(breakMargin/2),margin]);
+  var breakMargin = 10;
+  var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-20,vizHeight-margin+breakMargin]).clamp(true);
+  var y2 = d3.scaleLinear().domain([t,1]).range([vizHeight-margin,margin]);
   svg.datum(data);
   x.domain(dl.range(0,data.length,1));
 
@@ -349,7 +348,7 @@ var brokenBar = function(svg,data){
     .call(y2Axis);
 
   svg.append("g")
-    .attr("transform","translate(0," + (vizHeight-margin) + ")")
+    .attr("transform","translate(0," + (vizHeight-20) + ")")
     .call(xAxis);
 }
 
@@ -372,10 +371,9 @@ var brokenGradBar = function(svg,data){
   }
 
   //most of the chart is the devoted to the top section.
-  var breakHeight = 2*vizHeight/3;
-  var breakMargin = vizHeight/20;
-  var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-margin,breakHeight+(breakMargin/2)]).clamp(true);
-  var y2 = d3.scaleLinear().domain([t,1]).range([breakHeight-(breakMargin/2),margin]);
+  var breakMargin = 10;
+  var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-20,vizHeight-margin+breakMargin]).clamp(true);
+  var y2 = d3.scaleLinear().domain([t,1]).range([vizHeight-margin,margin]);
   svg.datum(data);
   x.domain(dl.range(0,data.length,1));
 
@@ -407,12 +405,14 @@ var brokenGradBar = function(svg,data){
     .call(y2Axis);
 
   svg.append("g")
-    .attr("transform","translate(0," + (vizHeight-margin) + ")")
+    .attr("transform","translate(0," + (vizHeight-20) + ")")
     .call(xAxis);
 }
 
 var gradBar = function(svg,data){
   //bar chart with a gradient fill, indicating truncation
+
+  var t = y.domain()[0];
 
   if(t<=0){
     bar(svg,data);
@@ -434,6 +434,8 @@ var gradBar = function(svg,data){
 
 var bottomGradBar = function(svg,data){
   //bar chart with a gradient below the y-axis, indicating truncation
+
+  var t = y.domain()[0];
 
   if(t<=0){
     bar(svg,data);
@@ -488,6 +490,7 @@ var lollipop = function(svg,data){
 
 var gradLollipop = function(svg,data){
   //lollipop chart with a gradient "stick", indicating truncation
+  var t = y.domain()[0];
 
   if(t<=0){
     lollipop(svg,data);
@@ -517,6 +520,8 @@ var gradLollipop = function(svg,data){
 
 var gradBottomLollipop = function(svg,data){
   //lollipop chart with a gradient below the y-axis indicating truncation
+
+  var t = y.domain()[0];
 
   if(t<=0){
     lollipop(svg,data);
@@ -571,10 +576,9 @@ var brokenLollipop = function(svg,data){
   }
 
   //half of the chart is the devoted to each section.
-  var breakHeight = 2*vizHeight/3;
-  var breakMargin = vizHeight/20;
-  var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-margin,breakHeight+(breakMargin/2)]).clamp(true);
-  var y2 = d3.scaleLinear().domain([t,1]).range([breakHeight-(breakMargin/2),margin]);
+  var breakMargin = 10;
+  var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-20,vizHeight-margin+breakMargin]).clamp(true);
+  var y2 = d3.scaleLinear().domain([t,1]).range([vizHeight-margin,margin]);
   svg.datum(data);
   x.domain(dl.range(0,data.length,1));
 
@@ -619,7 +623,7 @@ var brokenLollipop = function(svg,data){
     .call(y2Axis);
 
   svg.append("g")
-    .attr("transform","translate(0," + (vizHeight-margin) + ")")
+    .attr("transform","translate(0," + (vizHeight-20) + ")")
     .call(xAxis);
 }
 
@@ -642,10 +646,9 @@ var brokenGradLollipop = function(svg,data){
   }
 
   //half of the chart is the devoted to each section.
-  var breakHeight = 2*vizHeight/3;
-  var breakMargin = vizHeight/20;
-  var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-margin,breakHeight+(breakMargin/2)]).clamp(true);
-  var y2 = d3.scaleLinear().domain([t,1]).range([breakHeight-(breakMargin/2),margin]);
+  var breakMargin = 10;
+  var y1 = d3.scaleLinear().domain([0,breakPoint]).range([vizHeight-20,vizHeight-margin+breakMargin]).clamp(true);
+  var y2 = d3.scaleLinear().domain([t,1]).range([vizHeight-margin,margin]);
   svg.datum(data);
   x.domain(dl.range(0,data.length,1));
 
@@ -688,7 +691,7 @@ var brokenGradLollipop = function(svg,data){
     .call(y2Axis);
 
   svg.append("g")
-    .attr("transform","translate(0," + (vizHeight-margin) + ")")
+    .attr("transform","translate(0," + (vizHeight-20) + ")")
     .call(xAxis);
 }
 
@@ -712,6 +715,8 @@ var area = function(svg,data){
 var gradArea = function(svg,data){
   //area chart with a gradient fill indicating truncation
 
+  var t = y.domain()[0];
+
   if(t<=0){
     area(svg,data);
     return;
@@ -734,6 +739,8 @@ var gradArea = function(svg,data){
 
 var bottomGradArea = function(svg,data){
   //area chart with a gradient rectange at the bottom indicating truncation
+
+  var t = y.domain()[0];
 
   if(t<=0){
     area(svg,data);
