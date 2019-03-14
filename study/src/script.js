@@ -183,7 +183,7 @@ var makeQuestions = function(stimulis){
   "Which value is larger, the first value or the last value?" :
   "Are the values increasing or decreasing?";
 
-  var binaryItems = stimulis.framing=="values" ? ["First","Last"] : ["Descreasing","Increasing"];
+  var binaryItems = stimulis.framing=="values" ? ["First","Last"] : ["Decreasing","Increasing"];
 
   var scaleQ = stimulis.framing=="values" ?
   "Subjectively, how different is the first value compared to the last value?" :
