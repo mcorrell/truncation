@@ -4,7 +4,7 @@ This folder contains the experimental apparatus to run the study, as well as the
 
 The study requires PHP and javascript to run successfully.
 
-The data are contained in the [Data](data/) folder. [Exp1](data/exp1)contains the data for the first experiment, and [Exp1](data/exp2) the data for the second experiment.
+The data are contained in the [Data](data/) folder. [Exp1](data/exp1) contains the data for the first experiment, and [Exp1](data/exp2) the data for the second experiment.
 
 ## Demographics Data
 `exp1/cleandemo.csv` and `exp2/cleandemo2.csv` contain anonymized information about the study participants in each experiment, with the following columns:
