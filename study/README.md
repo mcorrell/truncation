@@ -22,7 +22,7 @@ The data are contained in the [Data](data/) folder. [Exp1](data/exp1) contains t
 * `QUAL_noticed_truncation`: The first author's coded response concerning whether any of the free-text responses relate to the truncated y-axes on the visualizations in the main task.
 
 ## Trial Data
-`exp1/cleanrows.csv`and `exp2/cleanrows.csv` contain the responses for all participants, with the following columns:
+`exp1/cleanrows.csv`and `exp2/cleanrows2.csv` contain the responses for all participants, with the following columns:
 
 * `visType`: The visual design of the visualization the participants saw. For Exp1, either `bar` or `line`. For Exp2, either `bar`,`brokenbar`, or `bottomgradbar`.
 * `framing`: Whether the question about effect size was framed as being about individual `values` or overall `trend`. Exp1 had only the `trend` framing.
