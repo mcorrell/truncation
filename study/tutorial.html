@@ -11,19 +11,31 @@
   After you have seen the charts, we will ask you some basic questions about interpreting charts and graphs, and then ask for some basic demographic data. </p>
 
   <h2>Chart Types</h2>
-  <div class="fig">
-    <div class="figImg"><img src="img/bar.png" />A <b>bar</b> chart</div>
-    <div class="figImg"><img src="img/brokenbar.png" />A bar chart with a <b>broken axis</b></div>
-    <div class="figImg"><img src="img/bottomgradbar.png" />A bar chart with a <b>gradient</b></div>
-    <div class="figCaption">The same sample data, represented as three different chart types.</div>
+  <div id="exp2">
+    <div class="fig">
+      <div class="figImg"><img src="img/bar.png" />A <b>bar</b> chart</div>
+      <div class="figImg"><img src="img/brokenbar.png" />A bar chart with a <b>broken axis</b></div>
+      <div class="figImg"><img src="img/bottomgradbar.png" />A bar chart with a <b>gradient</b></div>
+      <div class="figCaption">The same sample data, represented as three different chart types.</div>
+    </div>
+    <p>You will see up to three different chart types. You will be asked about how you perceive the <b>effect sizes</b> in these charts: how quickly are the data increasing or decreasing? How different is one value from another?</p>
   </div>
-  <p>You will see up to three different chart types. You will be asked about how you perceive the <b>effect sizes</b> in these charts: how quickly are the data increasing or decreasing? How different is one value from another?</p>
+
+  <div id="exp1">
+    <div class="fig">
+      <div class="figImg"><img src="img/exp1_bar.png" />A <b>bar</b> chart</div>
+      <div class="figImg"><img src="img/line.png" />A <b>line</b> chart</div>
+    </div>
+    <p>You will see two different chart types. You will be asked about how you perceive the <b>effect sizes</b> in these charts: how quickly are the data increasing or decreasing? How different is one value from another?</p>
+  </div>
+
   <p>Do not refresh or reload the page during the task, as this will erase your progress.</p>
   <p>Click the "Ready" button to begin the pretest.</p>
   <form method="GET" action="task.html">
     <p>
       <input type="submit" value="Ready" />
       <input type="hidden" id="id" name="id" value="id" />
+      <input type="hidden" id="exp" name="exp" value="exp1" />
     </p>
   </form>
   <script>
@@ -39,6 +51,17 @@
   }
   var id = gup("id");
   d3.select("#id").attr("value",id);
+
+  var exp = gup("exp");
+  d3.select("#exp").attr("value",exp);
+
+  if(exp=="exp2"){
+    d3.select("#exp1").remove("*");
+  }
+  else{
+    d3.select("#exp2").remove("*");
+  }
+
   </script>
 </body>
 </html>

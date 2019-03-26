@@ -9,7 +9,7 @@ Study Parameters
 ***/
 //What experiment are we doing?
 //exp1,exp2
-var experiment = "exp2";
+var experiment = gup("exp");
 
 //What are the visualizations I've implemented so far?
 var allVisTypes = ["bar","brokenbar","brokengradbar","gradbar","bottomgradbar","scatter","lollipop","gradlollipop","gradbottomlollipop","brokenlollipop","brokengradlollipop","pointline","line","area","gradarea","bottomgradarea"];
@@ -23,7 +23,7 @@ var labelTypes = ["none"];
 
 //How will the task questions be framed? In terms of specific values, in terms of the overall trend, or a mix of both?
 //values, trend
-var framingTypes = experiment=="exp2" ? ["trend"] : ["values,"trend"];
+var framingTypes = experiment=="exp2" ? ["trend"] : ["values","trend"];
 
 //How many items are in the series?
 var dataSizes = [2,3];

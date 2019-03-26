@@ -1,13 +1,17 @@
 # Study Materials
-
 This folder contains the experimental apparatus to run the study, as well as the data tables for this study.
 
 The study requires PHP and javascript to run successfully.
+
+Click [here](study/consent.html?exp=exp1) to try out the first experiment.
+Click [here](study/consent.html?exp=exp2) to try out the second experiment.
+
 
 The data are contained in the [Data](data/) folder. [Exp1](data/exp1) contains the data for the first experiment, and [Exp1](data/exp2) the data for the second experiment.
 
 ## Demographics Data
 `exp1/cleandemo.csv` and `exp2/cleandemo2.csv` contain anonymized information about the study participants in each experiment, with the following columns:
+* `experiment`: Which experiment these participants participated in, `Exp1` or `Exp2`.
 * `timestamp`: When the participant submitted the study task, as a UTC timestamp.
 * `id`: The anonymous participant id.
 * `gender`: The participant gender.
@@ -43,4 +47,4 @@ The data are contained in the [Data](data/) folder. [Exp1](data/exp1) contains t
 * `x0`...`x`n: The value of the nth item in the data series, in percent. `null` if there were fewer items than the maximum (e.g. half of the visualizations had only two values, and the other half three values).
  the scatterplot, or the number of bins in the histogram.
 
-`analysis.R` is the R script used to conduct the analyses and generate the figures in the paper.
+`analysis.R` is the R script used to conduct the analyses and generate the figures in the paper. It relies on the `ggplot2`, `ez` and `skimr` libraries.

@@ -34,6 +34,7 @@
     <p>
       <form method="GET" action="tutorial.html">
         <input id="id" type="hidden" name="id" value="UNDEFINED"/>
+        <input type="hidden" id="exp" name="exp" value="exp1" />
         <p>
           <input type="submit" value="I Agree" />
         </p>
@@ -54,6 +55,8 @@
   id = (!id || id.length==0) ? "UNDEFINED" : id;
   d3.select("#id").attr("value",id);
   d3.select("#prolificid").text(id);
+  var exp = gup("exp");
+  d3.select("#exp").attr("value",exp);
 </script>
 </body>
 </html>

@@ -1,33 +1,33 @@
-timestamp,id,gender,age,education,graphicity,q10,q11,strategy,notice,comments,QUAL_coder1,QUAL_coder2,QUAL_mismatch,QUAL_noticed_truncation
-2019-03-14T09:22:56-05:00,5c893738ba1c4500167da8c3,Male,27,Graduate degree,12,3,4,Always make reference to the Y axis first to make sure the measurement wasn't bias_ then move over to the data to see if they were showing trends which were exaggerated due to the y axis ,some looked like the same data set just manipulated using the y axis to make the difference look larger than they actually are ,none,1,1,FALSE,1
-2019-03-14T09:23:17-05:00,5c10ccb06d1ac9000101dd34,Male,21,High school degree,10,3,3,analyze,no,,0,0,FALSE,0
-2019-03-14T09:32:58-05:00,5c24e83ac298750001776310,Male,23,Some college,8,1,2,Graphical proportion between the graphs,No,No,0,0,FALSE,0
-2019-03-14T09:34:06-05:00,5bd99e2bfdc9a90001728892,Female,26,College degree,11,3,2,Logical thinking,Not all started from 0_ but X was always the same,no,1,1,FALSE,1
-2019-03-14T09:36:05-05:00,5751e9f9eb80c4000741a65d,Female,32,Some college,12,3,4,paper measuring straight lines against the screen ,some lines were pixelated making specifics harder.,no_ thank you.,0,0,FALSE,0
-2019-03-14T09:38:17-05:00,5c49f8ffd9326c0001f3f5a5,Female,19,High school degree,12,3,2,I checked the height of the columns ,No,No,0,0,FALSE,0
-2019-03-14T09:39:19-05:00,5a2aec00443c100001211332,Male,43,Graduate degree,12,3,2,Decided on a baseline jump of what I perceived the subjective 'quickness' to be and tried to apply that based on the changes to the starting value of the %. ,No.  ,,1,1,FALSE,1
-2019-03-14T09:40:15-05:00,5a61c73a13898300014b14d8,Female,20,Some college,9,3,2,logic,no ,,0,0,FALSE,0
-2019-03-14T09:41:08-05:00,5c13a2a42066db0001604e4d,Female,33,Graduate degree,11,3,2,I was just reading the charts,ni,no,0,0,FALSE,0
-2019-03-14T09:46:33-05:00,5b7f280ef366a80001263ec3,Male,20,Some college,12,3,4,Looked at the number that was being used to set the baseline (whether it was 0_ 25_ or 50) and used that to determine how quickly I thought the numbers were increasing or decreasing,Not really,,1,1,FALSE,1
-2019-03-14T09:46:34-05:00,5a1431b35d06850001b0081d,Female,41,High school degree,7,3,2,Just thinking that's it ,No,No,0,0,FALSE,0
-2019-03-14T09:47:22-05:00,5bd47e07860b840001dbbf90,Female,32,College degree,11,1,2,Just looked at the charts,No,,0,0,FALSE,0
-2019-03-14T09:47:32-05:00,5ae96d1878b0060001e69b8a,Female,29,Graduate degree,10,4,3,Common sense,No - some graphs were missing numbers. ,In the first task decreasing was spelt wrong,0,0,FALSE,0
-2019-03-14T09:47:58-05:00,5c090a1a822fb40001a27936,Female,19,Some college,10,3,2,Tried to use comparison. ,No,I answered the last question wrong but realised as I pressed next! Sorry!,0,0,FALSE,0
-2019-03-14T09:49:47-05:00,5c0d30d9395bab0001eefbd3,Female,19,High school degree,12,3,2,I tried to compare the heights with the axes I got,The axes differ from time time,It's difficult to subjectively assess the change not having anything to compare it to,1,1,FALSE,1
-2019-03-14T09:50:09-05:00,5c5a9cf377ed900001625bd7,Male,34,Graduate degree,11,3,2,any,no,none,0,0,FALSE,0
-2019-03-14T09:50:21-05:00,5c71a0068e48570001f9cf56,Male,19,Some college,11,1,2,I used mostly visual aid to complete the task_ because some of them where it was not 100% one number I had to visualize to get the best aproximation that i could.,I didn't really notice anything unusual although I never have to see the bar graph with the separated bottom before,No additional feedback but in my opinion_ the pie charts are extremely hard to read without numbers on them but the rest of the charts are pretty straight forward!,1,1,FALSE,1
-2019-03-14T09:51:07-05:00,5c7e4b8a137b9900166d8eda,Female,48,Some high school,7,2,2,Thinking,Na,Na,0,0,FALSE,0
-2019-03-14T09:52:49-05:00,5c11b4f4d47b000001499aaf,Female,19,High school degree,12,3,4,just my brain,No,,0,0,FALSE,0
-2019-03-14T09:54:05-05:00,5bc3b9a46bd778000122f880,Female,25,Graduate degree,13,3,4,Paid attention to the scale and took this into consideration when determining the difference between bars.,No,,1,1,FALSE,1
-2019-03-14T09:54:51-05:00,565a3d24c51d430005875042,Female,24,Some college,12,3,4,mental math,they began at different places in the percentage_ making the differences appear larger despite sometimes being the same,,1,1,FALSE,1
-2019-03-14T09:55:34-05:00,5c5378fa54f9d30001db1a73,Female,19,Some college,10,3,2,Comparing the different graphics ,No,No,0,0,FALSE,0
-2019-03-14T09:56:00-05:00,5b366ffa06f9f90001fb4f41,Male,18,Some high school,11,1,2,Simple_ i just look ;),They are about health,No thank you,0,0,FALSE,0
-2019-03-14T09:56:24-05:00,5b4a1c8a166a4c000141a0bf,Female,18,High school degree,11,3,4,I just estimated ,They changed starting percentage and some of them were raised at the bottom ,No,1,1,FALSE,1
-2019-03-14T10:00:40-05:00,5aa46cdb1ade740001b95d5d,Male,24,College degree,11,3,2,My strategy was to to read all questions and charts carefully and I thnk I did my best.,I didnt notice anything wrong about the charts.,Some charts were a bit blurred.,0,0,FALSE,0
-2019-03-14T10:00:54-05:00,5c13ea66afe26c00014d8f05,Male,21,Graduate degree,10,3,2,Interpreting the graphs,No,No,0,0,FALSE,0
-2019-03-14T10:01:20-05:00,5926e5db121ca6000184c176,Female,34,Graduate degree,13,3,4,None in particular,No,Na,0,0,FALSE,0
-2019-03-14T10:02:22-05:00,5b96dd68d193e30001b3cb69,Male,28,Some college,13,3,4,I did not use any particular strategy or procedure. I simply followed the instructions and tried my best to read the charts as I normally would when_ for example_ viewing different types of documents_ doing research_ etc.,No_ I don't think there was anything odd ur unusual about them.,,0,0,FALSE,0
-2019-03-14T10:05:07-05:00,5c4321b881cc58000186df28,Female,30,Graduate degree,11,3,3,Looking at the scales,No,,1,0,TRUE,1
-2019-03-14T10:07:27-05:00,5c868f27392ce000153ee1ff,Female,58,Some high school,7,2,3,visual,there was a lot of bar charts that looked very similar,i enjoyed the survey,0,0,FALSE,0
-2019-03-14T10:09:57-05:00,590631366462090001a7f12a,Female,40,High school degree,11,3,2,My own personal judgement,No,None,0,0,FALSE,0
-2019-03-14T10:11:14-05:00,571b99e55d40840011c3de5f,Male,64,College degree,12,3,2,Basic knowledge of data presentation/interpretation over 33 years in science and engineering.,y-axis scale changed frequently,"The added ""Ready"" step/click between charts in part 1 is superfluous_ in my view.",1,1,FALSE,1
+experiment,timestamp,id,gender,age,education,graphicity,q10,q11,strategy,notice,comments,QUAL_coder1,QUAL_coder2,QUAL_mismatch,QUAL_noticed_truncation
+Exp2,2019-03-14T09:22:56-05:00,5c893738ba1c4500167da8c3,Male,27,Graduate degree,12,3,4,Always make reference to the Y axis first to make sure the measurement wasn't bias_ then move over to the data to see if they were showing trends which were exaggerated due to the y axis ,some looked like the same data set just manipulated using the y axis to make the difference look larger than they actually are ,none,1,1,FALSE,1
+Exp2,2019-03-14T09:23:17-05:00,5c10ccb06d1ac9000101dd34,Male,21,High school degree,10,3,3,analyze,no,,0,0,FALSE,0
+Exp2,2019-03-14T09:32:58-05:00,5c24e83ac298750001776310,Male,23,Some college,8,1,2,Graphical proportion between the graphs,No,No,0,0,FALSE,0
+Exp2,2019-03-14T09:34:06-05:00,5bd99e2bfdc9a90001728892,Female,26,College degree,11,3,2,Logical thinking,Not all started from 0_ but X was always the same,no,1,1,FALSE,1
+Exp2,2019-03-14T09:36:05-05:00,5751e9f9eb80c4000741a65d,Female,32,Some college,12,3,4,paper measuring straight lines against the screen ,some lines were pixelated making specifics harder.,no_ thank you.,0,0,FALSE,0
+Exp2,2019-03-14T09:38:17-05:00,5c49f8ffd9326c0001f3f5a5,Female,19,High school degree,12,3,2,I checked the height of the columns ,No,No,0,0,FALSE,0
+Exp2,2019-03-14T09:39:19-05:00,5a2aec00443c100001211332,Male,43,Graduate degree,12,3,2,Decided on a baseline jump of what I perceived the subjective 'quickness' to be and tried to apply that based on the changes to the starting value of the %. ,No.  ,,1,1,FALSE,1
+Exp2,2019-03-14T09:40:15-05:00,5a61c73a13898300014b14d8,Female,20,Some college,9,3,2,logic,no ,,0,0,FALSE,0
+Exp2,2019-03-14T09:41:08-05:00,5c13a2a42066db0001604e4d,Female,33,Graduate degree,11,3,2,I was just reading the charts,ni,no,0,0,FALSE,0
+Exp2,2019-03-14T09:46:33-05:00,5b7f280ef366a80001263ec3,Male,20,Some college,12,3,4,Looked at the number that was being used to set the baseline (whether it was 0_ 25_ or 50) and used that to determine how quickly I thought the numbers were increasing or decreasing,Not really,,1,1,FALSE,1
+Exp2,2019-03-14T09:46:34-05:00,5a1431b35d06850001b0081d,Female,41,High school degree,7,3,2,Just thinking that's it ,No,No,0,0,FALSE,0
+Exp2,2019-03-14T09:47:22-05:00,5bd47e07860b840001dbbf90,Female,32,College degree,11,1,2,Just looked at the charts,No,,0,0,FALSE,0
+Exp2,2019-03-14T09:47:32-05:00,5ae96d1878b0060001e69b8a,Female,29,Graduate degree,10,4,3,Common sense,No - some graphs were missing numbers. ,In the first task decreasing was spelt wrong,0,0,FALSE,0
+Exp2,2019-03-14T09:47:58-05:00,5c090a1a822fb40001a27936,Female,19,Some college,10,3,2,Tried to use comparison. ,No,I answered the last question wrong but realised as I pressed next! Sorry!,0,0,FALSE,0
+Exp2,2019-03-14T09:49:47-05:00,5c0d30d9395bab0001eefbd3,Female,19,High school degree,12,3,2,I tried to compare the heights with the axes I got,The axes differ from time time,It's difficult to subjectively assess the change not having anything to compare it to,1,1,FALSE,1
+Exp2,2019-03-14T09:50:09-05:00,5c5a9cf377ed900001625bd7,Male,34,Graduate degree,11,3,2,any,no,none,0,0,FALSE,0
+Exp2,2019-03-14T09:50:21-05:00,5c71a0068e48570001f9cf56,Male,19,Some college,11,1,2,I used mostly visual aid to complete the task_ because some of them where it was not 100% one number I had to visualize to get the best aproximation that i could.,I didn't really notice anything unusual although I never have to see the bar graph with the separated bottom before,No additional feedback but in my opinion_ the pie charts are extremely hard to read without numbers on them but the rest of the charts are pretty straight forward!,1,1,FALSE,1
+Exp2,2019-03-14T09:51:07-05:00,5c7e4b8a137b9900166d8eda,Female,48,Some high school,7,2,2,Thinking,Na,Na,0,0,FALSE,0
+Exp2,2019-03-14T09:52:49-05:00,5c11b4f4d47b000001499aaf,Female,19,High school degree,12,3,4,just my brain,No,,0,0,FALSE,0
+Exp2,2019-03-14T09:54:05-05:00,5bc3b9a46bd778000122f880,Female,25,Graduate degree,13,3,4,Paid attention to the scale and took this into consideration when determining the difference between bars.,No,,1,1,FALSE,1
+Exp2,2019-03-14T09:54:51-05:00,565a3d24c51d430005875042,Female,24,Some college,12,3,4,mental math,they began at different places in the percentage_ making the differences appear larger despite sometimes being the same,,1,1,FALSE,1
+Exp2,2019-03-14T09:55:34-05:00,5c5378fa54f9d30001db1a73,Female,19,Some college,10,3,2,Comparing the different graphics ,No,No,0,0,FALSE,0
+Exp2,2019-03-14T09:56:00-05:00,5b366ffa06f9f90001fb4f41,Male,18,Some high school,11,1,2,Simple_ i just look ;),They are about health,No thank you,0,0,FALSE,0
+Exp2,2019-03-14T09:56:24-05:00,5b4a1c8a166a4c000141a0bf,Female,18,High school degree,11,3,4,I just estimated ,They changed starting percentage and some of them were raised at the bottom ,No,1,1,FALSE,1
+Exp2,2019-03-14T10:00:40-05:00,5aa46cdb1ade740001b95d5d,Male,24,College degree,11,3,2,My strategy was to to read all questions and charts carefully and I thnk I did my best.,I didnt notice anything wrong about the charts.,Some charts were a bit blurred.,0,0,FALSE,0
+Exp2,2019-03-14T10:00:54-05:00,5c13ea66afe26c00014d8f05,Male,21,Graduate degree,10,3,2,Interpreting the graphs,No,No,0,0,FALSE,0
+Exp2,2019-03-14T10:01:20-05:00,5926e5db121ca6000184c176,Female,34,Graduate degree,13,3,4,None in particular,No,Na,0,0,FALSE,0
+Exp2,2019-03-14T10:02:22-05:00,5b96dd68d193e30001b3cb69,Male,28,Some college,13,3,4,I did not use any particular strategy or procedure. I simply followed the instructions and tried my best to read the charts as I normally would when_ for example_ viewing different types of documents_ doing research_ etc.,No_ I don't think there was anything odd ur unusual about them.,,0,0,FALSE,0
+Exp2,2019-03-14T10:05:07-05:00,5c4321b881cc58000186df28,Female,30,Graduate degree,11,3,3,Looking at the scales,No,,1,0,TRUE,1
+Exp2,2019-03-14T10:07:27-05:00,5c868f27392ce000153ee1ff,Female,58,Some high school,7,2,3,visual,there was a lot of bar charts that looked very similar,i enjoyed the survey,0,0,FALSE,0
+Exp2,2019-03-14T10:09:57-05:00,590631366462090001a7f12a,Female,40,High school degree,11,3,2,My own personal judgement,No,None,0,0,FALSE,0
+Exp2,2019-03-14T10:11:14-05:00,571b99e55d40840011c3de5f,Male,64,College degree,12,3,2,Basic knowledge of data presentation/interpretation over 33 years in science and engineering.,y-axis scale changed frequently,"The added ""Ready"" step/click between charts in part 1 is superfluous_ in my view.",1,1,FALSE,1
