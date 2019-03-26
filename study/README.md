@@ -8,7 +8,7 @@ Click [here](consent.html?exp=exp1) to try out the first experiment.
 Click [here](consent.html?exp=exp2) to try out the second experiment.
 
 The data are contained in the [Data](data/) folder.
-[Exp1](data/exp1) contains the data for the first experiment, and [Exp1](data/exp2) the data for the second experiment.
+[Exp1](data/exp1) contains the data for the first experiment, and [Exp2](data/exp2) the data for the second experiment.
 
 We also include the [R script](data/analysis.R) we used for data analysis and figure generation.
 
@@ -47,7 +47,7 @@ We also include the [R script](data/analysis.R) we used for data analysis and fi
 * `correct`: Whether the participant got the engagement question correct (if `qTrend`==`slope` then `1`, else `0`).
 * `firstX`: The value of the first item in the data series, in percent.
 * `lastX`: The value of the last item in the data series, in percent.
-* `x0`...`x`n: The value of the nth item in the data series, in percent. `null` if there were fewer items than the maximum (e.g. half of the visualizations had only two values, and the other half three values).
+* `x0`...`xn`: The value of the nth item in the data series, in percent. `null` if there were fewer items than the maximum (e.g. half of the visualizations had only two values, and the other half three values).
  the scatterplot, or the number of bins in the histogram.
 
 `analysis.R` is the R script used to conduct the analyses and generate the figures in the paper. It relies on the `ggplot2`, `ez` and `skimr` libraries.
