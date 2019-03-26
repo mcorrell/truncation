@@ -10,6 +10,8 @@ Click [here](consent.html?exp=exp2) to try out the second experiment.
 The data are contained in the [Data](data/) folder.
 [Exp1](data/exp1) contains the data for the first experiment, and [Exp1](data/exp2) the data for the second experiment.
 
+We also include the [R script](data/analysis.R) we used for data analysis and figure generation.
+
 ## Demographics Data
 `exp1/cleandemo.csv` and `exp2/cleandemo2.csv` contain anonymized information about the study participants in each experiment, with the following columns:
 * `experiment`: Which experiment these participants participated in, `Exp1` or `Exp2`.
