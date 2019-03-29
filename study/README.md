@@ -12,6 +12,8 @@ The data are contained in the [Data](data/) folder.
 
 We also include the [R script](data/analysis.R) we used for data analysis and figure generation.
 
+We've collected a group of [blogs and other media](blogs.csv) about y-axis truncation as well, in order to characterize the ongoing debate and when it's okay to truncate the y-axis, and how to design around the issue of data that doesn't start at 0.
+
 ## Demographics Data
 `exp1/cleandemo.csv` and `exp2/cleandemo2.csv` contain anonymized information about the study participants in each experiment, with the following columns:
 * `experiment`: Which experiment these participants participated in, `Exp1` or `Exp2`.
