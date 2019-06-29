@@ -9,7 +9,7 @@
     <p>You are invited by Michael Correll of the Tableau Research team to participate in a research study about how users make judgements about information in different kinds of charts. You have been asked to participate because we need to know how trends or effects are perceived in different kinds of charts.</p>
     <p>This study will include participants over 18 years of age who feel comfortable using an online interface to read graphs and answer questions about data.</p>
     <h4><b>What Will My Participation Involve?</b></h4>
-    <p>If you decide to participate in this research, you will be asked to answer questions about fictional data, using a number of charts or graphs to assist you in making decisions. You will be presented with a set of <span id="chartNum">44</span> charts, and asked to answer brief questions. After the main task, we will ask you some questions about how you read charts and collect basic demographic information. We expect this study to take 30 minutes.</p>
+    <p>If you decide to participate in this research, you will be asked to answer questions about fictional data, using a number of charts or graphs to assist you in making decisions. You will be presented with a set of <span id="chartNum">56</span> charts, and asked to answer brief questions. After the main task, we will ask you some questions about how you read charts and collect basic demographic information. We expect this study to take 30 minutes.</p>
     <h4><b>Are There Any Risks To Me?</b></h4>
     <p>We don't anticipate any risks from participation in this study greater than normal activity.</p>
     <h4><b>Are There Any Benefits To Me?</b></h4>
@@ -57,8 +57,8 @@
   d3.select("#prolificid").text(id);
   var exp = gup("exp");
   d3.select("#exp").attr("value",exp);
-  if(exp=="exp2"){
-    d3.select("#chartNum").text("56");
+  if(exp=="exp2" || exp=="exp3"){
+    d3.select("#chartNum").text("44");
   }
 </script>
 </body>

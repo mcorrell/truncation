@@ -8,14 +8,15 @@
 Study Parameters
 ***/
 //What experiment are we doing?
-//exp1,exp2
+//exp1,exp2,exp3
+
 var experiment = gup("exp");
 
 //What are the visualizations I've implemented so far?
 var allVisTypes = ["bar","brokenbar","brokengradbar","gradbar","bottomgradbar","scatter","lollipop","gradlollipop","gradbottomlollipop","brokenlollipop","brokengradlollipop","pointline","line","area","gradarea","bottomgradarea"];
 
 //What type of visualizations will they see?
-var visTypes = experiment=="exp2" ? ["bar","brokenbar","bottomgradbar"] : ["bar","line"];
+var visTypes = (experiment=="exp2" || experiment=="exp3") ? ["bar","brokenbar","bottomgradbar"] : ["bar","line"];
 
 //Will the individual values be labeled?
 //with, above, none
@@ -23,7 +24,7 @@ var labelTypes = ["none"];
 
 //How will the task questions be framed? In terms of specific values, in terms of the overall trend, or a mix of both?
 //values, trend
-var framingTypes = experiment=="exp2" ? ["trend"] : ["values","trend"];
+var framingTypes = (experiment=="exp2" || experiment=="exp3") ? ["trend"] : ["values","trend"];
 
 //How many items are in the series?
 var dataSizes = [2,3];
@@ -160,7 +161,7 @@ var nextQuestion = function(){
   questionIndex++;
   //Check to see if the next question is the last one
   if(questionIndex==stimuli.length){
-    window.location.href="graphicity.html?id="+stimuli[0].id;
+    window.location.href="graphicity.html?id="+stimuli[0].id+"\&exp="+experiment;
   }
 
   d3.select("#readyBtn")

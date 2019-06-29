@@ -178,6 +178,7 @@
 
     <div>
     <input type="hidden" id="id" name="id" value="id" />
+    <input type="hidden" id="exp" name="exp" value="" />
     <input type="submit" value="Submit" />
     </div>
   </form>
@@ -195,6 +196,7 @@
   }
   var id = gup("id");
   d3.select("#id").attr("value",id);
+  d3.select("#id").attr("value",gup("exp"));
   </script>
 
 </body>
