@@ -204,19 +204,22 @@ var makeQuestions = function(stimulis){
   makeScale(questions, "q2", scaleQ, scaleItems, true);
 
   if (experiment == "exp3"){
-    makeInput(questions, "q3", "");
-    makeInput(questions, "q4", "");
+    makeInput(questions, "q3", "What is the value of the first data point (0-100%)");
+    makeInput(questions, "q4", "What is the value of the last data point (0-100%)");
   }
 
 
-  questions.selectAll("input").on("change", checkInput);
+  questions.selectAll("input").on("change input", checkInput);
 }
 
 var checkInput = function(){
-  if (+document.forms["questions"]["q1"].value && +document.forms["questions"]["q2"].value){
-    if (experiment != "exp3" || (+document.forms["questions"]["q3"].value && +document.forms["questions"]["q4"].value)){
-      d3.select("#confirmBtn").attr("disabled", null);
-    }
+  let exp12qsSet = +document.forms["questions"]["q1"].value && +document.forms["questions"]["q2"].value;
+  let exp3qsSet = experiment != "exp3" ? true : !document.forms["questions"]["q3"].value == "" && !document.forms["questions"]["q4"].value == "";
+  if (exp12qsSet && exp3qsSet){
+    d3.select("#confirmBtn").attr("disabled", null);
+  }
+  else {
+    d3.select("#confirmBtn").attr("disabled", "disabled");
   }
 }
 
@@ -225,7 +228,15 @@ var makeInput = function(parent, id, question){
     .text(question)
     .style("font-weight", "bold");
 
-//TODO: finish this function to make a numeric input for exp3
+  var scale = parent.append("div")
+    .classed("scale", true)
+    .attr("id", id);
+
+  scale.append("input")
+    .attr("name", id)
+    .attr("type", "number")
+    .attr("min", 0)
+    .attr("max", 100);
 }
 
 var makeScale = function(parent, id, question, labels, showNumbers){
@@ -1031,8 +1042,12 @@ var answer = function(){
   participantData[questionIndex].qTrend = +document.forms["questions"]["q1"].value;
   participantData[questionIndex].qTrend = participantData[questionIndex].qTrend == 1 ? -1 : 1;
   participantData[questionIndex].qSeverity = +document.forms["questions"]["q2"].value;
+  if (experiment == "Exp3"){
+    participantData[questionIndex].qFirst = +document.forms["questions"]["q3"].value / 100;
+    participantData[questionIndex].qLast = +document.forms["questions"]["q4"].value / 100;
+    participantData[questionIndex].trendError = (participantData[questionIndex].qLast - participantData[questionIndex].qFirst) - participantData[questionIndex].slope;
+  }
   participantData[questionIndex].correct = (participantData[questionIndex].qTrend == participantData[questionIndex].trendDirection) ? 1 : 0;
-
   d3.select("#vis").selectAll("*:not(.grad)").remove();
   d3.select("#questions").selectAll("*").remove();
 
