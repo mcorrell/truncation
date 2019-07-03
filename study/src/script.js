@@ -202,11 +202,11 @@ var makeQuestions = function(stimulis){
   ["Almost the Same", "", "Somewhat Different", "", "Extremely Different"] :
   ["Barely", "", "Somewhat", "", "Extremely Quickly"];
 
-  makeScale(questions, "q1", binaryQ, binaryItems, false);
   if (experiment == "exp3"){
-    makeInput(questions, "q3", "What is the value of the first data point (0-100%)");
-    makeInput(questions, "q4", "What is the value of the last data point (0-100%)");
+    makeInput(questions, "q3", "What is the value of the first bar (0-100%)");
+    makeInput(questions, "q4", "What is the value of the last bar (0-100%)");
   }
+  makeScale(questions, "q1", binaryQ, binaryItems, false);
   makeScale(questions, "q2", scaleQ, scaleItems, true);
 
   questions.selectAll("input").on("change input", checkInput);
