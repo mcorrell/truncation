@@ -10,7 +10,9 @@ Study Parameters
 //What experiment are we doing?
 //exp1,exp2,exp3
 
-const experiment = gup("exp");
+//Set the "default" to be the most recent experiment.
+let experiment = gup("exp");
+experiment = !experiment || experiment == "" ? "exp3" : experiment;
 
 //What are the visualizations I've implemented so far?
 const allVisTypes = ["bar", "brokenbar", "brokengradbar", "gradbar", "bottomgradbar", "scatter", "lollipop", "gradlollipop", "gradbottomlollipop", "brokenlollipop", "brokengradlollipop", "pointline", "line", "area", "gradarea", "bottomgradarea"];
@@ -201,13 +203,11 @@ var makeQuestions = function(stimulis){
   ["Barely", "", "Somewhat", "", "Extremely Quickly"];
 
   makeScale(questions, "q1", binaryQ, binaryItems, false);
-  makeScale(questions, "q2", scaleQ, scaleItems, true);
-
   if (experiment == "exp3"){
     makeInput(questions, "q3", "What is the value of the first data point (0-100%)");
     makeInput(questions, "q4", "What is the value of the last data point (0-100%)");
   }
-
+  makeScale(questions, "q2", scaleQ, scaleItems, true);
 
   questions.selectAll("input").on("change input", checkInput);
 }
