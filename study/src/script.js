@@ -1001,6 +1001,7 @@ var writeAnswer = function(response){
   var data = toWrite.data;
   toWrite.firstX = data[0];
   toWrite.lastX = data[data.length - 1];
+  toWrite.exp = experiment;
 
   for (var i = 0;i < dl.max(dataSizes);i++){
     toWrite["x" + i] = data[i] ? data[i] : "";
@@ -1042,7 +1043,7 @@ var answer = function(){
   participantData[questionIndex].qTrend = +document.forms["questions"]["q1"].value;
   participantData[questionIndex].qTrend = participantData[questionIndex].qTrend == 1 ? -1 : 1;
   participantData[questionIndex].qSeverity = +document.forms["questions"]["q2"].value;
-  if (experiment == "Exp3"){
+  if (experiment == "exp3"){
     participantData[questionIndex].qFirst = +document.forms["questions"]["q3"].value / 100;
     participantData[questionIndex].qLast = +document.forms["questions"]["q4"].value / 100;
     participantData[questionIndex].trendError = (participantData[questionIndex].qLast - participantData[questionIndex].qFirst) - participantData[questionIndex].slope;
