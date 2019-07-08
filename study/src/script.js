@@ -214,8 +214,15 @@ var makeQuestions = function(stimulis){
 
 var checkInput = function(){
   let exp12qsSet = +document.forms["questions"]["q1"].value && +document.forms["questions"]["q2"].value;
-  let exp3qsSet = experiment != "exp3" ? true : !document.forms["questions"]["q3"].value == "" && !document.forms["questions"]["q4"].value == "";
-  if (exp12qsSet && exp3qsSet){
+  let exp3validate = true;
+  if (experiment == "exp3") {
+    let exp3qsSet = !document.forms["questions"]["q3"].value == "" && !document.forms["questions"]["q4"].value == "";
+    let q3 = +document.forms["questions"]["q3"].value;
+    let q4 = +document.forms["questions"]["q4"].value;
+    let exp3qsInRange = q3 >= 0 && q3 <= 100 && q4 >= 0 && q4 <= 100;
+    exp3validate = exp3qsSet && exp3qsInRange;
+  }
+  if (exp12qsSet && exp3validate){  
     d3.select("#confirmBtn").attr("disabled", null);
   }
   else {
