@@ -53,6 +53,8 @@
   d3.select("#id").attr("value",id);
 
   var exp = gup("exp");
+  exp = !exp || exp == "" ? "exp3" : exp;
+
   d3.select("#exp").attr("value",exp);
 
   if(exp=="exp2" || exp=="exp3"){
