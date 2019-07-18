@@ -27,7 +27,7 @@ if(true || is_writable($path)){
   }
 
   $id = $_POST['id'];
-  $experiment = $_POST['experiment'];
+  $experiment = $_POST['exp'];
   $gender = $_POST['gender'];
   $age = $_POST['age'];
   $education = $_POST['education'];

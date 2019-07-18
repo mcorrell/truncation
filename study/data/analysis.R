@@ -20,6 +20,14 @@ tboot <- function(x) {
 #cleandemo.csv is my demographic data, and cleanrows.csv is the per-trial information.
 #They are called "clean" because I've stripped out any potentially identifying information (ip address) and also I've eliminated duplicate rows and cleaned up any special characters (newlines, commas) in free text responses that would mess with our csv.
 
+#"clean" in cleandemo and cleandata here and in subsequent experiments mean that I:
+# 1) merged the per-participant csvs using awk '(NR == 1) || (FNR > 1)' *.csv > cleandata.csv
+# 2) got rid of ip and other potentially identifiable columns we were keeping for QA purposes (for instance to see if people were trying to take the study multiple times, or if they ran into technical issues halfway through and needed direct reimbursement, etc.
+# 3) dealt with escaped characters/newlines in the free text responses to make the csvs behave nicely
+# 4) did some qualitative coding of free text responses
+# 5) pruned repeated rows caused by server write issues
+# 6) remove data from participants who withdrew from the study
+
 #Read in demographics data
 demo <- read.csv("exp1/cleandemo.csv")
 
@@ -188,3 +196,61 @@ p <- ggplot(exp2Q10, aes(x=q10Correct, y=qSeverity[,2]),) + geom_pointrange(aes(
 p
 
 ggsave("exp2Q10.pdf", plot=last_plot(), device="pdf")
+
+#Experiment Three
+
+
+#Identical to Experiment Two, but we ask them to estimate the actual values of the first and last bars,:
+#cleandemo3.csv is my demographic data, and cleanrows3.csv is the per-trial information.
+
+#Read in demographics data
+demo3 <- read.csv("exp3/cleandemo3.csv")
+
+#Did they get the truncation-related questions correct?
+demo3$q10Correct <- demo3$q10==3
+demo3$q11Correct <- demo3$q11==4
+demo3$qBothCorrect <- demo3$q10Correct & demo3$q11Correct
+#Did we code them as mentioning the axis truncation in their comments?
+demo3$noticedTruncation <- as.logical(demo3$QUAL_noticed_truncation)
+
+#What does our demographic data look like?
+skim(demo3)
+
+#Do an inner join on data/demographic info.
+data3 <- read.csv("exp3/cleanrows3.csv")
+mergedata3 <- merge(data3,demo3,by="id")
+
+#What does the full table look like?
+skim(mergedata3)
+
+#Let's look for low performers on our engagement question and filter them out.
+#I'm using a 3 sigma standard here.
+
+participantPerformance3 <- with(mergedata3,aggregate(correct ~ id,FUN=mean))
+participantPerformance3 <- participantPerformance3[order(participantPerformance3$correct),]
+
+blackList3 <- subset(participantPerformance3,correct<(mean(participantPerformance3$correct) - 3*sd(participantPerformance3$correct)))$id
+
+#analysisData is our main dataframe. Let's populate it with our rows.
+analysisData3 <- subset(mergedata3,!(id %in% blackList3))
+
+#Let's also strip out our training/calibration stimuli.
+analysisData3 <- analysisData3[is.na(analysisData3$training),]
+
+#Let's coerce some of our numerical factor levels to factors for our ANOVA.
+analysisData3$sizeF <- factor(analysisData3$dataSize)
+analysisData3$truncationF <- factor(analysisData3$truncationLevel)
+
+#Let's also convert trendError from a signed error metric [(predicted last value - predicted first value) - actual slope] to an absolute error metric
+analysisData3$absTrendError <- abs(analysisData3$trendError)
+
+#The charts were identical when the truncation level was 0, so let's remove them from our ANOVA
+
+#Run ANOVA.
+model3Severity <- ezANOVA(data=subset(analysisData3,truncationLevel>0), dv = .(qSeverity), wid= .(id), within = .(truncationF,visType,sizeF), observed= .(noticedTruncation,qBothCorrect))
+
+#I'm also interested in how the different chart types impacted the trendError, which is the estimated difference in values - the actual difference in values. 
+
+model3Error <- ezANOVA(data=subset(analysisData3,truncationLevel>0), dv = .(absTrendError), wid= .(id), within = .(truncationF,visType,sizeF), observed= .(noticedTruncation,qBothCorrect))
+
+pairwise.t.test(analysisData3$qSeverity,analysisData3$visType,p.adjust.method="bonferroni")
