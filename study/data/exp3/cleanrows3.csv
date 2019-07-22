@@ -747,16 +747,6 @@ brokenbar,none,trend,3,0.25,-1,0.25,5d08b0a18f881d00191f2976,41,,31383,Wed Jul 1
 bar,none,trend,3,0.25,1,0.25,5d08b0a18f881d00191f2976,42,,15617,Wed Jul 17 2019 23:58:16 GMT 0100 (British Summer Time),1,3,0.55,0.65,-0.15,1,0.55,0.716666667,exp3,0.55,0.616533533,0.716666667
 brokenbar,none,trend,3,0.5,-1,0.25,5d08b0a18f881d00191f2976,43,,18601,Wed Jul 17 2019 23:58:37 GMT 0100 (British Summer Time),-1,4,1,0.8,-0.45,1,1,0.833333333,exp3,1,0.914018481,0.833333333
 brokenbar,none,trend,2,0.25,1,0.25,5d08b0a18f881d00191f2976,44,,21194,Wed Jul 17 2019 23:59:00 GMT 0100 (British Summer Time),1,4,0.56,0.65,-0.16,1,0.55,0.675,exp3,0.55,0.675,
-brokenbar,none,trend,2,0,-1,0.125,5d1a960338cc6a00177aae2a,1,1,54322,Thu Jul 18 2019 01:40:53 GMT 0300 (Eastern European Summer Time),-1,1,1,0.98,-0.145,1,1,0.9375,exp3,1,0.9375,
-bottomgradbar,none,trend,2,0,-1,0.25,5d1a960338cc6a00177aae2a,2,1,76804,Thu Jul 18 2019 01:42:16 GMT 0300 (Eastern European Summer Time),-1,2,1,0.92,-0.33,1,1,0.875,exp3,1,0.875,
-brokenbar,none,trend,3,0.5,1,0.125,5d1a960338cc6a00177aae2a,3,1,77539,Thu Jul 18 2019 01:43:37 GMT 0300 (Eastern European Summer Time),1,2,0.55,0.65,-0.025,1,0.55,0.633333333,exp3,0.55,0.584398154,0.633333333
-bottomgradbar,none,trend,3,0,-1,0.125,5d1a960338cc6a00177aae2a,4,1,17706,Thu Jul 18 2019 01:43:58 GMT 0300 (Eastern European Summer Time),-1,1,1,0.96,-0.165,1,1,0.916666667,exp3,1,0.965085805,0.916666667
-bottomgradbar,none,trend,3,0,-1,0.25,5d1a960338cc6a00177aae2a,5,1,42376,Thu Jul 18 2019 01:44:44 GMT 0300 (Eastern European Summer Time),-1,2,1,0.9,-0.35,1,1,0.833333333,exp3,1,0.913528801,0.833333333
-brokenbar,none,trend,3,0.5,-1,0.125,5d1a960338cc6a00177aae2a,6,1,29081,Thu Jul 18 2019 01:45:18 GMT 0300 (Eastern European Summer Time),-1,2,1,0.9,-0.225,1,1,0.916666667,exp3,1,0.957860158,0.916666667
-bar,none,trend,3,0.5,1,0.25,5d1a960338cc6a00177aae2a,7,1,173970,Thu Jul 18 2019 01:48:15 GMT 0300 (Eastern European Summer Time),1,4,0.57,0.66,-0.16,1,0.55,0.716666667,exp3,0.55,0.651875444,0.716666667
-brokenbar,none,trend,3,0.5,-1,0.25,5d1a960338cc6a00177aae2a,8,1,39478,Thu Jul 18 2019 01:48:57 GMT 0300 (Eastern European Summer Time),-1,3,1,0.78,-0.47,1,1,0.833333333,exp3,1,0.927855632,0.833333333
-bar,none,trend,3,0,1,0.25,5d1a960338cc6a00177aae2a,9,,50235,Thu Jul 18 2019 01:49:51 GMT 0300 (Eastern European Summer Time),1,2,0.5,0.7,-0.05,1,0.55,0.716666667,exp3,0.55,0.631650852,0.716666667
-brokenbar,none,trend,3,0.5,-1,0.125,5d1a960338cc6a00177aae2a,10,,49001,Thu Jul 18 2019 01:50:48 GMT 0300 (Eastern European Summer Time),-1,2,1,0.82,-0.305,1,1,0.916666667,exp3,1,0.952995047,0.916666667
 brokenbar,none,trend,3,0.5,1,0.125,5d1a960338cc6a00177aae2a,1,1,58429,Thu Jul 18 2019 01:52:26 GMT 0300 (Eastern European Summer Time),1,2,0.54,0.62,-0.045,1,0.55,0.633333333,exp3,0.55,0.601580006,0.633333333
 bottomgradbar,none,trend,2,0.5,1,0.25,5d1a960338cc6a00177aae2a,2,1,69997,Thu Jul 18 2019 01:53:39 GMT 0300 (Eastern European Summer Time),1,3,0.54,0.62,-0.17,1,0.55,0.675,exp3,0.55,0.675,
 brokenbar,none,trend,3,0,1,0.125,5d1a960338cc6a00177aae2a,3,1,71568,Thu Jul 18 2019 01:54:54 GMT 0300 (Eastern European Summer Time),1,2,0.65,0.7,-0.075,1,0.55,0.633333333,exp3,0.55,0.599683215,0.633333333
