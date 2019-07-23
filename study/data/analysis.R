@@ -79,44 +79,44 @@ pairwise.t.test(analysisData$qSeverity,analysisData$framing,p.adjust.method="bon
 #How did the different vis types impact judgments?
 exp1Designs <- with(analysisData, aggregate(qSeverity ~ truncationF*visType, FUN=tboot))
 
-p <- ggplot(exp1Designs, aes(x=visType, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Line"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5)) + theme(axis.text=element_text(size=18),
-        axis.title=element_text(size=18), strip.text=element_text(size=24))
+p <- ggplot(exp1Designs, aes(x=visType, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Line"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=18, family="Helvetica"),
+        axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"),strip.text=element_text(size=24, family="Helvetica"))
 
 
 p
 
-ggsave("exp1Designs.pdf", plot=last_plot(), device="pdf")
+ggsave("exp1Designs.pdf", plot=last_plot(), device="pdf", width=8, height=5)
 
 #What about the framings?
 
 exp1Framings <- with(analysisData, aggregate(qSeverity ~ framing*visType, FUN=tboot))
 
-p <- ggplot(exp1Framings, aes(x=framing, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)", title="Visualization Design") + scale_x_discrete(labels=c("Trend","Values"),name="Question Framing") + facet_grid(. ~ visType, labeller=labeller(visType=c(bar = "Bar",line = "Line"))) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5)) + theme(axis.text=element_text(size=18),
-        axis.title=element_text(size=18), strip.text=element_text(size=24))
+p <- ggplot(exp1Framings, aes(x=framing, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)", title="Visualization Design") + scale_x_discrete(labels=c("Trend","Values"),name="Question Framing") + facet_grid(. ~ visType, labeller=labeller(visType=c(bar = "Bar",line = "Line"))) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=18, family="Helvetica"),
+        axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
 
 p
 
-ggsave("exp1Frames.pdf", plot=last_plot(), device="pdf")
+ggsave("exp1Frames.pdf", plot=last_plot(), device="pdf", width=5, height=5)
 
 #And folks who noticed?
 
 exp1Noticed <- with(analysisData, aggregate(qSeverity ~ noticedTruncation*truncationF, FUN=tboot))
 
-p <- ggplot(exp1Noticed, aes(x=noticedTruncation, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)",title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("False","True"),name="Commented on Truncation") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=24,hjust=0.5)) + theme(axis.text=element_text(size=18),
-        axis.title=element_text(size=18), strip.text=element_text(size=24))
+p <- ggplot(exp1Noticed, aes(x=noticedTruncation, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)",title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("False","True"),name="Commented on Truncation") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=24,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=18, family="Helvetica"),
+        axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
 
 p
 
-ggsave("exp1Noticed.pdf", plot=last_plot(), device="pdf")
+ggsave("exp1Noticed.pdf", plot=last_plot(), device="pdf", width=8, height=5)
 
 exp1Q10 <- with(analysisData, aggregate(qSeverity ~ q10Correct, FUN=tboot))
 
-p <- ggplot(exp1Q10, aes(x=q10Correct, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)",title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("False","True"),name="Graphicity") + theme_bw() + theme(plot.title = element_text(size=24,hjust=0.5)) + theme(axis.text=element_text(size=18),
-        axis.title=element_text(size=18), strip.text=element_text(size=24))
+p <- ggplot(exp1Q10, aes(x=q10Correct, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)",title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("False","True"),name="Graphicity") + theme_bw() + theme(plot.title = element_text(size=24,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=18, family="Helvetica"),
+        axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
 
 p
 
-ggsave("exp1Q10.pdf", plot=last_plot(), device="pdf")
+ggsave("exp1Q10.pdf", plot=last_plot(), device="pdf", width=5, height=5)
 
 #Experiment Two
 
@@ -172,30 +172,30 @@ pairwise.t.test(analysisData2$qSeverity,analysisData2$visType,p.adjust.method="b
 #Plot all of our null effects
 exp2Designs <- with(analysisData2, aggregate(qSeverity ~ truncationF*visType, FUN=tboot))
 
-p <- ggplot(exp2Designs, aes(x=visType, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5)) + theme(axis.text=element_text(size=12),
-        axis.title=element_text(size=18), strip.text=element_text(size=24))
+p <- ggplot(exp2Designs, aes(x=visType, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
+        axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
 
 p
 
-ggsave("exp2Designs.pdf", plot=last_plot(), device="pdf")
+ggsave("exp2Designs.pdf", plot=last_plot(), device="pdf", width=8, height=5)
 
 exp2Noticed <- with(analysisData2, aggregate(qSeverity ~ noticedTruncation*truncationF, FUN=tboot))
 
-p <- ggplot(exp2Noticed, aes(x=noticedTruncation, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)",title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("False","True"),name="Commented on Truncation") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5)) + theme(axis.text=element_text(size=18),
-        axis.title=element_text(size=18), strip.text=element_text(size=24))
+p <- ggplot(exp2Noticed, aes(x=noticedTruncation, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)",title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("False","True"),name="Commented on Truncation") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=18, family="Helvetica"),
+        axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
 
 p
 
-ggsave("exp2Noticed.pdf", plot=last_plot(), device="pdf")
+ggsave("exp2Noticed.pdf", plot=last_plot(), device="pdf", width=8, height=5)
 
 exp2Q10 <- with(analysisData2, aggregate(qSeverity ~ q10Correct, FUN=tboot))
 
-p <- ggplot(exp2Q10, aes(x=q10Correct, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)",title="Post Test Truncation Question Response") + scale_x_discrete(labels=c("Incorrect","Correct"),name="Correct") + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5)) + theme(axis.text=element_text(size=18),
-        axis.title=element_text(size=18), strip.text=element_text(size=24))
+p <- ggplot(exp2Q10, aes(x=q10Correct, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)",title="Post Test Truncation Question Response") + scale_x_discrete(labels=c("Incorrect","Correct"),name="Correct") + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5)) + theme(axis.text=element_text(size=18, family="Helvetica"),
+        axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
 
 p
 
-ggsave("exp2Q10.pdf", plot=last_plot(), device="pdf")
+ggsave("exp2Q10.pdf", plot=last_plot(), device="pdf", width=5.5, height=5)
 
 #Experiment Three
 
