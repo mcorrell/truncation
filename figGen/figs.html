@@ -1,0 +1,276 @@
+<html>
+  <head>
+    <script src="https://vega.github.io/datalib/datalib.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript">
+      var data = [0.90,1.00,0.95];
+      var w = 600;
+      var h = 400;
+      var margin = 20;
+      var y = d3.scaleLinear().domain([0,1]).range([h-margin,margin]);
+      var yt = d3.scaleLinear().domain([0.8,1]).range([h-margin,margin]);
+      var y1 = d3.scaleLinear().domain([0,0.2]).range([h-margin,(h/2)+(margin/2)]).clamp(true);
+      var y4 = d3.scaleLinear().domain([0.8,1.0]).range([h-margin,(h/2)+(margin/2)]).clamp(true);
+      var y2 = d3.scaleLinear().domain([0.8,1.0]).range([(h/2)-(margin/2),margin]).clamp(true);
+      var y3 = d3.scaleLinear().domain([0,1.0]).range([(h/2)-(margin/2),margin]).clamp(true);
+      var x = d3.scaleBand().domain(dl.range(0,data.length)).range([margin,w-margin])
+                .paddingOuter(0.4).paddingInner(0.2);
+
+      var yAxis = d3.axisLeft(y).tickFormat(d3.format(".0%")).tickValues([0,1]);
+      var ytAxis = d3.axisLeft(yt).tickFormat(d3.format(".0%")).tickValues([0.8,1]);
+      var y1Axis = d3.axisLeft(y1).tickFormat(d3.format(".0%")).tickValues([0,0.2]);
+      var y2Axis = d3.axisLeft(y2).tickFormat(d3.format(".0%")).tickValues([0.8,1]);
+      var y3Axis = d3.axisLeft(y3).tickFormat(d3.format(".0%")).tickValues([0,1]);
+      var y4Axis = d3.axisLeft(y4).tickFormat(d3.format(".0%")).tickValues([0.8,1]);
+      var xAxis = d3.axisBottom(x);
+
+//Draw untruncated bar chart
+      var svg = d3.select("body").append("svg")
+        .style("width",w)
+        .style("height",h)
+        .attr("id","normal");
+
+        svg.selectAll("rect").data(data).enter().append("rect")
+          .attr("x",(d,i) =>  x(i) )
+          .attr("y", d => y(d))
+          .attr("fill","#333")
+          .attr("height", d => y(y.domain()[0]) - y(d))
+          .attr("width",x.bandwidth());
+
+        svg.append("g")
+          .attr("transform","translate(" + (2*margin) + ",0)")
+          .call(yAxis);
+
+//Draw truncated bar chart
+      var svg = d3.select("body").append("svg")
+        .style("width",w)
+        .style("height",h)
+        .attr("id","truncated");
+
+        svg.selectAll("rect").data(data).enter().append("rect")
+          .attr("x",(d,i) =>  x(i) )
+          .attr("y", d => yt(d))
+          .attr("fill","#333")
+          .attr("height", d => yt(yt.domain()[0]) - yt(d))
+          .attr("width",x.bandwidth());
+
+        svg.append("g")
+          .attr("transform","translate(" + (2*margin) + ",0)")
+          .call(ytAxis);
+
+//Draw panel chart (for later styling with gradients)
+        svg = d3.select("body").append("svg")
+          .style("width",w)
+          .style("height",h)
+          .attr("id","panel");
+
+          svg.append("g").selectAll("rect").data(data).enter().append("rect")
+            .attr("x",(d,i) =>  x(i) )
+            .attr("y", d => y4(d))
+            .attr("fill","#333")
+            .attr("height", d => y4(y1.domain()[0]) - y4(d))
+            .attr("width",x.bandwidth());
+
+          svg.append("g").selectAll("rect").data(data).enter().append("rect")
+            .attr("x",(d,i) =>  x(i) )
+            .attr("y", d => y3(d))
+            .attr("fill","#333")
+            .attr("height", d => y3(y3.domain()[0]) - y3(d))
+            .attr("width",x.bandwidth());
+
+          svg.append("g")
+            .attr("transform","translate(" + (2*margin) + ",0)")
+            .call(y4Axis);
+
+          svg.append("g")
+            .attr("transform","translate(" + (2*margin) + ",0)")
+            .call(y3Axis);
+
+//Draw broken axis chart (for later styling with glyphs)
+          svg = d3.select("body").append("svg")
+            .style("width",w)
+            .style("height",h)
+            .attr("id","broken");
+
+          svg.append("g").selectAll("rect").data(data).enter().append("rect")
+            .attr("x",(d,i) =>  x(i) )
+            .attr("y", d => y1(d))
+            .attr("fill","#333")
+            .attr("height", d => y1(y1.domain()[0]) - y1(d))
+            .attr("width",x.bandwidth());
+
+          svg.append("g").selectAll("rect").data(data).enter().append("rect")
+            .attr("x",(d,i) =>  x(i) )
+            .attr("y", d => y2(d))
+            .attr("fill","#333")
+            .attr("height", d => y2(y2.domain()[0]) - y2(d))
+            .attr("width",x.bandwidth());
+
+          svg.append("g")
+            .attr("transform","translate(" + (2*margin) + ",0)")
+            .call(y1Axis);
+
+          svg.append("g")
+            .attr("transform","translate(" + (2*margin) + ",0)")
+            .call(y2Axis);
+
+//Draw bent 3d chart (for later styling with single point perspective and optional highlights)
+
+          svg = d3.select("body").append("svg")
+              .style("width",w)
+              .style("height",h)
+              .attr("id","bent");
+
+          svg.append("g").selectAll("rect").data(data).enter().append("rect")
+            .attr("x",(d,i) =>  x(i) )
+            .attr("y", d => y2(d))
+            .attr("fill","#333")
+            .attr("height", d => y2(y2.domain()[0]) - y2(d))
+            .attr("width",x.bandwidth());
+
+          svg.append("g").selectAll("text").data(data).enter().append("text")
+            .attr("x",(d,i) =>  x(i) + (x.bandwidth()/2))
+            .attr("y", d => y2(d)+margin)
+            .attr("fill","white")
+            .attr("text-anchor","middle")
+            .text(d => d3.format(".0%")(d));
+
+//Fox news (good and bad)
+          margin = 20;
+          var foxXs = ["Now","Jan 1, 2013"];
+          var foxYs = [0.35,0.396];
+          var foxX = d3.scaleBand().domain(["Now","Jan 1, 2013"]).range([2*margin,w-margin])
+                      .paddingOuter(0.4).paddingInner(0.2);
+          var foxYGood = d3.scaleLinear().domain([0,0.42]).range([h-margin,margin]);
+          var foxYBad = d3.scaleLinear().domain([0.34,0.42]).range([h-margin,margin]);
+
+          var foxXAxis = d3.axisBottom(foxX);
+          var foxYAxisGood = d3.axisLeft(foxYGood).tickFormat(d3.format(".1%")).tickValues([0,0.42]);
+          var foxYAxisBad = d3.axisLeft(foxYBad).tickFormat(d3.format(".1%")).tickValues([0.34,0.42]);
+//good
+          svg = d3.select("body").append("svg")
+            .style("width",w)
+            .style("height",h)
+            .attr("id","foxGood");
+
+            svg.selectAll("rect").data(foxYs).enter().append("rect")
+              .attr("x",(d,i) =>  foxX(foxXs[i]) )
+              .attr("y", d => foxYGood(d))
+              .attr("fill","#333")
+              .attr("height", d => foxYGood(foxYGood.domain()[0]) - foxYGood(d))
+              .attr("width",foxX.bandwidth());
+
+            svg.append("g")
+              .attr("transform","translate(" + (2*margin) + ",0)")
+              .call(foxYAxisGood);
+
+            svg.append("g")
+              .attr("transform","translate(0," + (h-margin) + ")")
+              .call(foxXAxis);
+
+            svg.append("g").selectAll("text").data(foxYs).enter().append("text")
+              .attr("x",(d,i) =>  foxX(foxXs[i]) + (foxX.bandwidth()/2))
+              .attr("y", d => foxYGood(d)+margin)
+              .attr("fill","white")
+              .attr("text-anchor","middle")
+              .text(d => d3.format(".1%")(d));
+
+//bad
+            svg = d3.select("body").append("svg")
+              .style("width",w)
+              .style("height",h)
+              .attr("id","foxBad");
+
+            svg.selectAll("rect").data(foxYs).enter().append("rect")
+              .attr("x",(d,i) =>  foxX(foxXs[i]) )
+              .attr("y", d => foxYBad(d))
+              .attr("fill","#333")
+              .attr("height", d => foxYBad(foxYBad.domain()[0]) - foxYBad(d))
+              .attr("width",foxX.bandwidth());
+
+            svg.append("g")
+              .attr("transform","translate(" + (2*margin) + ",0)")
+              .call(foxYAxisBad);
+
+            svg.append("g")
+              .attr("transform","translate(0," + (h-margin) + ")")
+              .call(foxXAxis);
+
+            svg.append("g").selectAll("text").data(foxYs).enter().append("text")
+              .attr("x",(d,i) =>  foxX(foxXs[i]) + (foxX.bandwidth()/2))
+              .attr("y", d => foxYBad(d)+margin)
+              .attr("fill","white")
+              .attr("text-anchor","middle")
+              .text(d => d3.format(".1%")(d));
+
+//NRO chart (good and bad)
+          var nrodata;
+          d3.csv("nrodata.csv",function(rows){
+            nrodata = rows;
+            drawNRO();
+          });
+
+          var nroX = d3.scaleLinear().domain([1880,2015]).range([2*margin,w-margin]);
+          var nroYBad = d3.scaleLinear().domain([-10,110]).range([h-margin,margin]);
+          var nroYGood = d3.scaleLinear().domain([55,60]).range([h-margin,margin]);
+          var nroXAxis = d3.axisBottom(nroX).tickFormat(d3.format("c"));
+          var nroYAxisBad = d3.axisLeft(nroYBad);
+          var nroYAxisGood = d3.axisLeft(nroYGood);
+
+          var lineBad = d3.line()
+            .x(d => nroX(+d.Year))
+            .y(d => nroYBad(+d.F));
+
+            var lineGood = d3.line()
+              .x(d => nroX(+d.Year))
+              .y(d => nroYGood(+d.F));
+
+          function drawNRO(){
+            //bad
+            svg = d3.select("body").append("svg")
+              .style("width",w)
+              .style("height",h)
+              .attr("id","nroBad");
+
+
+            svg.append("path").datum(nrodata)
+              .attr("fill","none")
+              .attr("stroke","#333")
+              .attr("stroke-width","3")
+              .attr("d",lineBad);
+
+            svg.append("g")
+              .attr("transform","translate(" + (2*margin) + ",0)")
+              .call(nroYAxisBad);
+
+            svg.append("g")
+              .attr("transform","translate(0," + nroYBad(0) + ")")
+              .call(nroXAxis);
+
+            svg = d3.select("body").append("svg")
+              .style("width",w)
+              .style("height",h)
+              .attr("id","nroGood");
+
+
+            svg.append("path").datum(nrodata)
+              .attr("fill","none")
+              .attr("stroke","#333")
+              .attr("stroke-width","3")
+              .attr("d",lineGood);
+
+            svg.append("g")
+              .attr("transform","translate(" + (2*margin) + ",0)")
+              .call(nroYAxisGood);
+
+            svg.append("g")
+              .attr("transform","translate(0," + (h-margin) + ")")
+              .call(nroXAxis);
+          }
+
+    </script>
+  </body>
+</html>

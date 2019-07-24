@@ -102,7 +102,7 @@ ggsave("exp1Frames.pdf", plot=last_plot(), device="pdf", width=5, height=5)
 
 exp1Noticed <- with(analysisData, aggregate(qSeverity ~ noticedTruncation*truncationF, FUN=tboot))
 
-p <- ggplot(exp1Noticed, aes(x=noticedTruncation, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)",title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("False","True"),name="Commented on Truncation") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=24,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=18, family="Helvetica"),
+p <- ggplot(exp1Noticed, aes(x=noticedTruncation, y=qSeverity[,2]),) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75) + ylim(1,NA) + labs(y="Perceived Severity (avg)",title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("False","True"),name="Commented on Truncation") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=18, family="Helvetica"),
         axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
 
 p
