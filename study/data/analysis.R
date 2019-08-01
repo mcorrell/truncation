@@ -241,7 +241,9 @@ analysisData3 <- analysisData3[is.na(analysisData3$training),]
 analysisData3$sizeF <- factor(analysisData3$dataSize)
 analysisData3$truncationF <- factor(analysisData3$truncationLevel)
 
-#Let's also convert trendError from a signed error metric [(predicted last value - predicted first value) - actual slope] to an absolute error metric
+#Let's create a "trendError" column as a signed error metric [(predicted last value - predicted first value) - actual slope].
+analysisData3$trendError <- (analysisData3$qLast - analysisData3$qFirst) - (analysisData3$slope * analysisData3$trendDirection)
+#Let's also create an unsigned absTrendError
 analysisData3$absTrendError <- abs(analysisData3$trendError)
 
 #The charts were identical when the truncation level was 0, so let's remove them from our ANOVA
@@ -254,3 +256,23 @@ model3Severity <- ezANOVA(data=subset(analysisData3,truncationLevel>0), dv = .(q
 model3Error <- ezANOVA(data=subset(analysisData3,truncationLevel>0), dv = .(absTrendError), wid= .(id), within = .(truncationF,visType,sizeF), observed= .(noticedTruncation,qBothCorrect))
 
 pairwise.t.test(analysisData3$qSeverity,analysisData3$visType,p.adjust.method="bonferroni")
+
+#Plots: how did our truncation bias stack up compared to the previous experiment?
+exp23Designs <- rbind(with(analysisData2, aggregate(qSeverity ~ truncationF*visType*experiment, FUN=tboot)),with(analysisData3, aggregate(qSeverity ~ truncationF*visType*experiment, FUN=tboot)))
+
+p <- ggplot(exp23Designs, aes(x=visType, y=qSeverity[,2], color=experiment)) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75, position=position_dodge(0.4)) + ylim(1,NA) + labs(y="Perceived Severity (avg)", title="Y-Axis Start Location (%)") + scale_color_discrete(labels=c("Experiment 2","Experiment 3"),name="") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom")
+
+p
+
+ggsave("exp23Designs.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+
+#Was this bias due to people making more errors when the truncation was high?
+
+exp3Errors <- with(analysisData3, aggregate(absTrendError ~ truncationF*visType,FUN=tboot))
+
+p <- ggplot(exp3Errors, aes(x=visType, y=absTrendError[,2]*100),) + geom_pointrange(aes(ymin=absTrendError[,1]*100, ymax=absTrendError[,3]*100, y=absTrendError[,2]*100), size=0.75) + ylim(1,NA) + labs(y="Absolute Estimation Error", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
+        axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
+
+p
+
+ggsave("exp3Errors.pdf", plot=last_plot(), device="pdf", width=8, height=5)

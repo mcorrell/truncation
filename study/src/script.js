@@ -222,7 +222,7 @@ var checkInput = function(){
     let exp3qsInRange = q3 >= 0 && q3 <= 100 && q4 >= 0 && q4 <= 100;
     exp3validate = exp3qsSet && exp3qsInRange;
   }
-  if (exp12qsSet && exp3validate){  
+  if (exp12qsSet && exp3validate){
     d3.select("#confirmBtn").attr("disabled", null);
   }
   else {
@@ -1053,7 +1053,7 @@ var answer = function(){
   if (experiment == "exp3"){
     participantData[questionIndex].qFirst = +document.forms["questions"]["q3"].value / 100;
     participantData[questionIndex].qLast = +document.forms["questions"]["q4"].value / 100;
-    participantData[questionIndex].trendError = (participantData[questionIndex].qLast - participantData[questionIndex].qFirst) - participantData[questionIndex].slope;
+    participantData[questionIndex].trendError = (participantData[questionIndex].qLast - participantData[questionIndex].qFirst) - (participantData[questionIndex].slope*participantData[questionIndex].trendDirection);
   }
   participantData[questionIndex].correct = (participantData[questionIndex].qTrend == participantData[questionIndex].trendDirection) ? 1 : 0;
   d3.select("#vis").selectAll("*:not(.grad)").remove();
