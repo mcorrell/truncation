@@ -245,6 +245,8 @@ analysisData3$truncationF <- factor(analysisData3$truncationLevel)
 analysisData3$trendError <- (analysisData3$qLast - analysisData3$qFirst) - (analysisData3$slope * analysisData3$trendDirection)
 #Let's also create an unsigned absTrendError
 analysisData3$absTrendError <- abs(analysisData3$trendError)
+#Let's also just see how off participants were at estimating values in general, taking trend out of the equation.
+analysisData3$avgTrendError <- (abs(analysisData3$qFirst-analysisData3$firstX) + abs(analysisData3$qLast-analysisData3$lastX)) / 2
 
 #The charts were identical when the truncation level was 0, so let's remove them from our ANOVA
 
@@ -253,9 +255,16 @@ model3Severity <- ezANOVA(data=subset(analysisData3,truncationLevel>0), dv = .(q
 
 #I'm also interested in how the different chart types impacted the trendError, which is the estimated difference in values - the actual difference in values. 
 
-model3Error <- ezANOVA(data=subset(analysisData3,truncationLevel>0), dv = .(absTrendError), wid= .(id), within = .(truncationF,visType,sizeF), observed= .(noticedTruncation,qBothCorrect))
+model3trendError <- ezANOVA(data=subset(analysisData3,truncationLevel>0), dv = .(absTrendError), wid= .(id), within = .(truncationF,visType,sizeF), observed= .(noticedTruncation,qBothCorrect))
 
-pairwise.t.test(analysisData3$qSeverity,analysisData3$visType,p.adjust.method="bonferroni")
+pairwise.t.test(analysisData3$absTrendError,analysisData3$sizeF,p.adjust.method="bonferroni")
+
+#Note that absTrendError onlys capture exaggerations in trend, but not misreadings where the trend is correct, but the values are just off by whatever the truncation level is. E.g. 50-25 = 25% would have 0 absTrendError even if axis truncation caused people to guess 100-75. avgError tries to capture any sytematic errors in assessing values.
+
+model3avgError <- ezANOVA(data=subset(analysisData3,truncationLevel>0), dv = .(avgTrendError), wid= .(id), within = .(truncationF,visType,sizeF), observed= .(noticedTruncation,qBothCorrect))
+
+#Looks like truncationF was the only difference. If people were misreading, we'd expect truncation of 0 to be < 0.25 < 0.5...
+pairwise.t.test(analysisData3$avgTrendError,analysisData3$truncationF,p.adjust.method="bonferroni")
 
 #Plots: how did our truncation bias stack up compared to the previous experiment?
 exp23Designs <- rbind(with(analysisData2, aggregate(qSeverity ~ truncationF*visType*experiment, FUN=tboot)),with(analysisData3, aggregate(qSeverity ~ truncationF*visType*experiment, FUN=tboot)))
