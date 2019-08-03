@@ -253,6 +253,8 @@ analysisData3$avgTrendError <- (abs(analysisData3$qFirst-analysisData3$firstX) +
 #Run ANOVA.
 model3Severity <- ezANOVA(data=subset(analysisData3,truncationLevel>0), dv = .(qSeverity), wid= .(id), within = .(truncationF,visType,sizeF), observed= .(noticedTruncation,qBothCorrect))
 
+pairwise.t.test(analysisData3$qSeverity,analysisData3$truncationF,p.adjust.method="bonferroni")
+
 #I'm also interested in how the different chart types impacted the trendError, which is the estimated difference in values - the actual difference in values. 
 
 model3trendError <- ezANOVA(data=subset(analysisData3,truncationLevel>0), dv = .(absTrendError), wid= .(id), within = .(truncationF,visType,sizeF), observed= .(noticedTruncation,qBothCorrect))
@@ -269,7 +271,7 @@ pairwise.t.test(analysisData3$avgTrendError,analysisData3$truncationF,p.adjust.m
 #Plots: how did our truncation bias stack up compared to the previous experiment?
 exp23Designs <- rbind(with(analysisData2, aggregate(qSeverity ~ truncationF*visType*experiment, FUN=tboot)),with(analysisData3, aggregate(qSeverity ~ truncationF*visType*experiment, FUN=tboot)))
 
-p <- ggplot(exp23Designs, aes(x=visType, y=qSeverity[,2], color=experiment)) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75, position=position_dodge(0.4)) + ylim(1,NA) + labs(y="Perceived Severity (avg)", title="Y-Axis Start Location (%)") + scale_color_discrete(labels=c("Experiment 2","Experiment 3"),name="") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom")
+p <- ggplot(exp23Designs, aes(x=visType, y=qSeverity[,2], color=experiment)) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75, position=position_dodge(0.4)) + ylim(1,NA) + labs(y="Perceived Severity (avg)", title="Y-Axis Start Location (%)") + scale_color_manual(labels=c("Experiment 2","Experiment 3"),name="",values=c("#FF7F0E","#2CA02C")) + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom")
 
 p
 
@@ -277,11 +279,32 @@ ggsave("exp23Designs.pdf", plot=last_plot(), device="pdf", width=8, height=5)
 
 #Was this bias due to people making more errors when the truncation was high?
 
-exp3Errors <- with(analysisData3, aggregate(absTrendError ~ truncationF*visType,FUN=tboot))
+exp3absErrors <- with(analysisData3, aggregate(absTrendError ~ truncationF*visType,FUN=tboot))
 
-p <- ggplot(exp3Errors, aes(x=visType, y=absTrendError[,2]*100),) + geom_pointrange(aes(ymin=absTrendError[,1]*100, ymax=absTrendError[,3]*100, y=absTrendError[,2]*100), size=0.75) + ylim(1,NA) + labs(y="Absolute Estimation Error", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
+p <- ggplot(exp3absErrors, aes(x=visType, y=absTrendError[,2]*100),) + geom_pointrange(aes(ymin=absTrendError[,1]*100, ymax=absTrendError[,3]*100, y=absTrendError[,2]*100), size=0.75) + ylim(1,NA) + labs(y="|Trend Estimation Error|", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
         axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
 
 p
 
-ggsave("exp3Errors.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp3absErrors.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+
+exp3avgErrors <- with(analysisData3, aggregate(avgTrendError ~ truncationF*visType,FUN=tboot))
+
+p <- ggplot(exp3avgErrors, aes(x=visType, y=avgTrendError[,2]*100),) + geom_pointrange(aes(ymin=avgTrendError[,1]*100, ymax=avgTrendError[,3]*100, y=avgTrendError[,2]*100), size=0.75) + ylim(1,NA) + labs(y="|Value Estimation Error|", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
+        axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
+
+p
+
+ggsave("exp3avgErrors.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+
+#People who were chattier about noticing the y-axis truncation seemed to be less biased.
+
+exp123Noticed <- with(analysisData, aggregate(qSeverity ~ noticedTruncation*truncationF*experiment, FUN=tboot))
+exp123Noticed <- rbind(exp123Noticed,with(analysisData2, aggregate(qSeverity ~ noticedTruncation*truncationF*experiment, FUN=tboot)))
+exp123Noticed <- rbind(exp123Noticed,with(analysisData3, aggregate(qSeverity ~ noticedTruncation*truncationF*experiment, FUN=tboot)))
+
+p <- ggplot(exp123Noticed, aes(x=noticedTruncation, y=qSeverity[,2], color=experiment)) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75, position=position_dodge(0.4)) + ylim(1,NA) + labs(y="Perceived Severity (avg)", title="Y-Axis Start Location (%)") + scale_color_manual(labels=c("Experiment 1","Experiment 2","Experiment 3"),name="",values=c("#1F77B4","#FF7F0E","#2CA02C")) + scale_x_discrete(labels=c("False","True"),name="Commented on Truncation") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom") 
+
+p
+
+ggsave("exp123Noticed.pdf", plot=last_plot(), device="pdf", width=8, height=5)
