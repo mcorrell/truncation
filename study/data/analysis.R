@@ -297,7 +297,7 @@ p
 
 ggsave("exp3avgErrors.pdf", plot=last_plot(), device="pdf", width=8, height=5)
 
-#People who were chattier about noticing the y-axis truncation seemed to be less biased.
+#People who were chattier about noticing the y-axis truncation seemed to be less biased, except in Experiment 3
 
 exp123Noticed <- with(analysisData, aggregate(qSeverity ~ noticedTruncation*truncationF*experiment, FUN=tboot))
 exp123Noticed <- rbind(exp123Noticed,with(analysisData2, aggregate(qSeverity ~ noticedTruncation*truncationF*experiment, FUN=tboot)))
