@@ -118,6 +118,16 @@ p
 
 ggsave("exp1Q10.pdf", plot=last_plot(), device="pdf", width=5, height=5)
 
+#Combined fig of all conditions
+exp1All <- with(analysisData, aggregate(qSeverity ~ truncationF*visType*framing, FUN=tboot))
+
+p <- ggplot(exp1All, aes(x=visType, y=qSeverity[,2], color=framing)) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75, position=position_dodge(0.4)) + ylim(1,NA) + labs(y="Perceived Severity (avg)", title="Y-Axis Start Location (%)") + scale_color_manual(labels=c("Trend","Value"),name="Task Framing",values=c("#4E79A7","#E15759")) + scale_x_discrete(labels=c("Bar","Line"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom")
+
+p
+
+ggsave("exp1All.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+
+
 #Experiment Two
 
 
@@ -281,7 +291,7 @@ ggsave("exp23Designs.pdf", plot=last_plot(), device="pdf", width=8, height=5)
 
 exp3absErrors <- with(analysisData3, aggregate(absTrendError ~ truncationF*visType,FUN=tboot))
 
-p <- ggplot(exp3absErrors, aes(x=visType, y=absTrendError[,2]*100),) + geom_pointrange(aes(ymin=absTrendError[,1]*100, ymax=absTrendError[,3]*100, y=absTrendError[,2]*100), size=0.75) + ylim(1,NA) + labs(y="|Trend Estimation Error|", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
+p <- ggplot(exp3absErrors, aes(x=visType, y=absTrendError[,2]*100),) + geom_pointrange(aes(ymin=absTrendError[,1]*100, ymax=absTrendError[,3]*100, y=absTrendError[,2]*100), size=0.75) + ylim(1,NA) + labs(y="Error (slope)", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
         axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
 
 p
@@ -290,7 +300,7 @@ ggsave("exp3absErrors.pdf", plot=last_plot(), device="pdf", width=8, height=5)
 
 exp3avgErrors <- with(analysisData3, aggregate(avgTrendError ~ truncationF*visType,FUN=tboot))
 
-p <- ggplot(exp3avgErrors, aes(x=visType, y=avgTrendError[,2]*100),) + geom_pointrange(aes(ymin=avgTrendError[,1]*100, ymax=avgTrendError[,3]*100, y=avgTrendError[,2]*100), size=0.75) + ylim(1,NA) + labs(y="|Value Estimation Error|", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
+p <- ggplot(exp3avgErrors, aes(x=visType, y=avgTrendError[,2]*100),) + geom_pointrange(aes(ymin=avgTrendError[,1]*100, ymax=avgTrendError[,3]*100, y=avgTrendError[,2]*100), size=0.75) + ylim(1,NA) + labs(y="Error (magnitude)", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Visualization Design") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
         axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
 
 p
@@ -303,7 +313,7 @@ exp123Noticed <- with(analysisData, aggregate(qSeverity ~ noticedTruncation*trun
 exp123Noticed <- rbind(exp123Noticed,with(analysisData2, aggregate(qSeverity ~ noticedTruncation*truncationF*experiment, FUN=tboot)))
 exp123Noticed <- rbind(exp123Noticed,with(analysisData3, aggregate(qSeverity ~ noticedTruncation*truncationF*experiment, FUN=tboot)))
 
-p <- ggplot(exp123Noticed, aes(x=noticedTruncation, y=qSeverity[,2], color=experiment)) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75, position=position_dodge(0.4)) + ylim(1,NA) + labs(y="Perceived Severity (avg)", title="Y-Axis Start Location (%)") + scale_color_manual(labels=c("Experiment 1","Experiment 2","Experiment 3"),name="",values=c("#1F77B4","#FF7F0E","#2CA02C")) + scale_x_discrete(labels=c("False","True"),name="Commented on Truncation") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom") 
+p <- ggplot(exp123Noticed, aes(x=noticedTruncation, y=qSeverity[,2], color=experiment)) + geom_pointrange(aes(ymin=qSeverity[,1], ymax=qSeverity[,3], y=qSeverity[,2]), size=0.75, position=position_dodge(0.4)) + ylim(1,NA) + labs(y="Perceived Severity (avg)", title="Y-Axis Start Location (%)") + scale_color_manual(labels=c("Experiment 1","Experiment 2","Experiment 3"),name="",values=c("#B07AA1","#FF7F0E","#2CA02C")) + scale_x_discrete(labels=c("False","True"),name="Commented on Truncation") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom") 
 
 p
 
