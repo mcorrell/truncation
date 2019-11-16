@@ -33,8 +33,11 @@ We've collected a group of [blogs and other media](blogs.csv) about y-axis trunc
 * `q11`: The answer the participant gave for the 11th graphicity item, which dealt with unlabelled y-axes.
 * `strategy`: Free-text response to the question "What strategy or procedure did you use to complete the tasks?"
 * `notice`: Free-text response to the question "Did you notice anything odd or unusual about the charts you saw during the task?"
-* `comment`: Free-text response to the question "Any additional comments or feedback? "
-* `QUAL_noticed_truncation`: The first author's coded response concerning whether any of the free-text responses relate to the truncated y-axes on the visualizations in the main task.
+* `comment`: Free-text response to the question "Any additional comments of feedback? "
+* `QUAL_coder1`: The first author's coded response concerning whether any of the free-text responses relate to the truncated y-axes on the visualizations in the main task.
+* `QUAL_coder2`: The second (non-author) coder's response concerning whether any of the free-text responses relate to the truncated y-axes on the visualizations in the main task.
+* `QUAL_mismatch`: Whether there was a mismatch between the two qualitative coders concerning whether the participant mentioned the y-axis manipulation.
+* `QUAL_noticed_truncation`: The final agreed-upon qualitative code for the participant concerning whether the participant mentioned the y-axis manipulation.
 
 ## Trial Data
 `exp1/cleanrows.csv`,`exp2/cleanrows2.csv`, and `exp2/cleanrows3.csv` contain the responses for all participants, with the following columns:
