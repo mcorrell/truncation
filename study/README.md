@@ -27,13 +27,13 @@ We've collected a group of [blogs and other media](blogs.csv) about y-axis trunc
 * `id`: The anonymous participant id.
 * `gender`: The participant gender.
 * `age`: The participant age.
-* `education`: The participant level of schooling.
+* `education`: The participant's level of schooling.
 * `graphicity`: How many items the participant got correct on the 13 item graphicity scale.
 * `q10`: The answer the participant gave for the 10th graphicity item, which dealt with y-axis truncation.
 * `q11`: The answer the participant gave for the 11th graphicity item, which dealt with unlabelled y-axes.
 * `strategy`: Free-text response to the question "What strategy or procedure did you use to complete the tasks?"
 * `notice`: Free-text response to the question "Did you notice anything odd or unusual about the charts you saw during the task?"
-* `comment`: Free-text response to the question "Any additional comments of feedback? "
+* `comment`: Free-text response to the question "Any additional comments or feedback? "
 * `QUAL_noticed_truncation`: The first author's coded response concerning whether any of the free-text responses relate to the truncated y-axes on the visualizations in the main task.
 
 ## Trial Data
@@ -54,11 +54,10 @@ We've collected a group of [blogs and other media](blogs.csv) about y-axis trunc
 * `qSeverity`: The participant's response to the subject effect size question. A 5-point rating from `1` (least severe) to `5` (most severe).
 * `qFirst`: For Exp3 only, the participant's response when asked for the value of the first point, in percent.
 * `qLast`: For Exp3 only, the participant's response when asked for the value of the last point, in percent.
-* `trendError`: For Exp3 only, the particiant's *measured* slope (`qLast`-`qFirst`) - the *actual* slope (`slope`).
+* `trendError`: For Exp3 only, the participant's *measured* slope (`qLast`-`qFirst`) - the *actual* slope (`slope`).
 * `correct`: Whether the participant got the engagement question correct (if `qTrend`==`slope` then `1`, else `0`).
 * `firstX`: The value of the first item in the data series, in percent.
 * `lastX`: The value of the last item in the data series, in percent.
 * `x0`...`xn`: The value of the nth item in the data series, in percent. `null` if there were fewer items than the maximum (e.g. half of the visualizations had only two values, and the other half three values).
- the scatterplot, or the number of bins in the histogram.
 
 `analysis.R` is the R script used to conduct the analyses and generate the figures in the paper. It relies on the `ggplot2`, `ez` and `skimr` libraries.
