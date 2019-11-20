@@ -71,7 +71,7 @@ blackList <- subset(participantPerformance,correct<(mean(participantPerformance$
 #analysisData is our main dataframe. Let's populate it with our rows.
 analysisData <- subset(mergedata,!(id %in% blackList))
 
-#Let's also trip out our training/calibration stimuli.
+#Let's also strip out our training/calibration stimuli.
 analysisData <- analysisData[is.na(analysisData$training),]
 
 #Let's coerce some of our numerical factor levels to factors for our ANOVA.
@@ -177,7 +177,7 @@ blackList2 <- subset(participantPerformance2,correct<(mean(participantPerformanc
 #analysisData is our main dataframe. Let's populate it with our rows.
 analysisData2 <- subset(mergedata2,!(id %in% blackList2))
 
-#Let's also trip out our training/calibration stimuli.
+#Let's also strip out our training/calibration stimuli.
 analysisData2 <- analysisData2[is.na(analysisData2$training),]
 
 #Let's coerce some of our numerical factor levels to factors for our ANOVA.
@@ -222,7 +222,7 @@ ggsave("exp2Q10.pdf", plot=last_plot(), device="pdf", width=5.5, height=5)
 #Experiment Three
 
 
-#Identical to Experiment Two, but we ask them to estimate the actual values of the first and last bars,:
+#Identical to Experiment Two, but we ask them to estimate the actual values of the first and last bars:
 #cleandemo3.csv is my demographic data, and cleanrows3.csv is the per-trial information.
 
 #Read in demographics data
