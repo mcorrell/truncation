@@ -140,6 +140,15 @@ p
 ggsave("exp1All.pdf", plot=last_plot(), device="pdf", width=8, height=5)
 
 
+#Stacked Bar Chart of results
+exp1Stacked <- analysisData %>% group_by(truncationF,visType) %>% count(qSeverity)
+
+p <- ggplot(exp1Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = truncationF, fill = factor(qSeverity)), stat="identity") + scale_fill_manual(values=c("#D5D5D5", "#AEB2B3", "#889296", "#66717B", "#49525E")) + facet_grid(. ~ visType,labeller=labeller(visType=c(bar = "Bar",line = "Line"))) + labs(x="Y-Axis Start Location (%)",y="Count of Reponses (#)",fill="Perceived \n Severity",title="Visualization Type") + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
+
+p
+
+ggsave("exp1Stacked.pdf", plot=last_plot(), device="pdf", width=4, height=5)
+
 #Experiment Two
 
 
@@ -218,6 +227,15 @@ p <- ggplot(exp2Q10, aes(x=q10Correct, y=qSeverity[,2]),) + geom_pointrange(aes(
 p
 
 ggsave("exp2Q10.pdf", plot=last_plot(), device="pdf", width=5.5, height=5)
+
+#Stacked Bar Chart of results
+exp2Stacked <- analysisData2 %>% group_by(truncationF,visType) %>% count(qSeverity)
+
+p <- ggplot(exp2Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = truncationF, fill = factor(qSeverity)), stat="identity") + scale_fill_manual(values=c("#D5D5D5", "#AEB2B3", "#889296", "#66717B", "#49525E")) + facet_grid(. ~ visType,labeller=labeller(visType=c(bar = "Bar",bottomgradbar = "Gradient",brokenbar = "Broken"))) + labs(x="Y-Axis Start Location (%)",y="Count of Reponses (#)",fill="Perceived Severity (rating)",title="Visualization Type") + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom")
+
+p
+
+ggsave("exp2Stacked.pdf", plot=last_plot(), device="pdf", width=8, height=5)
 
 #Experiment Three
 
@@ -330,3 +348,12 @@ p <- ggplot(exp123Noticed, aes(x=noticedTruncation, y=qSeverity[,2], color=exper
 p
 
 ggsave("exp123Noticed.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+
+#Stacked Bar Chart of results
+exp3Stacked <- analysisData3 %>% group_by(truncationF,visType) %>% count(qSeverity)
+
+p <- ggplot(exp3Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = truncationF, fill = factor(qSeverity)), stat="identity") + scale_fill_manual(values=c("#D5D5D5", "#AEB2B3", "#889296", "#66717B", "#49525E")) + facet_grid(. ~ visType,labeller=labeller(visType=c(bar = "Bar",bottomgradbar = "Gradient",brokenbar = "Broken"))) + labs(x="Y-Axis Start Location (%)",y="Count of Reponses (#)",fill="Perceived Severity (rating)",title="Visualization Type") + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom")
+
+p
+
+ggsave("exp3Stacked.pdf", plot=last_plot(), device="pdf", width=8, height=5)
