@@ -143,7 +143,7 @@ ggsave("exp1All.pdf", plot=last_plot(), device="pdf", width=8, height=5)
 #Stacked Bar Chart of results
 exp1Stacked <- analysisData %>% group_by(truncationF,visType) %>% count(qSeverity)
 
-p <- ggplot(exp1Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = truncationF, fill = factor(qSeverity)), stat="identity") + scale_fill_manual(values=c("#D5D5D5", "#AEB2B3", "#889296", "#66717B", "#49525E")) + facet_grid(. ~ visType,labeller=labeller(visType=c(bar = "Bar",line = "Line"))) + labs(x="Y-Axis Start Location (%)",y="Count of Reponses (#)",fill="Perceived \n Severity",title="Visualization Type") + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
+p <- ggplot(exp1Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = visType, fill = factor(qSeverity, levels=c(5,4,3,2,1))), stat="identity") + scale_fill_manual(values=c("#49525E", "#66717B", "#889296", "#AEB2B3", "#D5D5D5")) + facet_grid(. ~ truncationF) + labs(x="Visualization Type",y="Count of Reponses (#)",fill="Perceived \n Severity",title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Line")) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom")
 
 p
 
@@ -231,11 +231,11 @@ ggsave("exp2Q10.pdf", plot=last_plot(), device="pdf", width=5.5, height=5)
 #Stacked Bar Chart of results
 exp2Stacked <- analysisData2 %>% group_by(truncationF,visType) %>% count(qSeverity)
 
-p <- ggplot(exp2Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = truncationF, fill = factor(qSeverity)), stat="identity") + scale_fill_manual(values=c("#D5D5D5", "#AEB2B3", "#889296", "#66717B", "#49525E")) + facet_grid(. ~ visType,labeller=labeller(visType=c(bar = "Bar",bottomgradbar = "Gradient",brokenbar = "Broken"))) + labs(x="Y-Axis Start Location (%)",y="Count of Reponses (#)",fill="Perceived Severity (rating)",title="Visualization Type") + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom")
+p <- ggplot(exp2Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = visType, fill = factor(qSeverity, levels=c(5,4,3,2,1))), stat="identity") + scale_fill_manual(values=c("#49525E", "#66717B", "#889296", "#AEB2B3", "#D5D5D5")) + facet_grid(. ~ truncationF) + labs(x="Visualization Type",y="Count of Reponses (#)",fill="Perceived \n Severity",title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken")) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=8, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom")
 
 p
 
-ggsave("exp2Stacked.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp2Stacked.pdf", plot=last_plot(), device="pdf", width=6, height=5)
 
 #Experiment Three
 
@@ -352,8 +352,8 @@ ggsave("exp123Noticed.pdf", plot=last_plot(), device="pdf", width=8, height=5)
 #Stacked Bar Chart of results
 exp3Stacked <- analysisData3 %>% group_by(truncationF,visType) %>% count(qSeverity)
 
-p <- ggplot(exp3Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = truncationF, fill = factor(qSeverity)), stat="identity") + scale_fill_manual(values=c("#D5D5D5", "#AEB2B3", "#889296", "#66717B", "#49525E")) + facet_grid(. ~ visType,labeller=labeller(visType=c(bar = "Bar",bottomgradbar = "Gradient",brokenbar = "Broken"))) + labs(x="Y-Axis Start Location (%)",y="Count of Reponses (#)",fill="Perceived Severity (rating)",title="Visualization Type") + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom")
+p <- ggplot(exp3Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = visType, fill = factor(qSeverity, levels=c(5,4,3,2,1))), stat="identity") + scale_fill_manual(values=c("#49525E", "#66717B", "#889296", "#AEB2B3", "#D5D5D5")) + facet_grid(. ~ truncationF) + labs(x="Visualization Type",y="Count of Reponses (#)",fill="Perceived \n Severity",title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken")) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=8, family="Helvetica"), axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica")) + theme(legend.position="bottom")
 
 p
 
-ggsave("exp3Stacked.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp3Stacked.pdf", plot=last_plot(), device="pdf", width=6, height=5)
