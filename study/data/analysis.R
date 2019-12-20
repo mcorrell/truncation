@@ -2,6 +2,7 @@ library(skimr)
 library(ez)
 library(ggplot2)
 library(boot)
+library(dplyr)
 
 #Bootstrapped confidence intervals
 tboot <- function(x) {
@@ -235,7 +236,7 @@ p <- ggplot(exp2Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = visType, fill
 
 p
 
-ggsave("exp2Stacked.pdf", plot=last_plot(), device="pdf", width=6, height=5)
+ggsave("exp2Stacked.pdf", plot=last_plot(), device="pdf", width=4, height=5)
 
 #Experiment Three
 
@@ -356,4 +357,4 @@ p <- ggplot(exp3Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = visType, fill
 
 p
 
-ggsave("exp3Stacked.pdf", plot=last_plot(), device="pdf", width=6, height=5)
+ggsave("exp3Stacked.pdf", plot=last_plot(), device="pdf", width=5, height=5)
