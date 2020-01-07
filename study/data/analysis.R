@@ -280,7 +280,7 @@ p <- ggplot(exp2Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = visType, fill
 
 p
 
-ggsave("exp2Stacked.pdf", plot=last_plot(), device="pdf", width=4, height=5)
+ggsave("exp2Stacked.pdf", plot=last_plot(), device="pdf", width=5, height=5)
 
 #Experiment Three
 
@@ -376,12 +376,38 @@ exp3RT <- with(analysisData3, aggregate(rt ~ truncationF*visType, FUN=bcaboot))
 
 #Or: RT could be super noisy and undiagnostic on online studies, especially when we gave no special instructions to answer quickly.
 
-p <- ggplot(exp3RT, aes(x=visType, y=rt[,2]/1000),) + geom_pointrange(aes(ymin=rt[,1]/1000, ymax=rt[,3]/1000, y=rt[,2]/1000), size=0.75) + ylim(1,NA) + labs(y="RT (sec)", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Chart Type") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
+p <- ggplot(exp3RT, aes(x=visType, y=rt[,2]/1000),) + geom_pointrange(aes(ymin=rt[,1]/1000, ymax=rt[,3]/1000, y=rt[,2]/1000), size=0.75) + ylim(0,NA) + labs(y="RT (sec)", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Chart Type") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
         axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
 
 p
 
 ggsave("exp3RT.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+
+
+#Let's generate the RT charts for the other experiments, but peg them to the RTs for Exp3, since that was the experiment with the extra task on it.
+
+
+#Note that I'm futzing with the y-axis for these next two. We had an extra task for the third experiment, so it's not comparable to these others, but we want the remaining to experiments to afford apples to apples comparison.
+
+expRT <- with(analysisData, aggregate(rt ~ truncationF*visType, FUN=bcaboot))
+
+p <- ggplot(expRT, aes(x=visType, y=rt[,2]/1000),) + geom_pointrange(aes(ymin=rt[,1]/1000, ymax=rt[,3]/1000, y=rt[,2]/1000), size=0.75) + ylim(0,20) + labs(y="RT (sec)", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Line"),name="Chart Type") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
+        axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
+
+p
+
+ggsave("expRT.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+
+exp2RT <- with(analysisData2, aggregate(rt ~ truncationF*visType, FUN=bcaboot))
+
+p <- ggplot(exp2RT, aes(x=visType, y=rt[,2]/1000),) + geom_pointrange(aes(ymin=rt[,1]/1000, ymax=rt[,3]/1000, y=rt[,2]/1000), size=0.75) + ylim(0,20) + labs(y="RT (sec)", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Chart Type") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
+        axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
+
+p
+
+ggsave("exp2RT.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+
+
 
 #Plots: how did our truncation bias stack up compared to the previous experiment?
 exp23Designs <- rbind(with(analysisData2, aggregate(qSeverity ~ truncationF*visType*experiment, FUN=bcaboot)),with(analysisData3, aggregate(qSeverity ~ truncationF*visType*experiment, FUN=bcaboot)))

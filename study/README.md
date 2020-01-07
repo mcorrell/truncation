@@ -18,6 +18,8 @@ The data are contained in the [Data](data/) folder.
 
 We also include the [R script](data/analysis.R) we used for data analysis and figure generation.
 
+For more human-readable information, check either the [paper](https://arxiv.org/abs/1907.02035) or the included [Supplement](Supplemental.pdf).
+
 We've collected a group of [blogs and other media](blogs.csv) about y-axis truncation as well, in order to characterize the ongoing debate about when it's okay to truncate the y-axis, and how to design around the issue of charts that don't start at 0.
 
 ## Demographics Data
