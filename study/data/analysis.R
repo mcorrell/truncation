@@ -21,6 +21,7 @@ bootMean <- function(data,indices) {
 	return(mean(d))	
 }
 
+#Bias-corrected bootstrapped confidence intervals, for wackier distributions
 bcaboot <- function(x) {
 	bootResults <- boot(data = x, statistic = bootMean, R=1000)
 	bootCI <- boot.ci(bootResults,type="bca")
@@ -89,17 +90,15 @@ pairwise.t.test(analysisData$qSeverity,analysisData$truncationF,p.adjust.method=
 
 pairwise.t.test(analysisData$qSeverity,analysisData$framing,p.adjust.method="bonferroni")
 
-#Regular ANOVAs are parametric, and Likert ratings potentially violate those assumptions, so let's use a non-parametric ANOVA of our main factors:
+#Regular ANOVAs are parametric, and Likert ratings potentially violate those assumptions, so let's try out a non-parametric ANOVA of our main factors. Unfortunately, ARTools does not provide the full results table we're looking for, since our three-way repeated measures interaction is not well behaved with how ARTools interacts with base R's aov. But they are here if you want them.
 
-#since sizeF is a random factor it's not going to align well when we do the rank transform, so it's excluded here
+#sizeF is a random factor it's not going to align well when we do the rank transform, so it's excluded here
 modelART <- art(qSeverity ~ truncationF * visType * framing + Error(id / truncationF * visType * framing), data=analysisData)
 
 #Before using the model we should check that the aligned responses are 0 or close to 0
-
 summary(modelART)
 
 #And then run the ANOVA
-
 anova(modelART)
 
 #Let's look at response time as well, why not.
