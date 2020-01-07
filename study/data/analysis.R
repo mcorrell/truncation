@@ -3,6 +3,7 @@ library(ez)
 library(ggplot2)
 library(boot)
 library(dplyr)
+library(ARTool)
 
 #Bootstrapped confidence intervals
 tboot <- function(x) {
@@ -82,9 +83,30 @@ analysisData$truncationF <- factor(analysisData$truncationLevel)
 #Run ANOVA.
 model <- ezANOVA(data=analysisData, dv = .(qSeverity), wid= .(id), within = .(truncationF,visType,framing,sizeF), observed= .(noticedTruncation,qBothCorrect))
 
+model
+
 pairwise.t.test(analysisData$qSeverity,analysisData$truncationF,p.adjust.method="bonferroni")
 
 pairwise.t.test(analysisData$qSeverity,analysisData$framing,p.adjust.method="bonferroni")
+
+#Regular ANOVAs are parametric, and Likert ratings potentially violate those assumptions, so let's use a non-parametric ANOVA of our main factors:
+
+#since sizeF is a random factor it's not going to align well when we do the rank transform, so it's excluded here
+modelART <- art(qSeverity ~ truncationF * visType * framing + Error(id / truncationF * visType * framing), data=analysisData)
+
+#Before using the model we should check that the aligned responses are 0 or close to 0
+
+summary(modelART)
+
+#And then run the ANOVA
+
+anova(modelART)
+
+#Let's look at response time as well, why not.
+
+modelRT <- ezANOVA(data=analysisData, dv = .(rt), wid= .(id), within = .(truncationF,visType,framing,sizeF), observed= .(noticedTruncation,qBothCorrect))
+
+modelRT
 
 
 #Make plots
@@ -199,7 +221,30 @@ analysisData2$truncationF <- factor(analysisData2$truncationLevel)
 #Run ANOVA.
 model2 <- ezANOVA(data=subset(analysisData2,truncationLevel>0), dv = .(qSeverity), wid= .(id), within = .(truncationF,visType,sizeF), observed= .(noticedTruncation,qBothCorrect))
 
+model2
+
 pairwise.t.test(analysisData2$qSeverity,analysisData2$visType,p.adjust.method="bonferroni")
+
+#...and the non-parametric version of our main variables
+
+modelART2 <- art(qSeverity ~ truncationF * visType * sizeF + Error(id / truncationF * visType * sizeF), data=analysisData2)
+
+#Before using the model we should check that the aligned responses are 0 or close to 0
+
+summary(modelART2)
+
+#And then run the ANOVA
+
+anova(modelART2)
+
+
+#Another look at RTs.
+
+model2RT <- ezANOVA(data=subset(analysisData2,truncationLevel>0), dv = .(rt), wid= .(id), within = .(truncationF,visType,sizeF), observed= .(noticedTruncation,qBothCorrect))
+
+#bubkis, but the reviews wanted to hear about it, so what's the harm.
+model2RT
+
 
 #Plot all of our null effects
 exp2Designs <- with(analysisData2, aggregate(qSeverity ~ truncationF*visType, FUN=bcaboot))
@@ -296,6 +341,18 @@ model3Severity <- ezANOVA(data=subset(analysisData3,truncationLevel>0), dv = .(q
 
 pairwise.t.test(analysisData3$qSeverity,analysisData3$truncationF,p.adjust.method="bonferroni")
 
+#And our non-parametric version
+
+modelART3 <- art(qSeverity ~ truncationF * visType * sizeF + Error(id / truncationF * visType * sizeF), data=analysisData3)
+
+#check that alignment makes sense
+summary(modelART3)
+
+#run ANOVA
+anova(modelART3)
+
+#Now let's move on to our error functions. We're not longer in rating scale land for our response variable, so it's back to just vanilla ANOVAs here.
+
 #I'm also interested in how the different chart types impacted the trendError, which is the estimated difference in values - the actual difference in values. 
 
 model3trendError <- ezANOVA(data=subset(analysisData3,truncationLevel>0), dv = .(absTrendError), wid= .(id), within = .(truncationF,visType,sizeF), observed= .(noticedTruncation,qBothCorrect))
@@ -308,6 +365,24 @@ model3avgError <- ezANOVA(data=subset(analysisData3,truncationLevel>0), dv = .(a
 
 #Looks like truncationF was the only difference. If people were misreading, we'd expect truncation of 0 to be < 0.25 < 0.5...
 pairwise.t.test(analysisData3$avgTrendError,analysisData3$truncationF,p.adjust.method="bonferroni")
+
+#And also our additional RT analysis.
+
+model3RT <- ezANOVA(data=analysisData3, dv = .(rt), wid= .(id), within = .(truncationF,visType,sizeF), observed= .(noticedTruncation,qBothCorrect))
+
+#interestingly, RT is higher when the y-axis starts at 25%. I think this is because doing math starting from 25% is harder than starting from 0 or 50 (halfway up the y-axis)
+model3RT
+
+exp3RT <- with(analysisData3, aggregate(rt ~ truncationF*visType, FUN=bcaboot))
+
+#Or: RT could be super noisy and undiagnostic on online studies, especially when we gave no special instructions to answer quickly.
+
+p <- ggplot(exp3RT, aes(x=visType, y=rt[,2]/1000),) + geom_pointrange(aes(ymin=rt[,1]/1000, ymax=rt[,3]/1000, y=rt[,2]/1000), size=0.75) + ylim(1,NA) + labs(y="RT (sec)", title="Y-Axis Start Location (%)") + scale_x_discrete(labels=c("Bar","Gradient","Broken"),name="Chart Type") + facet_grid(. ~ truncationF) + theme_bw() + theme(plot.title = element_text(size=18,hjust=0.5, family="Helvetica")) + theme(axis.text=element_text(size=12, family="Helvetica"),
+        axis.title=element_text(size=18, family="Helvetica"), strip.background=element_rect(color="white", fill="white"), strip.text=element_text(size=24, family="Helvetica"))
+
+p
+
+ggsave("exp3RT.pdf", plot=last_plot(), device="pdf", width=8, height=5)
 
 #Plots: how did our truncation bias stack up compared to the previous experiment?
 exp23Designs <- rbind(with(analysisData2, aggregate(qSeverity ~ truncationF*visType*experiment, FUN=bcaboot)),with(analysisData3, aggregate(qSeverity ~ truncationF*visType*experiment, FUN=bcaboot)))
