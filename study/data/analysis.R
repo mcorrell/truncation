@@ -4,6 +4,7 @@ library(ggplot2)
 library(boot)
 library(dplyr)
 library(ARTool)
+library(Cairo)
 
 #Bootstrapped confidence intervals
 tboot <- function(x) {
@@ -119,7 +120,7 @@ p <- ggplot(exp1Designs, aes(x=visType, y=qSeverity[,2]),) + geom_pointrange(aes
 
 p
 
-ggsave("exp1Designs.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp1Designs.pdf", plot=last_plot(), device=cairo_pdf, width=8, height=5)
 
 #What about the framings?
 
@@ -130,7 +131,7 @@ p <- ggplot(exp1Framings, aes(x=framing, y=qSeverity[,2]),) + geom_pointrange(ae
 
 p
 
-ggsave("exp1Frames.pdf", plot=last_plot(), device="pdf", width=5, height=5)
+ggsave("exp1Frames.pdf", plot=last_plot(), device=cairo_pdf, width=5, height=5)
 
 #And folks who noticed?
 
@@ -141,7 +142,7 @@ p <- ggplot(exp1Noticed, aes(x=noticedTruncation, y=qSeverity[,2]),) + geom_poin
 
 p
 
-ggsave("exp1Noticed.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp1Noticed.pdf", plot=last_plot(), device=cairo_pdf, width=8, height=5)
 
 exp1Q10 <- with(analysisData, aggregate(qSeverity ~ q10Correct, FUN=bcaboot))
 
@@ -150,7 +151,7 @@ p <- ggplot(exp1Q10, aes(x=q10Correct, y=qSeverity[,2]),) + geom_pointrange(aes(
 
 p
 
-ggsave("exp1Q10.pdf", plot=last_plot(), device="pdf", width=5, height=5)
+ggsave("exp1Q10.pdf", plot=last_plot(), device=cairo_pdf, width=5, height=5)
 
 #Combined fig of all conditions
 exp1All <- with(analysisData, aggregate(qSeverity ~ truncationF*visType*framing, FUN=bcaboot))
@@ -159,7 +160,7 @@ p <- ggplot(exp1All, aes(x=visType, y=qSeverity[,2], color=framing)) + geom_poin
 
 p
 
-ggsave("exp1All.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp1All.pdf", plot=last_plot(), device=cairo_pdf, width=8, height=5)
 
 
 #Stacked Bar Chart of results
@@ -169,7 +170,7 @@ p <- ggplot(exp1Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = visType, fill
 
 p
 
-ggsave("exp1Stacked.pdf", plot=last_plot(), device="pdf", width=4, height=5)
+ggsave("exp1Stacked.pdf", plot=last_plot(), device=cairo_pdf, width=4, height=5)
 
 #Experiment Two
 
@@ -253,7 +254,7 @@ p <- ggplot(exp2Designs, aes(x=visType, y=qSeverity[,2]),) + geom_pointrange(aes
 
 p
 
-ggsave("exp2Designs.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp2Designs.pdf", plot=last_plot(), device=cairo_pdf, width=8, height=5)
 
 exp2Noticed <- with(analysisData2, aggregate(qSeverity ~ noticedTruncation*truncationF, FUN=bcaboot))
 
@@ -262,7 +263,7 @@ p <- ggplot(exp2Noticed, aes(x=noticedTruncation, y=qSeverity[,2]),) + geom_poin
 
 p
 
-ggsave("exp2Noticed.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp2Noticed.pdf", plot=last_plot(), device=cairo_pdf, width=8, height=5)
 
 exp2Q10 <- with(analysisData2, aggregate(qSeverity ~ q10Correct, FUN=bcaboot))
 
@@ -271,7 +272,7 @@ p <- ggplot(exp2Q10, aes(x=q10Correct, y=qSeverity[,2]),) + geom_pointrange(aes(
 
 p
 
-ggsave("exp2Q10.pdf", plot=last_plot(), device="pdf", width=5.5, height=5)
+ggsave("exp2Q10.pdf", plot=last_plot(), device=cairo_pdf, width=5.5, height=5)
 
 #Stacked Bar Chart of results
 exp2Stacked <- analysisData2 %>% group_by(truncationF,visType) %>% count(qSeverity)
@@ -280,7 +281,7 @@ p <- ggplot(exp2Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = visType, fill
 
 p
 
-ggsave("exp2Stacked.pdf", plot=last_plot(), device="pdf", width=5, height=5)
+ggsave("exp2Stacked.pdf", plot=last_plot(), device=cairo_pdf, width=5, height=5)
 
 #Experiment Three
 
@@ -381,7 +382,7 @@ p <- ggplot(exp3RT, aes(x=visType, y=rt[,2]/1000),) + geom_pointrange(aes(ymin=r
 
 p
 
-ggsave("exp3RT.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp3RT.pdf", plot=last_plot(), device=cairo_pdf, width=8, height=5)
 
 
 #Let's generate the RT charts for the other experiments, but peg them to the RTs for Exp3, since that was the experiment with the extra task on it.
@@ -396,7 +397,7 @@ p <- ggplot(expRT, aes(x=visType, y=rt[,2]/1000),) + geom_pointrange(aes(ymin=rt
 
 p
 
-ggsave("expRT.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("expRT.pdf", plot=last_plot(), device=cairo_pdf, width=8, height=5)
 
 exp2RT <- with(analysisData2, aggregate(rt ~ truncationF*visType, FUN=bcaboot))
 
@@ -405,7 +406,7 @@ p <- ggplot(exp2RT, aes(x=visType, y=rt[,2]/1000),) + geom_pointrange(aes(ymin=r
 
 p
 
-ggsave("exp2RT.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp2RT.pdf", plot=last_plot(), device=cairo_pdf, width=8, height=5)
 
 
 
@@ -416,7 +417,7 @@ p <- ggplot(exp23Designs, aes(x=visType, y=qSeverity[,2], color=experiment)) + g
 
 p
 
-ggsave("exp23Designs.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp23Designs.pdf", plot=last_plot(), device=cairo_pdf, width=8, height=5)
 
 #Was this bias due to people making more errors when the truncation was high?
 
@@ -427,7 +428,7 @@ p <- ggplot(exp3absErrors, aes(x=visType, y=absTrendError[,2]*100),) + geom_poin
 
 p
 
-ggsave("exp3absErrors.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp3absErrors.pdf", plot=last_plot(), device=cairo_pdf, width=8, height=5)
 
 exp3avgErrors <- with(analysisData3, aggregate(avgTrendError ~ truncationF*visType,FUN=bcaboot))
 
@@ -436,7 +437,7 @@ p <- ggplot(exp3avgErrors, aes(x=visType, y=avgTrendError[,2]*100),) + geom_poin
 
 p
 
-ggsave("exp3avgErrors.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp3avgErrors.pdf", plot=last_plot(), device=cairo_pdf, width=8, height=5)
 
 #People who were chattier about noticing the y-axis truncation seemed to be less biased, except in Experiment 3
 
@@ -448,7 +449,7 @@ p <- ggplot(exp123Noticed, aes(x=noticedTruncation, y=qSeverity[,2], color=exper
 
 p
 
-ggsave("exp123Noticed.pdf", plot=last_plot(), device="pdf", width=8, height=5)
+ggsave("exp123Noticed.pdf", plot=last_plot(), device=cairo_pdf, width=8, height=5)
 
 #Stacked Bar Chart of results
 exp3Stacked <- analysisData3 %>% group_by(truncationF,visType) %>% count(qSeverity)
@@ -457,4 +458,4 @@ p <- ggplot(exp3Stacked, aes(x=visType)) + geom_bar(aes(y = n, x = visType, fill
 
 p
 
-ggsave("exp3Stacked.pdf", plot=last_plot(), device="pdf", width=5, height=5)
+ggsave("exp3Stacked.pdf", plot=last_plot(), device=cairo_pdf, width=5, height=5)
